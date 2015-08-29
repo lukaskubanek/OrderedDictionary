@@ -10,7 +10,34 @@
 		803F9CD51B92324C002F728F /* OrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 803F9CD21B92324C002F728F /* OrderedDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		803F9CD81B9232EE002F728F /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803F9CD71B9232EE002F728F /* OrderedDictionary.swift */; settings = {ASSET_TAGS = (); }; };
 		803F9CEA1B925AE5002F728F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803F9CE91B925AE5002F728F /* Nimble.framework */; settings = {ASSET_TAGS = (); }; };
+		803F9CF41B925B1C002F728F /* OrderedDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803F9CC61B923207002F728F /* OrderedDictionary.framework */; settings = {ASSET_TAGS = (); }; };
+		803F9CFD1B925B4C002F728F /* OrderedDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */; settings = {ASSET_TAGS = (); }; };
+		803F9D001B925BBF002F728F /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 803F9CE91B925AE5002F728F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		803F9D011B925BE9002F728F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803F9CE91B925AE5002F728F /* Nimble.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		803F9CF51B925B1C002F728F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 803F9CBD1B923207002F728F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 803F9CC51B923207002F728F;
+			remoteInfo = OrderedDictionary;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		803F9CFF1B925BA2002F728F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				803F9D001B925BBF002F728F /* Nimble.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		803F9CC61B923207002F728F /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -18,6 +45,9 @@
 		803F9CD41B92324C002F728F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		803F9CD71B9232EE002F728F /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		803F9CE91B925AE5002F728F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
+		803F9CEF1B925B1C002F728F /* OrderedDictionaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryTests.swift; sourceTree = "<group>"; };
+		803F9CFE1B925B56002F728F /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Tests.plist"; path = "Supporting Files/Info-Tests.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +59,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		803F9CEC1B925B1C002F728F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				803F9CF41B925B1C002F728F /* OrderedDictionary.framework in Frameworks */,
+				803F9D011B925BE9002F728F /* Nimble.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -36,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				803F9CD11B92324C002F728F /* Sources */,
+				803F9CFB1B925B4C002F728F /* Tests */,
 				803F9CD31B92324C002F728F /* Supporting Files */,
 				803F9CC71B923207002F728F /* Products */,
 				803F9CE81B9259F3002F728F /* Frameworks */,
@@ -46,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				803F9CC61B923207002F728F /* OrderedDictionary.framework */,
+				803F9CEF1B925B1C002F728F /* OrderedDictionaryTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +103,7 @@
 		803F9CD31B92324C002F728F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				803F9CFE1B925B56002F728F /* Info-Tests.plist */,
 				803F9CD41B92324C002F728F /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -73,6 +115,14 @@
 				803F9CE91B925AE5002F728F /* Nimble.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		803F9CFB1B925B4C002F728F /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,6 +157,25 @@
 			productReference = 803F9CC61B923207002F728F /* OrderedDictionary.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		803F9CEE1B925B1C002F728F /* OrderedDictionaryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionaryTests" */;
+			buildPhases = (
+				803F9CEB1B925B1C002F728F /* Sources */,
+				803F9CEC1B925B1C002F728F /* Frameworks */,
+				803F9CED1B925B1C002F728F /* Resources */,
+				803F9CFF1B925BA2002F728F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				803F9CF61B925B1C002F728F /* PBXTargetDependency */,
+			);
+			name = OrderedDictionaryTests;
+			productName = OrderedDictionaryTests;
+			productReference = 803F9CEF1B925B1C002F728F /* OrderedDictionaryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -118,6 +187,9 @@
 				ORGANIZATIONNAME = "Lukas Kubanek";
 				TargetAttributes = {
 					803F9CC51B923207002F728F = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					803F9CEE1B925B1C002F728F = {
 						CreatedOnToolsVersion = 7.0;
 					};
 				};
@@ -135,12 +207,20 @@
 			projectRoot = "";
 			targets = (
 				803F9CC51B923207002F728F /* OrderedDictionary */,
+				803F9CEE1B925B1C002F728F /* OrderedDictionaryTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		803F9CC41B923207002F728F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		803F9CED1B925B1C002F728F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -158,7 +238,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		803F9CEB1B925B1C002F728F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				803F9CFD1B925B4C002F728F /* OrderedDictionaryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		803F9CF61B925B1C002F728F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 803F9CC51B923207002F728F /* OrderedDictionary */;
+			targetProxy = 803F9CF51B925B1C002F728F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		803F9CCC1B923207002F728F /* Debug */ = {
@@ -292,6 +388,36 @@
 			};
 			name = Release;
 		};
+		803F9CF81B925B1C002F728F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "Supporting Files/Info-Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukaskubanek.OrderedDictionaryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		803F9CF91B925B1C002F728F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "Supporting Files/Info-Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukaskubanek.OrderedDictionaryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -312,6 +438,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionaryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				803F9CF81B925B1C002F728F /* Debug */,
+				803F9CF91B925B1C002F728F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
