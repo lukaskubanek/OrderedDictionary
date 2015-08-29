@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		803F9CD51B92324C002F728F /* OrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 803F9CD21B92324C002F728F /* OrderedDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		803F9CD81B9232EE002F728F /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803F9CD71B9232EE002F728F /* OrderedDictionary.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		803F9CC61B923207002F728F /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		803F9CD21B92324C002F728F /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		803F9CD41B92324C002F728F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		803F9CD71B9232EE002F728F /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				803F9CD21B92324C002F728F /* OrderedDictionary.h */,
+				803F9CD71B9232EE002F728F /* OrderedDictionary.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -98,6 +101,7 @@
 		803F9CBD1B923207002F728F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Lukas Kubanek";
 				TargetAttributes = {
@@ -138,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				803F9CD81B9232EE002F728F /* OrderedDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +236,7 @@
 		803F9CCF1B923207002F728F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -243,12 +249,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukaskubanek.OrderedDictionary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		803F9CD01B923207002F728F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
