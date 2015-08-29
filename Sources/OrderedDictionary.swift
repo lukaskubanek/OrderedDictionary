@@ -102,6 +102,8 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, ArrayLit
     }
     
     public mutating func updateElement(element: Element, atIndex index: Index) -> Element? {
+        // TODO: Handle index out of range
+        
         let currentElement = elementAtIndex(index)
         
         if currentElement != nil {
