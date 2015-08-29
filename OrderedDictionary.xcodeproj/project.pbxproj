@@ -48,6 +48,7 @@
 		803F9CEF1B925B1C002F728F /* OrderedDictionaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryTests.swift; sourceTree = "<group>"; };
 		803F9CFE1B925B56002F728F /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Tests.plist"; path = "Supporting Files/Info-Tests.plist"; sourceTree = SOURCE_ROOT; };
+		80F94F181B926A60000A96E7 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				803F9CD11B92324C002F728F /* Sources */,
+				80F94F171B926A60000A96E7 /* Playgrounds */,
 				803F9CFB1B925B4C002F728F /* Tests */,
 				803F9CD31B92324C002F728F /* Supporting Files */,
 				803F9CC71B923207002F728F /* Products */,
@@ -123,6 +125,14 @@
 				803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		80F94F171B926A60000A96E7 /* Playgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				80F94F181B926A60000A96E7 /* OrderedDictionary.playground */,
+			);
+			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,6 +456,7 @@
 				803F9CF91B925B1C002F728F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
