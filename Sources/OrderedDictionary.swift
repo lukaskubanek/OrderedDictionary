@@ -6,6 +6,8 @@
 //  Copyright © 2015 Lukas Kubanek. All rights reserved.
 //
 
+/// The `OrderedDictionary` is a collection which combines the features of `Dictionary` and `Array`.
+/// It maps keys to values and additionally sorts the key-value pairs by zero-based integer index.
 public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
     
     // MARK: - Initialization
