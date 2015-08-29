@@ -132,7 +132,7 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
         let lastIndex = self.count
         
         return anyGenerator {
-            guard nextIndex <= lastIndex else { return nil }
+            guard nextIndex < lastIndex else { return nil }
             
             let nextKey = self.orderedKeys[nextIndex]
             guard let nextValue = self.keysToValues[nextKey] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
