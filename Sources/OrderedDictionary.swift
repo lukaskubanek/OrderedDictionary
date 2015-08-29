@@ -20,47 +20,107 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
     public typealias Element = (Key, Value)
     public typealias Index = Int
     
-    // MARK: - Managing Content
+    // MARK: - Managing Content Using Keys
     
     public subscript(key: Key) -> Value? {
         get {
             return keysToValues[key]
         }
         set(newValue) {
-            switch newValue {
-            case nil:
-                if let index = orderedKeys.indexOf(key) {
-                    orderedKeys.removeAtIndex(index)
-                }
-                keysToValues[key] = nil
-            case let newValue where orderedKeys.contains(key):
-                keysToValues[key] = newValue
-            default:
-                orderedKeys.append(key)
-                keysToValues[key] = newValue
+            if let newValue = newValue {
+                updateValue(newValue, forKey: key)
+            } else {
+                removeValueForKey(key)
             }
         }
     }
     
-    public subscript(index: Index) -> Element {
-        get {
-            guard orderedKeys.indices.contains(index) else { fatalError("Index out of bounds in OrderedDictionary.") }
-            
-            let key = orderedKeys[index]
-            guard let value = self.keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
-            
-            return (key, value)
-        }
-        set(newValue) {
-            let newKey = newValue.0
-            let newValue = newValue.1
-            
-            orderedKeys[index] = newKey
-            keysToValues[newKey] = newValue
+    public mutating func updateValue(value: Value, forKey key: Key) -> Value? {
+        if orderedKeys.contains(key) {
+            guard let currentValue = keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+            keysToValues[key] = value
+            return currentValue
+        } else {
+            orderedKeys.append(key)
+            keysToValues[key] = value
+            return nil
         }
     }
     
-    // MARK: - Backing Storage
+    public mutating func removeValueForKey(key: Key) -> Value? {
+        if let index = orderedKeys.indexOf(key) {
+            orderedKeys.removeAtIndex(index)
+            guard let currentValue = keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+            keysToValues[key] = nil
+            return currentValue
+        } else {
+            return nil
+        }
+    }
+    
+    public mutating func removeAll(keepCapacity keepCapacity: Bool = true) {
+        orderedKeys.removeAll(keepCapacity: keepCapacity)
+        keysToValues.removeAll(keepCapacity: keepCapacity)
+    }
+    
+    // MARK: - Managing Content Using Indexes
+    
+    public subscript(index: Index) -> Element {
+        get {
+            if let element = elementAtIndex(index) {
+                return element
+            } else {
+                fatalError("Index out of bounds in OrderedDictionary.")
+            }
+        }
+        set(newValue) {
+            updateElement(newValue, atIndex: index)
+        }
+    }
+    
+    public func indexForKey(key: Key) -> Index? {
+        return orderedKeys.indexOf(key)
+    }
+    
+    public func elementAtIndex(index: Index) -> Element? {
+        guard orderedKeys.indices.contains(index) else { return nil }
+        
+        let key = orderedKeys[index]
+        guard let value = self.keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+        
+        return (key, value)
+    }
+    
+    public mutating func updateElement(element: Element, atIndex index: Index) -> Element? {
+        let currentElement = elementAtIndex(index)
+        
+        if currentElement != nil {
+            keysToValues.removeValueForKey(element.0)
+        }
+        
+        let (newKey, newValue) = (element.0, element.1)
+        orderedKeys[index] = newKey
+        keysToValues[newKey] = newValue
+        
+        return currentElement
+    }
+    
+    public mutating func removeAtIndex(index: Index) -> Element? {
+        if let element = elementAtIndex(index) {
+            orderedKeys.removeAtIndex(index)
+            keysToValues.removeValueForKey(element.0)
+            
+            return element
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: - Description
+    
+    // TODO: Add description
+    
+    // MARK: - Backing Store
     
     private var orderedKeys: [Key]
     private var keysToValues: [Key: Value]
