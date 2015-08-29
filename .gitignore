@@ -25,6 +25,5 @@ DerivedData
 *.xcuserstate
 *.xctimeline
 
-# Carthage (https://github.com/Carthage/Carthage)
-Carthage/Checkouts
-Carthage/Build/iOS
+# Carthage
+Carthage

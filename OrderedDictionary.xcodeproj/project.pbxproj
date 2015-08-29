@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		803F9CD51B92324C002F728F /* OrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 803F9CD21B92324C002F728F /* OrderedDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		803F9CD81B9232EE002F728F /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803F9CD71B9232EE002F728F /* OrderedDictionary.swift */; settings = {ASSET_TAGS = (); }; };
+		803F9CEA1B925AE5002F728F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803F9CE91B925AE5002F728F /* Nimble.framework */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		803F9CD21B92324C002F728F /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		803F9CD41B92324C002F728F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		803F9CD71B9232EE002F728F /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
+		803F9CE91B925AE5002F728F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,6 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				803F9CEA1B925AE5002F728F /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,6 +38,7 @@
 				803F9CD11B92324C002F728F /* Sources */,
 				803F9CD31B92324C002F728F /* Supporting Files */,
 				803F9CC71B923207002F728F /* Products */,
+				803F9CE81B9259F3002F728F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +65,14 @@
 				803F9CD41B92324C002F728F /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		803F9CE81B9259F3002F728F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				803F9CE91B925AE5002F728F /* Nimble.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +254,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -262,6 +278,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
