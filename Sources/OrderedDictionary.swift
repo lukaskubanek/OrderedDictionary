@@ -8,11 +8,6 @@
 
 public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
     
-    // MARK: - Type Aliases
-    
-    public typealias Element = (Key, Value)
-    public typealias Index = Int
-    
     // MARK: - Initialization
     
     public init() {
@@ -20,11 +15,61 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
         self.keysToValues = [:]
     }
     
-    // MARK: - SequenceType Conformance
+    // MARK: - Type Aliases
+    
+    public typealias Element = (Key, Value)
+    public typealias Index = Int
+    
+    // MARK: - Managing Content
+    
+    public subscript(key: Key) -> Value? {
+        get {
+            return keysToValues[key]
+        }
+        set(newValue) {
+            switch newValue {
+            case nil:
+                if let index = orderedKeys.indexOf(key) {
+                    orderedKeys.removeAtIndex(index)
+                }
+                keysToValues[key] = nil
+            case let newValue where orderedKeys.contains(key):
+                keysToValues[key] = newValue
+            default:
+                orderedKeys.append(key)
+                keysToValues[key] = newValue
+            }
+        }
+    }
+    
+    public subscript(index: Index) -> Element {
+        get {
+            guard orderedKeys.indices.contains(index) else { fatalError("Index out of bounds in OrderedDictionary.") }
+            
+            let key = orderedKeys[index]
+            guard let value = self.keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+            
+            return (key, value)
+        }
+        set(newValue) {
+            let newKey = newValue.0
+            let newValue = newValue.1
+            
+            orderedKeys[index] = newKey
+            keysToValues[newKey] = newValue
+        }
+    }
+    
+    // MARK: - Backing Storage
+    
+    private var orderedKeys: [Key]
+    private var keysToValues: [Key: Value]
+    
+    // MARK: - SequenceType & Indexable Conformance
 
     public func generate() -> AnyGenerator<Element> {
         var nextIndex = 0
-        let lastIndex = count
+        let lastIndex = self.count
         
         return anyGenerator {
             guard nextIndex <= lastIndex else { return nil }
@@ -39,22 +84,8 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
         }
     }
     
-    // MARK: - Indexable Conformance
-    
     public var startIndex: Index { return orderedKeys.startIndex }
     
     public var endIndex: Index { return orderedKeys.endIndex }
-    
-    public subscript(index: Index) -> Element {
-        let key = orderedKeys[index]
-        guard let value = self.keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
-        
-        return (key, value)
-    }
-    
-    // MARK: - Backing Storage
-    
-    private var orderedKeys: [Key]
-    private var keysToValues: [Key: Value]
     
 }
