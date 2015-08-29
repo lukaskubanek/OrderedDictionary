@@ -8,7 +8,7 @@
 
 /// The `OrderedDictionary` is a collection which combines the features of `Dictionary` and `Array`.
 /// It maps keys to values and additionally sorts the key-value pairs by zero-based integer index.
-public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
+public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, CustomStringConvertible {
     
     // MARK: - Initialization
     
@@ -120,7 +120,10 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType {
     
     // MARK: - Description
     
-    // TODO: Add description
+    public var description: String {
+        let content = map({ "\($0.0): \($0.1)" }).joinWithSeparator(", ")
+        return "[\(content)]"
+    }
     
     // MARK: - Backing Store
     
