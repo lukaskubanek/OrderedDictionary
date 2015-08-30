@@ -102,7 +102,7 @@ Lukas Kubanek // [lukaskubanek.com][6] // [@kubanekl][7]
 
 ## License
 
-OrderedDictionary is release under the [MIT License][8].
+`OrderedDictionary` is released under the [MIT License][8].
 
 [1]:	https://github.com/lukaskubanek/OrderedDictionary/releases
 [2]:	https://developer.apple.com/swift/
