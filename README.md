@@ -6,6 +6,26 @@ This is a lightweight implementation of an ordered dictionary data structure in 
 
 `OrderedDictioary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library and allows accessing the content by keys or indexes.
 
+Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys.
+
+## Requirements
+
+- Swift 2.0
+- Xcode 7.0 beta 6+
+- iOS 8.0+ / OS X 10.10+
+
+## Installation
+
+The easiest way to integrate `OrderedDictionary` to your project is to use [Carthage][5]. Add following line to your `Cartfile`:
+
+```
+github "lukaskubanek/OrderedDictionary" ~> 0.1
+```
+
+Then drag the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link against the `OrderedDictionary.framework`.
+
+Finally make sure the framework gets copied into your application bundle.
+
 ## Example Usage
 
 ```swift
@@ -78,19 +98,20 @@ print(orderedDictionary.indexForKey("C")) // => nil
 
 ## Author
 
-Lukas Kubanek // [lukaskubanek.com][5] // [@kubanekl][6]
+Lukas Kubanek // [lukaskubanek.com][6] // [@kubanekl][7]
 
 ## License
 
-OrderedDictionary is release under the [MIT License][7].
+OrderedDictionary is release under the [MIT License][8].
 
 [1]:	https://github.com/lukaskubanek/OrderedDictionary/releases
 [2]:	https://developer.apple.com/swift/
 [3]:	https://github.com/Carthage/Carthage
 [4]:	LICENSE.md
-[5]:	http://lukaskubanek.com
-[6]:	https://twitter.com/kubanekl
-[7]:	LICENSE.md
+[5]:	https://github.com/Carthage/Carthage/
+[6]:	http://lukaskubanek.com
+[7]:	https://twitter.com/kubanekl
+[8]:	LICENSE.md
 
 [image-1]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
 [image-2]:	https://img.shields.io/badge/Swift-2.0_(7b6)-orange.svg?style=flat-square
