@@ -45,6 +45,10 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, ArrayLit
         }
     }
     
+    public func containsKey(key: Key) -> Bool {
+        return orderedKeys.contains(key)
+    }
+    
     public mutating func updateValue(value: Value, forKey key: Key) -> Value? {
         if orderedKeys.contains(key) {
             guard let currentValue = keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }

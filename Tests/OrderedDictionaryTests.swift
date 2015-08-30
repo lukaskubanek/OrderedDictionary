@@ -29,12 +29,15 @@ class OrderedDictionaryTests: XCTestCase {
         
         expect(self.orderedDictionary["A"]) == 1
         expect(self.orderedDictionary.indexForKey("A")) == 0
+        expect(self.orderedDictionary.containsKey("A")) == true
         
         expect(self.orderedDictionary["B"]) == 2
         expect(self.orderedDictionary.indexForKey("B")) == 1
+        expect(self.orderedDictionary.containsKey("B")) == true
         
         expect(self.orderedDictionary["C"]) == 3
         expect(self.orderedDictionary.indexForKey("C")) == 2
+        expect(self.orderedDictionary.containsKey("C")) == true
     }
     
     func testElementsGenerator() {
@@ -55,15 +58,19 @@ class OrderedDictionaryTests: XCTestCase {
         
         expect(self.orderedDictionary["A"]) == 5
         expect(self.orderedDictionary.indexForKey("A")) == 0
+        expect(self.orderedDictionary.containsKey("A")) == true
         
         expect(self.orderedDictionary["B"]).to(beNil())
         expect(self.orderedDictionary.indexForKey("B")).to(beNil())
+        expect(self.orderedDictionary.containsKey("B")) == false
         
         expect(self.orderedDictionary["C"]) == 3
         expect(self.orderedDictionary.indexForKey("C")) == 1
+        expect(self.orderedDictionary.containsKey("C")) == true
         
         expect(self.orderedDictionary["D"]) == 10
         expect(self.orderedDictionary.indexForKey("D")) == 2
+        expect(self.orderedDictionary.containsKey("D")) == true
     }
     
     // MARK: - Index-based Modifications
