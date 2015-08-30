@@ -4,7 +4,7 @@
 
 This is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
 
-`OrderedDictioary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library and allows accessing the content by keys or indexes.
+`OrderedDictionary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library and allows accessing the content by keys or indexes.
 
 Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys.
 
