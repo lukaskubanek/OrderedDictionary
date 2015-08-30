@@ -1,6 +1,6 @@
 # OrderedDictionary
 
-[![][image-1]][1] [![][image-2]][2] ![][image-3] [![][image-4]][3] [![][image-5]][4]
+[![][image-1]][1] [![][image-2]][2] [![][image-3]][3] ![][image-4] [![][image-5]][4] [![][image-6]][5]
 
 This is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
 
@@ -16,7 +16,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 ## Installation
 
-The easiest way to integrate `OrderedDictionary` to your project is to use [Carthage][5]. Add following line to your `Cartfile`:
+The easiest way to integrate `OrderedDictionary` to your project is to use [Carthage][6]. Add following line to your `Cartfile`:
 
 ```
 github "lukaskubanek/OrderedDictionary" ~> 0.1
@@ -98,23 +98,29 @@ print(orderedDictionary.indexForKey("C")) // => nil
 
 ## Author
 
-Lukas Kubanek // [lukaskubanek.com][6] // [@kubanekl][7]
+Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 
 ## License
 
-`OrderedDictionary` is released under the [MIT License][8].
+`OrderedDictionary` is released under the [MIT License][13].
 
-[1]:	https://github.com/lukaskubanek/OrderedDictionary/releases
-[2]:	https://developer.apple.com/swift/
-[3]:	https://github.com/Carthage/Carthage
-[4]:	LICENSE.md
-[5]:	https://github.com/Carthage/Carthage/
-[6]:	http://lukaskubanek.com
-[7]:	https://twitter.com/kubanekl
-[8]:	LICENSE.md
+[1]:	https://travis-ci.org/lukaskubanek/OrderedDictionary
+[2]:	https://github.com/lukaskubanek/OrderedDictionary/releases
+[3]:	https://developer.apple.com/swift/
+[4]:	https://github.com/Carthage/Carthage
+[5]:	LICENSE.md
+[6]:	https://github.com/Carthage/Carthage/
+[7]:	https://developer.apple.com/swift/
+[8]:	https://github.com/lukaskubanek/OrderedDictionary/releases
+[9]:	https://developer.apple.com/swift/
+[10]:	https://github.com/Carthage/Carthage
+[11]:	http://lukaskubanek.com
+[12]:	https://twitter.com/kubanekl
+[13]:	LICENSE.md
 
-[image-1]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-2]:	https://img.shields.io/badge/Swift-2.0_(7b6)-orange.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Platform-OS_X%20&_iOS-yellowgreen.svg?style=flat-square
-[image-4]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
-[image-5]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License"
+[image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square
+[image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
+[image-3]:	https://img.shields.io/badge/Swift-2.0_(7b6)-orange.svg?style=flat-square
+[image-4]:	https://img.shields.io/badge/platform-OS_X%20&_iOS-yellowgreen.svg?style=flat-square
+[image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
+[image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License"
