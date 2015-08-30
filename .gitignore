@@ -26,4 +26,4 @@ DerivedData
 *.xctimeline
 
 # Carthage
-Carthage
+Carthage/Checkouts
