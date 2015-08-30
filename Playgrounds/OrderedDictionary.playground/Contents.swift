@@ -5,3 +5,5 @@ let orderedDictionary: OrderedDictionary<String, Int> = [
     ("B", 2),
     ("C", 3)
 ]
+
+print(orderedDictionary)

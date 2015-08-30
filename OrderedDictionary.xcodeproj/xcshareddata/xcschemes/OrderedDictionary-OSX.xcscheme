@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "803F9CC51B923207002F728F"
                BuildableName = "OrderedDictionary.framework"
-               BlueprintName = "OrderedDictionary"
+               BlueprintName = "OrderedDictionary-OSX"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "803F9CEE1B925B1C002F728F"
-               BuildableName = "OrderedDictionaryTests.xctest"
-               BlueprintName = "OrderedDictionaryTests"
+               BuildableName = "OrderedDictionary-OSX-Tests.xctest"
+               BlueprintName = "OrderedDictionary-OSX-Tests"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -45,7 +45,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "803F9CC51B923207002F728F"
             BuildableName = "OrderedDictionary.framework"
-            BlueprintName = "OrderedDictionary"
+            BlueprintName = "OrderedDictionary-OSX"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,7 +67,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "803F9CC51B923207002F728F"
             BuildableName = "OrderedDictionary.framework"
-            BlueprintName = "OrderedDictionary"
+            BlueprintName = "OrderedDictionary-OSX"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -85,7 +85,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "803F9CC51B923207002F728F"
             BuildableName = "OrderedDictionary.framework"
-            BlueprintName = "OrderedDictionary"
+            BlueprintName = "OrderedDictionary-OSX"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
