@@ -6,7 +6,5 @@
 //  Copyright © 2015 Lukas Kubanek. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-
-FOUNDATION_EXPORT double OrderedDictionaryVersionNumber;
-FOUNDATION_EXPORT const unsigned char OrderedDictionaryVersionString[];
+extern double OrderedDictionaryVersionNumber;
+extern const unsigned char OrderedDictionaryVersionString[];
