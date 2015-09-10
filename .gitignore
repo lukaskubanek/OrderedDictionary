@@ -27,3 +27,4 @@ DerivedData
 
 # Carthage
 Carthage/Checkouts
+Carthage/**/OrderedDictionary*
