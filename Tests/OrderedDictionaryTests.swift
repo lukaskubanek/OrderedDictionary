@@ -40,6 +40,16 @@ class OrderedDictionaryTests: XCTestCase {
         expect(self.orderedDictionary.containsKey("C")) == true
     }
     
+    func testInitializationUsingPairs() {
+        let elements = [
+            ("A", 1),
+            ("B", 2),
+            ("C", 3)
+        ]
+        
+        expect(OrderedDictionary(elements: elements) == self.orderedDictionary).to(beTrue())
+    }
+    
     func testElementsGenerator() {
         for entry in self.orderedDictionary.enumerate() {
             expect(self.orderedDictionary[entry.index].0) == entry.element.0

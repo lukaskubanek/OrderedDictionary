@@ -8,7 +8,7 @@
 
 /// The `OrderedDictionary` is a collection which combines the features of `Dictionary` and `Array`.
 /// It maps keys to values and additionally sorts the key-value pairs by zero-based integer index.
-public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
+public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
     
     // MARK: - Initialization
     
@@ -17,12 +17,16 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, ArrayLit
         self.keysToValues = [:]
     }
     
-    public init(arrayLiteral elements: Element...) {
+    public init(elements: [Element]) {
         self.init()
         
         for element in elements {
             self[element.0] = element.1
         }
+    }
+    
+    public init(arrayLiteral elements: Element...) {
+        self.init(elements: elements)
     }
     
     // MARK: - Type Aliases
@@ -167,4 +171,8 @@ public struct OrderedDictionary<Key : Hashable, Value>: CollectionType, ArrayLit
     
     public var endIndex: Index { return orderedKeys.endIndex }
     
+}
+
+public func == <Key: Equatable, Value: Equatable>(lhs: OrderedDictionary<Key, Value>, rhs: OrderedDictionary<Key, Value>) -> Bool {
+    return lhs.orderedKeys == rhs.orderedKeys && lhs.keysToValues == rhs.keysToValues
 }
