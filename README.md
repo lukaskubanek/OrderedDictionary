@@ -11,7 +11,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 ## Requirements
 
 - Swift 2.0
-- Xcode 7.0 beta 6+
+- Xcode 7.0 GM
 - iOS 8.0+ / OS X 10.10+
 
 ## Installation
@@ -120,7 +120,7 @@ Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 
 [image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square
 [image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Swift-2.0_(7b6)-orange.svg?style=flat-square
+[image-3]:	https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat-square
 [image-4]:	https://img.shields.io/badge/platform-OS_X%20&_iOS-yellowgreen.svg?style=flat-square
 [image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
 [image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License"
