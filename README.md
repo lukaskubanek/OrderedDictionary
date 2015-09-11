@@ -19,7 +19,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 The easiest way to integrate `OrderedDictionary` to your project is to use [Carthage][6]. Add following line to your `Cartfile`:
 
 ```
-github "lukaskubanek/OrderedDictionary" ~> 0.2
+github "lukaskubanek/OrderedDictionary" ~> 0.3
 ```
 
 Then drag the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link against the `OrderedDictionary.framework`.
