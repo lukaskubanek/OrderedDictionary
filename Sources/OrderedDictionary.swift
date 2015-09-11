@@ -6,8 +6,6 @@
 //  Copyright © 2015 Lukas Kubanek. All rights reserved.
 //
 
-/// The `OrderedDictionary` is a collection which combines the features of `Dictionary` and `Array`.
-/// It maps keys to values and additionally sorts the key-value pairs by zero-based integer index.
 public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
     
     // MARK: - Initialization
@@ -60,10 +58,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
             }
             
             keysToValues[key] = value
+            
             return currentValue
         } else {
             orderedKeys.append(key)
             keysToValues[key] = value
+            
             return nil
         }
     }
@@ -155,9 +155,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
             fatalError("OrderedDictionary index out of range")
         }
         
-        keysToValues.removeValueForKey(element.0)
-        
         let (newKey, newValue) = (element.0, element.1)
+        
         orderedKeys[index] = newKey
         keysToValues[newKey] = newValue
         
