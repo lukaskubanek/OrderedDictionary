@@ -55,7 +55,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     
     public mutating func updateValue(value: Value, forKey key: Key) -> Value? {
         if orderedKeys.contains(key) {
-            guard let currentValue = keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+            guard let currentValue = keysToValues[key] else {
+                fatalError("Inconsistency error occured in OrderedDictionary")
+            }
+            
             keysToValues[key] = value
             return currentValue
         } else {
@@ -67,9 +70,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     
     public mutating func removeValueForKey(key: Key) -> Value? {
         if let index = orderedKeys.indexOf(key) {
+            guard let currentValue = keysToValues[key] else {
+                fatalError("Inconsistency error occured in OrderedDictionary")
+            }
+            
             orderedKeys.removeAtIndex(index)
-            guard let currentValue = keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
             keysToValues[key] = nil
+            
             return currentValue
         } else {
             return nil
@@ -85,11 +92,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     
     public subscript(index: Index) -> Element {
         get {
-            if let element = elementAtIndex(index) {
-                return element
-            } else {
-                fatalError("Index out of bounds in OrderedDictionary.")
+            guard let element = elementAtIndex(index) else {
+                fatalError("OrderedDictionary index out of range")
             }
+            
+            return element
         }
         set(newValue) {
             updateElement(newValue, atIndex: index)
@@ -104,19 +111,20 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         guard orderedKeys.indices.contains(index) else { return nil }
         
         let key = orderedKeys[index]
-        guard let value = self.keysToValues[key] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+        
+        guard let value = self.keysToValues[key] else {
+            fatalError("Inconsistency error occured in OrderedDictionary")
+        }
         
         return (key, value)
     }
     
     public mutating func updateElement(element: Element, atIndex index: Index) -> Element? {
-        // TODO: Handle index out of range
-        
-        let currentElement = elementAtIndex(index)
-        
-        if currentElement != nil {
-            keysToValues.removeValueForKey(element.0)
+        guard let currentElement = elementAtIndex(index) else {
+            fatalError("OrderedDictionary index out of range")
         }
+        
+        keysToValues.removeValueForKey(element.0)
         
         let (newKey, newValue) = (element.0, element.1)
         orderedKeys[index] = newKey
@@ -158,7 +166,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
             guard nextIndex < lastIndex else { return nil }
             
             let nextKey = self.orderedKeys[nextIndex]
-            guard let nextValue = self.keysToValues[nextKey] else { fatalError("Inconsistency error occured in OrderedDictionary.") }
+            
+            guard let nextValue = self.keysToValues[nextKey] else {
+                fatalError("Inconsistency error occured in OrderedDictionary")
+            }
+            
             let element = (nextKey, nextValue)
             
             nextIndex++
