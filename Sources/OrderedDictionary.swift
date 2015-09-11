@@ -120,6 +120,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     }
     
     public mutating func insertElement(newElement: Element, atIndex index: Index) -> Value? {
+        guard index >= 0 else {
+            fatalError("Negative OrderedDictionary index is out of range")
+        }
+        
         guard index <= count else {
             fatalError("OrderedDictionary index out of range")
         }
