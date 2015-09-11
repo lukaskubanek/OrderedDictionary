@@ -120,6 +120,67 @@ class OrderedDictionaryTests: XCTestCase {
         expect(self.orderedDictionary.elementAtIndex(10)).to(beNil())
     }
     
+    func testIndexBasedInsertionsOfElementsWithDistinctKeys() {
+        self.orderedDictionary.insertElement(("T", 15), atIndex: 0)
+        self.orderedDictionary.insertElement(("U", 16), atIndex: 2)
+        self.orderedDictionary.insertElement(("V", 17), atIndex: 5)
+        self.orderedDictionary.insertElement(("W", 18), atIndex: 2)
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("T", 15),
+            ("A", 1),
+            ("W", 18),
+            ("U", 16),
+            ("B", 2),
+            ("C", 3),
+            ("V", 17)
+        ]
+        
+        expect(self.orderedDictionary == expectedOrderedDictionary).to(beTrue())
+    }
+    
+    func testIndexBasedInsertionOfElementWithSameKeyBeforeItsCurrentIndex() {
+        let previousValue = self.orderedDictionary.insertElement(("B", 5), atIndex: 0)
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("B", 5),
+            ("A", 1),
+            ("C", 3)
+        ]
+        
+        expect(self.orderedDictionary.count) == 3
+        expect(self.orderedDictionary == expectedOrderedDictionary).to(beTrue())
+        expect(previousValue) == 2
+    }
+    
+    func testIndexBasedInsertionOfElementWithSameKeyAtItsCurrentIndex() {
+        let previousValue = self.orderedDictionary.insertElement(("B", 5), atIndex: 1)
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("A", 1),
+            ("B", 5),
+            ("C", 3)
+        ]
+        
+        expect(self.orderedDictionary.count) == 3
+        expect(self.orderedDictionary == expectedOrderedDictionary).to(beTrue())
+        expect(previousValue) == 2
+    }
+    
+    func testIndexBasedInsertionOfElementWithSameKeyAfterItsCurrentIndex() {
+        let previousValue = self.orderedDictionary.insertElement(("B", 5), atIndex: 3)
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("A", 1),
+            ("C", 3),
+            ("B", 5)
+        ]
+        
+        expect(self.orderedDictionary.count) == 3
+        expect(self.orderedDictionary == expectedOrderedDictionary).to(beTrue())
+        expect(previousValue) == 2
+    }
+    
     // MARK: - Removal
     
     func testRemoveAll() {

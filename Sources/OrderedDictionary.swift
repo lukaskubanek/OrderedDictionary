@@ -119,6 +119,33 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         return (key, value)
     }
     
+    public mutating func insertElement(newElement: Element, atIndex index: Index) -> Value? {
+        guard index <= count else {
+            fatalError("OrderedDictionary index out of range")
+        }
+        
+        let (key, value) = (newElement.0, newElement.1)
+        
+        let adjustedIndex: Int
+        let currentValue: Value?
+        
+        if let currentIndex = orderedKeys.indexOf(key) {
+            currentValue = keysToValues[key]
+            adjustedIndex = (currentIndex < index - 1) ? index - 1 : index
+            
+            orderedKeys.removeAtIndex(currentIndex)
+            keysToValues[key] = nil
+        } else {
+            currentValue = nil
+            adjustedIndex = index
+        }
+        
+        orderedKeys.insert(key, atIndex: adjustedIndex)
+        keysToValues[key] = value
+        
+        return currentValue
+    }
+    
     public mutating func updateElement(element: Element, atIndex index: Index) -> Element? {
         guard let currentElement = elementAtIndex(index) else {
             fatalError("OrderedDictionary index out of range")
