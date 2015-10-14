@@ -22,7 +22,9 @@ class OrderedDictionaryTests: XCTestCase {
         ]
     }
     
+    // ======================================================= //
     // MARK: - Content
+    // ======================================================= //
     
     func testInitializedContent() {
         expect(self.orderedDictionary.count) == 3
@@ -57,7 +59,14 @@ class OrderedDictionaryTests: XCTestCase {
         }
     }
     
+    func testOrderedKeysAndValues() {
+        expect(self.orderedDictionary.orderedKeys) == ["A", "B", "C"]
+        expect(self.orderedDictionary.orderedValues) == [1, 2, 3]
+    }
+    
+    // ======================================================= //
     // MARK: - Key-based Modifications
+    // ======================================================= //
     
     func testKeyBasedSubscript() {
         self.orderedDictionary["A"] = 5
@@ -83,7 +92,9 @@ class OrderedDictionaryTests: XCTestCase {
         expect(self.orderedDictionary.containsKey("D")) == true
     }
     
+    // ======================================================= //
     // MARK: - Index-based Modifications
+    // ======================================================= //
     
     func testIndexBasedSubscriptForRetrievingValues() {
         let elementAtIndex0 = self.orderedDictionary[0]
@@ -229,7 +240,9 @@ class OrderedDictionaryTests: XCTestCase {
         expect(elementAtIndex0.1) == 3
     }
     
+    // ======================================================= //
     // MARK: - Description
+    // ======================================================= //
     
     func testDescription() {
         expect(self.orderedDictionary.description) == "[A: 1, B: 2, C: 3]"

@@ -8,11 +8,13 @@
 
 public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
     
+    // ======================================================= //
     // MARK: - Initialization
+    // ======================================================= //
     
     public init() {
-        self.orderedKeys = []
-        self.keysToValues = [:]
+        self._orderedKeys = []
+        self._keysToValues = [:]
     }
     
     public init(elements: [Element]) {
@@ -27,16 +29,32 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         self.init(elements: elements)
     }
     
+    // ======================================================= //
     // MARK: - Type Aliases
+    // ======================================================= //
     
     public typealias Element = (Key, Value)
     public typealias Index = Int
     
+    // ======================================================= //
+    // MARK: - Accessing Keys & Values
+    // ======================================================= //
+    
+    public var orderedKeys: [Key] {
+        return _orderedKeys
+    }
+    
+    public var orderedValues: [Value] {
+        return _orderedKeys.flatMap { _keysToValues[$0] }
+    }
+    
+    // ======================================================= //
     // MARK: - Managing Content Using Keys
+    // ======================================================= //
     
     public subscript(key: Key) -> Value? {
         get {
-            return keysToValues[key]
+            return _keysToValues[key]
         }
         set(newValue) {
             if let newValue = newValue {
@@ -48,34 +66,34 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     }
     
     public func containsKey(key: Key) -> Bool {
-        return orderedKeys.contains(key)
+        return _orderedKeys.contains(key)
     }
     
     public mutating func updateValue(value: Value, forKey key: Key) -> Value? {
-        if orderedKeys.contains(key) {
-            guard let currentValue = keysToValues[key] else {
+        if _orderedKeys.contains(key) {
+            guard let currentValue = _keysToValues[key] else {
                 fatalError("Inconsistency error occured in OrderedDictionary")
             }
             
-            keysToValues[key] = value
+            _keysToValues[key] = value
             
             return currentValue
         } else {
-            orderedKeys.append(key)
-            keysToValues[key] = value
+            _orderedKeys.append(key)
+            _keysToValues[key] = value
             
             return nil
         }
     }
     
     public mutating func removeValueForKey(key: Key) -> Value? {
-        if let index = orderedKeys.indexOf(key) {
-            guard let currentValue = keysToValues[key] else {
+        if let index = _orderedKeys.indexOf(key) {
+            guard let currentValue = _keysToValues[key] else {
                 fatalError("Inconsistency error occured in OrderedDictionary")
             }
             
-            orderedKeys.removeAtIndex(index)
-            keysToValues[key] = nil
+            _orderedKeys.removeAtIndex(index)
+            _keysToValues[key] = nil
             
             return currentValue
         } else {
@@ -84,11 +102,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     }
     
     public mutating func removeAll(keepCapacity keepCapacity: Bool = true) {
-        orderedKeys.removeAll(keepCapacity: keepCapacity)
-        keysToValues.removeAll(keepCapacity: keepCapacity)
+        _orderedKeys.removeAll(keepCapacity: keepCapacity)
+        _keysToValues.removeAll(keepCapacity: keepCapacity)
     }
     
+    // ======================================================= //
     // MARK: - Managing Content Using Indexes
+    // ======================================================= //
     
     public subscript(index: Index) -> Element {
         get {
@@ -104,15 +124,15 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     }
     
     public func indexForKey(key: Key) -> Index? {
-        return orderedKeys.indexOf(key)
+        return _orderedKeys.indexOf(key)
     }
     
     public func elementAtIndex(index: Index) -> Element? {
-        guard orderedKeys.indices.contains(index) else { return nil }
+        guard _orderedKeys.indices.contains(index) else { return nil }
         
-        let key = orderedKeys[index]
+        let key = _orderedKeys[index]
         
-        guard let value = self.keysToValues[key] else {
+        guard let value = self._keysToValues[key] else {
             fatalError("Inconsistency error occured in OrderedDictionary")
         }
         
@@ -133,19 +153,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         let adjustedIndex: Int
         let currentValue: Value?
         
-        if let currentIndex = orderedKeys.indexOf(key) {
-            currentValue = keysToValues[key]
+        if let currentIndex = _orderedKeys.indexOf(key) {
+            currentValue = _keysToValues[key]
             adjustedIndex = (currentIndex < index - 1) ? index - 1 : index
             
-            orderedKeys.removeAtIndex(currentIndex)
-            keysToValues[key] = nil
+            _orderedKeys.removeAtIndex(currentIndex)
+            _keysToValues[key] = nil
         } else {
             currentValue = nil
             adjustedIndex = index
         }
         
-        orderedKeys.insert(key, atIndex: adjustedIndex)
-        keysToValues[key] = value
+        _orderedKeys.insert(key, atIndex: adjustedIndex)
+        _keysToValues[key] = value
         
         return currentValue
     }
@@ -157,16 +177,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         
         let (newKey, newValue) = (element.0, element.1)
         
-        orderedKeys[index] = newKey
-        keysToValues[newKey] = newValue
+        _orderedKeys[index] = newKey
+        _keysToValues[newKey] = newValue
         
         return currentElement
     }
     
     public mutating func removeAtIndex(index: Index) -> Element? {
         if let element = elementAtIndex(index) {
-            orderedKeys.removeAtIndex(index)
-            keysToValues.removeValueForKey(element.0)
+            _orderedKeys.removeAtIndex(index)
+            _keysToValues.removeValueForKey(element.0)
             
             return element
         } else {
@@ -174,19 +194,28 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         }
     }
     
+    // ======================================================= //
     // MARK: - Description
+    // ======================================================= //
     
     public var description: String {
         let content = map({ "\($0.0): \($0.1)" }).joinWithSeparator(", ")
         return "[\(content)]"
     }
     
+    // ======================================================= //
     // MARK: - Backing Store
+    // ======================================================= //
     
-    private var orderedKeys: [Key]
-    private var keysToValues: [Key: Value]
+    /// The backing store for the ordered keys.
+    private var _orderedKeys: [Key]
     
+    /// The backing store for the mapping of keys to values.
+    private var _keysToValues: [Key: Value]
+    
+    // ======================================================= //
     // MARK: - SequenceType & Indexable Conformance
+    // ======================================================= //
 
     public func generate() -> AnyGenerator<Element> {
         var nextIndex = 0
@@ -195,9 +224,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         return anyGenerator {
             guard nextIndex < lastIndex else { return nil }
             
-            let nextKey = self.orderedKeys[nextIndex]
+            let nextKey = self._orderedKeys[nextIndex]
             
-            guard let nextValue = self.keysToValues[nextKey] else {
+            guard let nextValue = self._keysToValues[nextKey] else {
                 fatalError("Inconsistency error occured in OrderedDictionary")
             }
             
@@ -209,12 +238,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         }
     }
     
-    public var startIndex: Index { return orderedKeys.startIndex }
+    public var startIndex: Index {
+        return _orderedKeys.startIndex
+    }
     
-    public var endIndex: Index { return orderedKeys.endIndex }
+    public var endIndex: Index {
+        return _orderedKeys.endIndex
+    }
     
 }
 
 public func == <Key: Equatable, Value: Equatable>(lhs: OrderedDictionary<Key, Value>, rhs: OrderedDictionary<Key, Value>) -> Bool {
-    return lhs.orderedKeys == rhs.orderedKeys && lhs.keysToValues == rhs.keysToValues
+    return lhs._orderedKeys == rhs._orderedKeys && lhs._keysToValues == rhs._keysToValues
 }
