@@ -16,15 +16,18 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 ## Installation
 
-The easiest way to integrate `OrderedDictionary` to your project is to use [Carthage][6]. Add following line to your `Cartfile`:
+### Carthage
 
-```
-github "lukaskubanek/OrderedDictionary" ~> 0.3
-```
+The easiest way to integrate this framework in your project is to use [Carthage](https://github.com/Carthage/Carthage/).
 
-Then drag the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link against the `OrderedDictionary.framework`.
+1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.3` to your `Cartfile`.
+2. Run `carthage bootstrap`.
+3. Drag either the `OrderedDictionary.xcodeproj` or the `LoremSwiftum.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
+4. Make sure the framework [gets copied](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) to your application bundle.
 
-Finally make sure the framework gets copied into your application bundle.
+### Submodules
+
+Another option for integrating this framework is to use [Git submodules](http://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
 ## Example Usage
 
