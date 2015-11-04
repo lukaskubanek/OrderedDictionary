@@ -139,6 +139,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
         return (key, value)
     }
     
+    public mutating func insertElementWithKey(key: Key, value: Value, atIndex index: Index) -> Value? {
+        return insertElement((key, value), atIndex: index)
+    }
+    
     public mutating func insertElement(newElement: Element, atIndex index: Index) -> Value? {
         guard index >= 0 else {
             fatalError("Negative OrderedDictionary index is out of range")
