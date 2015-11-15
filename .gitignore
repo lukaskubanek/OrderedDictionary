@@ -26,5 +26,4 @@ DerivedData
 *.xctimeline
 
 # Carthage
-Carthage/Checkouts
-Carthage/**/OrderedDictionary*
+Carthage
