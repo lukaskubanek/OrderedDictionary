@@ -1,3 +1,3 @@
 #!/bin/bash
 
-carthage bootstrap --platform Mac --platform iOS --verbose --no-use-binaries
+carthage bootstrap --platform mac,ios --verbose --no-use-binaries

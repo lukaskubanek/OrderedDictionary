@@ -1,3 +1,3 @@
 #!/bin/bash
 
-carthage update --verbose --no-use-binaries
+carthage update --platform mac,ios --verbose --no-use-binaries
