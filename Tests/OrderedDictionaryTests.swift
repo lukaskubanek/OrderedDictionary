@@ -241,6 +241,20 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(elementAtIndex0.1, 3)
     }
     
+    func testSort() {
+        self.orderedDictionary.sort {(item1, item2) in
+            return item1.0 > item2.0
+        }
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("C", 3),
+            ("B", 2),
+            ("A", 1)
+        ]
+        
+        XCTAssertTrue(self.orderedDictionary == expectedOrderedDictionary)
+    }
+    
     // ======================================================= //
     // MARK: - Description
     // ======================================================= //

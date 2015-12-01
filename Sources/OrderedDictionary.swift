@@ -199,6 +199,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     }
     
     // ======================================================= //
+    // MARK: - Sort
+    // ======================================================= //
+    
+    public mutating func sort(isOrderedBefore sortFunction: ((Key, Value), (Key, Value)) -> Bool) {
+        var tempArray = Array(_keysToValues)
+        tempArray.sortInPlace(sortFunction)
+        _orderedKeys = tempArray.map({
+            let (key, _) = $0
+            return key
+        })
+    }
+    
+    // ======================================================= //
     // MARK: - Description
     // ======================================================= //
     
