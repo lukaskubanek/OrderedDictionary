@@ -9,17 +9,20 @@
 public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
     
     // ======================================================= //
+    // MARK: - Type Aliases
+    // ======================================================= //
+    
+    public typealias Element = (Key, Value)
+    
+    public typealias Index = Int
+    
+    // ======================================================= //
     // MARK: - Initialization
     // ======================================================= //
     
-    public init() {
-        self._orderedKeys = []
-        self._keysToValues = [:]
-    }
+    public init() {}
     
     public init(elements: [Element]) {
-        self.init()
-        
         for element in elements {
             self[element.0] = element.1
         }
@@ -28,13 +31,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     public init(arrayLiteral elements: Element...) {
         self.init(elements: elements)
     }
-    
-    // ======================================================= //
-    // MARK: - Type Aliases
-    // ======================================================= //
-    
-    public typealias Element = (Key, Value)
-    public typealias Index = Int
     
     // ======================================================= //
     // MARK: - Accessing Keys & Values
@@ -212,10 +208,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLite
     // ======================================================= //
     
     /// The backing store for the ordered keys.
-    private var _orderedKeys: [Key]
+    private var _orderedKeys = [Key]()
     
     /// The backing store for the mapping of keys to values.
-    private var _keysToValues: [Key: Value]
+    private var _keysToValues = [Key: Value]()
     
     // ======================================================= //
     // MARK: - SequenceType & Indexable Conformance
