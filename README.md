@@ -4,14 +4,14 @@
 
 This is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
 
-`OrderedDictionary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library and allows accessing the content by keys or indexes.
+`OrderedDictionary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library, allows accessing the content by keys or indexes and sorting.
 
 Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys.
 
 ## Requirements
 
-- Swift 2.0
-- Xcode 7.0 GM
+- Swift 2.0+
+- Xcode 7.0+
 - iOS 8.0+ / OS X 10.10+
 
 ## Installation
@@ -20,7 +20,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 The easiest way to integrate this framework in your project is to use [Carthage](https://github.com/Carthage/Carthage/).
 
-1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.3` to your `Cartfile`.
+1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.4` to your `Cartfile`.
 2. Run `carthage bootstrap`.
 3. Drag either the `OrderedDictionary.xcodeproj` or the `LoremSwiftum.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
 4. Make sure the framework [gets copied](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) to your application bundle.
@@ -31,13 +31,9 @@ Another option for integrating this framework is to use [Git submodules](http://
 
 ## Example Usage
 
+Initialization:
+
 ```swift
-import OrderedDictionary
-
-////
-// Initialize an ordered dictionary using an array of key-value pairs
-////
-
 var orderedDictionary: OrderedDictionary<String, Int> = [
     ("A", 1),
     ("B", 2),
@@ -46,11 +42,11 @@ var orderedDictionary: OrderedDictionary<String, Int> = [
 ]
 
 print(orderedDictionary) // => [A: 1, B: 2, C: 3, D: 4]
+```
 
-////
-// Loop through the contents
-////
+Looping throug the contents:
 
+```swift
 for (index, (key, value)) in orderedDictionary.enumerate() {
     print("\(index): (\(key): \(value))")
 }
@@ -59,11 +55,11 @@ for (index, (key, value)) in orderedDictionary.enumerate() {
 // => 1: (B: 2)
 // => 2: (C: 3)
 // => 3: (D: 4)
+```
 
-////
-// Modify the values by setting the value for key
-////
+Modifying the values by setting the value for key:
 
+```swift
 orderedDictionary["A"] = 100
 orderedDictionary["E"] = 5
 orderedDictionary["B"] = nil
@@ -76,11 +72,11 @@ print(orderedDictionary["B"]) // => nil
 print(orderedDictionary["C"]) // => Optional(3)
 print(orderedDictionary["D"]) // => Optional(42)
 print(orderedDictionary["E"]) // => Optional(5)
+```
 
-////
-// Modify the values by setting the element for index
-////
+Modifying the values by setting the element for index:
 
+```swift
 orderedDictionary[2] = ("F", 235)
 orderedDictionary.updateElement(("K", 12), atIndex: 1)
 orderedDictionary.removeAtIndex(0)
@@ -97,6 +93,29 @@ print(orderedDictionary.indexForKey("F")) // => Optional(1)
 print(orderedDictionary.indexForKey("E")) // => Optional(2)
 print(orderedDictionary.indexForKey("A")) // => nil
 print(orderedDictionary.indexForKey("C")) // => nil
+```
+
+Sorting:
+
+```swift
+var sortingOrderedDictionary: OrderedDictionary<String, Int> = [
+    ("E", 4),
+    ("G", 3),
+    ("A", 3),
+    ("D", 1),
+    ("B", 4)
+]
+
+sortingOrderedDictionary.sortInPlace { (item1, item2) in
+    if item1.1 == item2.1 {
+        return item1.0 < item2.0
+    } else {
+        return item1.1 < item2.1
+    }
+}
+
+print(sortingOrderedDictionary) // => [D: 1, A: 3, G: 3, B: 4, E: 4]
+
 ```
 
 ## Author

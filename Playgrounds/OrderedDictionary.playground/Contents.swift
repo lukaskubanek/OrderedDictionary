@@ -63,3 +63,25 @@ print(orderedDictionary.indexForKey("F")) // => Optional(1)
 print(orderedDictionary.indexForKey("E")) // => Optional(2)
 print(orderedDictionary.indexForKey("A")) // => nil
 print(orderedDictionary.indexForKey("C")) // => nil
+
+////
+// Sorting
+////
+
+var sortingOrderedDictionary: OrderedDictionary<String, Int> = [
+    ("E", 4),
+    ("G", 3),
+    ("A", 3),
+    ("D", 1),
+    ("B", 4)
+]
+
+sortingOrderedDictionary.sortInPlace { (item1, item2) in
+    if item1.1 == item2.1 {
+        return item1.0 < item2.0
+    } else {
+        return item1.1 < item2.1
+    }
+}
+
+print(sortingOrderedDictionary) // => [D: 1, A: 3, G: 3, B: 4, E: 4]
