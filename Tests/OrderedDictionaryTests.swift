@@ -242,6 +242,38 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     // ======================================================= //
+    // MARK: - Sorting
+    // ======================================================= //
+    
+    func testSortingInPlace() {
+        var testOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("E", 4),
+            ("G", 3),
+            ("A", 3),
+            ("D", 1),
+            ("B", 4)
+        ]
+        
+        testOrderedDictionary.sortInPlace { (item1, item2) in
+            if item1.1 == item2.1 {
+                return item1.0 < item2.0
+            } else {
+                return item1.1 < item2.1
+            }
+        }
+        
+        let expectedOrderedDictionary: OrderedDictionary<String, Int> = [
+            ("D", 1),
+            ("A", 3),
+            ("G", 3),
+            ("B", 4),
+            ("E", 4)
+        ]
+        
+        XCTAssertTrue(testOrderedDictionary == expectedOrderedDictionary)
+    }
+    
+    // ======================================================= //
     // MARK: - Description
     // ======================================================= //
     

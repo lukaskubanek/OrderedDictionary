@@ -6,7 +6,7 @@
 //  Copyright © 2015 Lukas Kubanek. All rights reserved.
 //
 
-public struct OrderedDictionary<Key: Hashable, Value>: CollectionType, ArrayLiteralConvertible, CustomStringConvertible {
+public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, ArrayLiteralConvertible, CustomStringConvertible {
     
     // ======================================================= //
     // MARK: - Type Aliases
