@@ -44,7 +44,7 @@ var orderedDictionary: OrderedDictionary<String, Int> = [
 print(orderedDictionary) // => [A: 1, B: 2, C: 3, D: 4]
 ```
 
-Looping throug the contents:
+Looping through the contents:
 
 ```swift
 for (index, (key, value)) in orderedDictionary.enumerate() {
