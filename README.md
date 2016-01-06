@@ -20,7 +20,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 The easiest way to integrate this framework in your project is to use [Carthage](https://github.com/Carthage/Carthage/).
 
-1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.4` to your `Cartfile`.
+1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.5` to your `Cartfile`.
 2. Run `carthage bootstrap`.
 3. Drag either the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
 4. Make sure the framework [gets copied](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) to your application bundle.
