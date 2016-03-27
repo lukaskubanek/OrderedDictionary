@@ -195,27 +195,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, Ar
     }
     
     // ======================================================= //
-    // MARK: - Description
+    // MARK: - CollectionType Conformance
     // ======================================================= //
     
-    public var description: String {
-        let content = map({ "\($0.0): \($0.1)" }).joinWithSeparator(", ")
-        return "[\(content)]"
+    public var startIndex: Index {
+        return _orderedKeys.startIndex
     }
     
-    // ======================================================= //
-    // MARK: - Backing Store
-    // ======================================================= //
-    
-    /// The backing store for the ordered keys.
-    private var _orderedKeys = [Key]()
-    
-    /// The backing store for the mapping of keys to values.
-    private var _keysToValues = [Key: Value]()
-    
-    // ======================================================= //
-    // MARK: - SequenceType & Indexable Conformance
-    // ======================================================= //
+    public var endIndex: Index {
+        return _orderedKeys.endIndex
+    }
 
     public func generate() -> AnyGenerator<Element> {
         var nextIndex = 0
@@ -238,13 +227,24 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, Ar
         }
     }
     
-    public var startIndex: Index {
-        return _orderedKeys.startIndex
+    // ======================================================= //
+    // MARK: - Description
+    // ======================================================= //
+    
+    public var description: String {
+        let content = map({ "\($0.0): \($0.1)" }).joinWithSeparator(", ")
+        return "[\(content)]"
     }
     
-    public var endIndex: Index {
-        return _orderedKeys.endIndex
-    }
+    // ======================================================= //
+    // MARK: - Internal Backing Store
+    // ======================================================= //
+    
+    /// The backing store for the ordered keys.
+    private var _orderedKeys = [Key]()
+    
+    /// The backing store for the mapping of keys to values.
+    private var _keysToValues = [Key: Value]()
     
 }
 
