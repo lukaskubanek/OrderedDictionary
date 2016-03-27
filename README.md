@@ -11,7 +11,7 @@
 [swift-image]: https://img.shields.io/badge/Swift-2.2-orange.svg?style=flat-square "Swift 2.2"
 [swift-link]:  https://developer.apple.com/swift/
 
-[platform-image]: https://img.shields.io/badge/platform-OS_X%20/_iOS-yellowgreen.svg?style=flat-square "Platform: OS X / iOS"
+[platform-image]: https://img.shields.io/badge/platform-osx/ios-yellowgreen.svg?style=flat-square "Platform: OS X, iOS"
 
 [carthage-image]: https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
 [carthage-link]:  https://github.com/Carthage/Carthage
@@ -19,9 +19,9 @@
 [license-image]: https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT"
 [license-link]:  LICENSE.md
 
-This is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
+**OrderedDictionary** is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
 
-`OrderedDictionary` is an immutable generic collection which combines the features of `Dictionary` and `Array`. Like `Dictionary` it stores key-value pairs and maps the keys to values. Additionally these pairs are sorted by zero-based integer index like in `Array`. The `OrderedDictionary` provides similar APIs to the collections from the Swift standard library, allows accessing the content by keys or indexes and sorting.
+The `OrderedDictionary` structure is an immutable generic collection which combines the features of `Dictionary` and `Array` from the Swift standard library. Like `Dictionary` it stores key-value pairs and maps each key to a value. Like `Array` it stores those pairs sorted and accessible by a zero-based integer index. `OrderedDictionary` provides similar APIs to collections from the standard library. This includes accessing contents by keys or indexes, inserting and removing contents, sorting etc.
 
 Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys.
 
@@ -37,7 +37,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 The easiest way to integrate this framework in your project is to use [Carthage][carthage-link]).
 
-1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.5` to your `Cartfile`.
+1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.6` to your `Cartfile`.
 2. Run `carthage bootstrap`.
 3. Drag either the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
 4. Make sure the framework [gets copied](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) to your application bundle.
@@ -141,4 +141,4 @@ Lukas Kubanek // [lukaskubanek.com](http://lukaskubanek.com) // [@kubanekl](http
 
 ## License
 
-`OrderedDictionary` is released under the [MIT License](LICENSE.md).
+**OrderedDictionary** is released under the [MIT License](LICENSE.md).
