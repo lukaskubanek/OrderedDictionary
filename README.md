@@ -1,6 +1,23 @@
 # OrderedDictionary
 
-[![][image-1]][1] [![][image-2]][2] [![][image-3]][3] ![][image-4] [![][image-5]][4] [![][image-6]][5]
+[![][travis-image]][travis-link] [![][release-image]][release-link] [![][swift-image]][swift-link] ![][platform-image] [![][carthage-image]][carthage-link] [![][license-image]][license-link]
+
+[travis-image]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build"
+[travis-link]:  https://travis-ci.org/lukaskubanek/OrderedDictionary
+
+[release-image]: https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
+[release-link]:  https://github.com/lukaskubanek/OrderedDictionary/releases
+
+[swift-image]: https://img.shields.io/badge/Swift-2.2-orange.svg?style=flat-square "Swift 2.2"
+[swift-link]:  https://developer.apple.com/swift/
+
+[platform-image]: https://img.shields.io/badge/platform-OS_X%20/_iOS-yellowgreen.svg?style=flat-square "Platform: OS X / iOS"
+
+[carthage-image]: https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
+[carthage-link]:  https://github.com/Carthage/Carthage
+
+[license-image]: https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT"
+[license-link]:  LICENSE.md
 
 This is a lightweight implementation of an ordered dictionary data structure in Swift packed into a µframework.
 
@@ -10,15 +27,15 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 ## Requirements
 
-- Swift 2.0+
-- Xcode 7.0+
+- Swift 2.2+
+- Xcode 7.3
 - iOS 8.0+ / OS X 10.10+
 
 ## Installation
 
 ### Carthage
 
-The easiest way to integrate this framework in your project is to use [Carthage](https://github.com/Carthage/Carthage/).
+The easiest way to integrate this framework in your project is to use [Carthage][carthage-link]).
 
 1. Add `github "lukaskubanek/OrderedDictionary" ~> 0.5` to your `Cartfile`.
 2. Run `carthage bootstrap`.
@@ -120,29 +137,8 @@ print(sortingOrderedDictionary) // => [D: 1, A: 3, G: 3, B: 4, E: 4]
 
 ## Author
 
-Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
+Lukas Kubanek // [lukaskubanek.com](http://lukaskubanek.com) // [@kubanekl](https://twitter.com/kubanekl)
 
 ## License
 
-`OrderedDictionary` is released under the [MIT License][13].
-
-[1]:	https://travis-ci.org/lukaskubanek/OrderedDictionary
-[2]:	https://github.com/lukaskubanek/OrderedDictionary/releases
-[3]:	https://developer.apple.com/swift/
-[4]:	https://github.com/Carthage/Carthage
-[5]:	LICENSE.md
-[6]:	https://github.com/Carthage/Carthage/
-[7]:	https://developer.apple.com/swift/
-[8]:	https://github.com/lukaskubanek/OrderedDictionary/releases
-[9]:	https://developer.apple.com/swift/
-[10]:	https://github.com/Carthage/Carthage
-[11]:	http://lukaskubanek.com
-[12]:	https://twitter.com/kubanekl
-[13]:	LICENSE.md
-
-[image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat-square
-[image-4]:	https://img.shields.io/badge/platform-OS_X%20&_iOS-yellowgreen.svg?style=flat-square
-[image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
-[image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License"
+`OrderedDictionary` is released under the [MIT License](LICENSE.md).
