@@ -68,16 +68,19 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(orderedDictionary.count, 3)
         
         XCTAssertEqual(orderedDictionary["A"], 1)
+        XCTAssertEqual(orderedDictionary.valueForKey("A"), 1)
         XCTAssertEqual(orderedDictionary.indexForKey("A"), 0)
         XCTAssertTrue(orderedDictionary.containsKey("A"))
         XCTAssertTrue(orderedDictionary[0] == ("A", 1))
         
         XCTAssertEqual(orderedDictionary["B"], 2)
+        XCTAssertEqual(orderedDictionary.valueForKey("B"), 2)
         XCTAssertEqual(orderedDictionary.indexForKey("B"), 1)
         XCTAssertTrue(orderedDictionary.containsKey("B"))
         XCTAssertTrue(orderedDictionary[1] == ("B", 2))
         
         XCTAssertEqual(orderedDictionary["C"], 3)
+        XCTAssertEqual(orderedDictionary.valueForKey("C"), 3)
         XCTAssertEqual(orderedDictionary.indexForKey("C"), 2)
         XCTAssertTrue(orderedDictionary.containsKey("C"))
         XCTAssertTrue(orderedDictionary[2] == ("C", 3))

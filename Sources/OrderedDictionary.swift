@@ -46,7 +46,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     
     public subscript(key: Key) -> Value? {
         get {
-            return _keysToValues[key]
+            return valueForKey(key)
         }
         set(newValue) {
             if let newValue = newValue {
@@ -59,6 +59,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     
     public func containsKey(key: Key) -> Bool {
         return _orderedKeys.contains(key)
+    }
+    
+    public func valueForKey(key: Key) -> Value? {
+        return _keysToValues[key]
     }
     
     public mutating func updateValue(value: Value, forKey key: Key) -> Value? {
