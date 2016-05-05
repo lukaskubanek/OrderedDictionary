@@ -20,11 +20,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     // MARK: - Initialization
     // ======================================================= //
     
-    public init() {}
-    
-    public init(elements: [Element]) {
-        for element in elements {
-            self[element.0] = element.1
+    public init(elements: [Element] = []) {
+        for (key, value) in elements {
+            self[key] = value
         }
     }
     
@@ -148,7 +146,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
             fatalError("OrderedDictionary index out of range")
         }
         
-        let (key, value) = (newElement.0, newElement.1)
+        let (key, value) = newElement
         
         let adjustedIndex: Int
         let currentValue: Value?
@@ -175,7 +173,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
             fatalError("OrderedDictionary index out of range")
         }
         
-        let (newKey, newValue) = (element.0, element.1)
+        let (newKey, newValue) = element
         
         _orderedKeys[index] = newKey
         _keysToValues[newKey] = newValue
@@ -218,6 +216,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     
 }
 
+// ======================================================= //
+// MARK: - Initializations from Literals
+// ======================================================= //
+
 extension OrderedDictionary: ArrayLiteralConvertible {
     
     public init(arrayLiteral elements: Element...) {
@@ -233,6 +235,10 @@ extension OrderedDictionary: DictionaryLiteralConvertible {
     }
     
 }
+
+// ======================================================= //
+// MARK: - Description
+// ======================================================= //
 
 extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertible {
     
