@@ -11,13 +11,66 @@ import OrderedDictionary
 
 class OrderedDictionaryTests: XCTestCase {
     
+    // ======================================================= //
+    // MARK: - Initialization
+    // ======================================================= //
+    
+    func testInitializationUsingArrayLiteral() {
+        let expected = OrderedDictionary<String, Int>(elements: [("A", 1), ("B", 2), ("C", 3)])
+        let actual: OrderedDictionary<String, Int> = [("A", 1), ("B", 2), ("C", 3)]
+        
+        XCTAssertTrue(expected == actual)
+    }
+    
+    func testInitializationUsingDictionaryLiteral() {
+        let expected = OrderedDictionary<String, Int>(elements: [("A", 1), ("B", 2), ("C", 3)])
+        let actual: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        
+        XCTAssertTrue(expected == actual)
+    }
+    
+    // ======================================================= //
+    // MARK: - Description
+    // ======================================================= //
+    
+    struct DescribedValue: CustomStringConvertible, CustomDebugStringConvertible {
+        init(_ value: Int) { self.value = value }
+        let value: Int
+        var description: String { return "\(value)" }
+        var debugDescription: String { return "debug(\(value))" }
+    }
+    
+    func testDescription() {
+        let expected = "[A: 1, B: 2, C: 3]"
+        
+        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
+        let actual = orderedDictionary.description
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testDebugDescription() {
+        let expected = "[\"A\": debug(1), \"B\": debug(2), \"C\": debug(3)]"
+        
+        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
+        let actual = orderedDictionary.debugDescription
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    
+    //////
+    
+    
+    
+    
     var orderedDictionary: OrderedDictionary<String, Int>!
     
     override func setUp() {
         orderedDictionary = [
-            ("A", 1),
-            ("B", 2),
-            ("C", 3)
+            "A": 1,
+            "B": 2,
+            "C": 3
         ]
     }
     
@@ -272,13 +325,5 @@ class OrderedDictionaryTests: XCTestCase {
         
         XCTAssertTrue(testOrderedDictionary == expectedOrderedDictionary)
     }
-    
-    // ======================================================= //
-    // MARK: - Description
-    // ======================================================= //
-    
-    func testDescription() {
-        XCTAssertEqual(orderedDictionary.description, "[A: 1, B: 2, C: 3]")
-    }
-    
+
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Lukas Kubanek. All rights reserved.
 //
 
-public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, ArrayLiteralConvertible, CustomStringConvertible {
+public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     
     // ======================================================= //
     // MARK: - Type Aliases
@@ -26,10 +26,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, Ar
         for element in elements {
             self[element.0] = element.1
         }
-    }
-    
-    public init(arrayLiteral elements: Element...) {
-        self.init(elements: elements)
     }
     
     // ======================================================= //
@@ -228,15 +224,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, Ar
     }
     
     // ======================================================= //
-    // MARK: - Description
-    // ======================================================= //
-    
-    public var description: String {
-        let content = map({ "\($0.0): \($0.1)" }).joinWithSeparator(", ")
-        return "[\(content)]"
-    }
-    
-    // ======================================================= //
     // MARK: - Internal Backing Store
     // ======================================================= //
     
@@ -245,6 +232,61 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType, Ar
     
     /// The backing store for the mapping of keys to values.
     private var _keysToValues = [Key: Value]()
+    
+}
+
+extension OrderedDictionary: ArrayLiteralConvertible {
+    
+    public init(arrayLiteral elements: Element...) {
+        self.init(elements: elements)
+    }
+    
+}
+
+extension OrderedDictionary: DictionaryLiteralConvertible {
+    
+    public init(dictionaryLiteral elements: Element...) {
+        self.init(elements: elements)
+    }
+    
+}
+
+extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    public var description: String {
+        return constructDescription(debug: false)
+    }
+    
+    public var debugDescription: String {
+        return constructDescription(debug: true)
+    }
+    
+    private func constructDescription(debug debug: Bool) -> String {
+        // The implementation of the description is inspired by zwaldowski's implementation of the ordered dictionary.
+        // See http://bit.ly/1VL4JUR
+        
+        if isEmpty { return "[:]" }
+        
+        func descriptionForItem(item: Any) -> String {
+            var description = ""
+            
+            if debug {
+                debugPrint(item, separator: "", terminator: "", toStream: &description)
+            } else {
+                print(item, separator: "", terminator: "", toStream: &description)
+            }
+            
+            return description
+        }
+        
+        let bodyComponents = map({ (key: Key, value: Value) -> String in
+            return descriptionForItem(key) + ": " + descriptionForItem(value)
+        })
+        
+        let body = bodyComponents.joinWithSeparator(", ")
+        
+        return "[\(body)]"
+    }
     
 }
 
