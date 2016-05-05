@@ -20,7 +20,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     // MARK: - Initialization
     // ======================================================= //
     
-    public init(elements: [Element] = []) {
+    public init() {}
+    
+    public init(elements: [Element]) {
         for (key, value) in elements {
             self[key] = value
         }
