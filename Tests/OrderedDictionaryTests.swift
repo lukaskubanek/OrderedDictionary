@@ -88,7 +88,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testGenerator() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let generator = orderedDictionary.generate()
+        var generator = orderedDictionary.generate()
         
         let indexes = [0, 1, 2]
         var indexesGenerator = indexes.generate()
@@ -101,6 +101,7 @@ class OrderedDictionaryTests: XCTestCase {
             XCTAssertEqual(expectedValue, actualValue)
         }
         
+        XCTAssertNil(generator.next())
         XCTAssertNil(indexesGenerator.next())
     }
     

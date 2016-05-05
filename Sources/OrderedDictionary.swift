@@ -205,27 +205,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
     public var endIndex: Index {
         return _orderedKeys.endIndex
     }
-
-    public func generate() -> AnyGenerator<Element> {
-        var nextIndex = 0
-        let lastIndex = self.count
-        
-        return AnyGenerator {
-            guard nextIndex < lastIndex else { return nil }
-            
-            let nextKey = self._orderedKeys[nextIndex]
-            
-            guard let nextValue = self._keysToValues[nextKey] else {
-                fatalError("Inconsistency error occured in OrderedDictionary")
-            }
-            
-            let element = (nextKey, nextValue)
-            
-            nextIndex += 1
-            
-            return element
-        }
-    }
     
     // ======================================================= //
     // MARK: - Internal Backing Store
