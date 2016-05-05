@@ -38,13 +38,17 @@ Another option is to use [Git submodules][8] and integrating the Xcode project `
 
 For the usage of this library please refer to the [example playground][9].
 
+## Changelog
+
+The changelog is managed on the [GitHub releases page][10].
+
 ## Author
 
-Lukas Kubanek // [lukaskubanek.com][10] // [@kubanekl][11]
+Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 
 ## License
 
-**OrderedDictionary** is released under the [MIT License][12].
+**OrderedDictionary** is provided under the [MIT License][13].
 
 [1]:	https://travis-ci.org/lukaskubanek/OrderedDictionary
 [2]:	https://github.com/lukaskubanek/OrderedDictionary/releases
@@ -55,9 +59,10 @@ Lukas Kubanek // [lukaskubanek.com][10] // [@kubanekl][11]
 [7]:	https://github.com/Carthage/Carthage#adding-frameworks-to-an-application
 [8]:	http://git-scm.com/book/en/v2/Git-Tools-Submodules
 [9]:	Playgrounds/OrderedDictionary.playground/Contents.swift
-[10]:	http://lukaskubanek.com
-[11]:	https://twitter.com/kubanekl
-[12]:	LICENSE.md
+[10]:	https://github.com/lukaskubanek/OrderedDictionary/releases
+[11]:	http://lukaskubanek.com
+[12]:	https://twitter.com/kubanekl
+[13]:	LICENSE.md
 
 [image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build"
 [image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
