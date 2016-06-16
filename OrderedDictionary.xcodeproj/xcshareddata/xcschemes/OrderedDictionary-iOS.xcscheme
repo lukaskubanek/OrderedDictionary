@@ -11,8 +11,7 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES"
-            hideIssues = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "806097621B92F20400DB20CF"
@@ -35,7 +34,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "806097701B92F44F00DB20CF"
-               BuildableName = "OrderedDictionary-iOS-Tests.xctest"
+               BuildableName = "OrderedDictionary_iOS_Tests.xctest"
                BlueprintName = "OrderedDictionary-iOS-Tests"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
             </BuildableReference>
