@@ -60,11 +60,11 @@
 		803F9CD21B92324C002F728F /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		803F9CD41B92324C002F728F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		803F9CD71B9232EE002F728F /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
-		803F9CEF1B925B1C002F728F /* OrderedDictionary-OSX-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OrderedDictionary-OSX-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_OSX_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryTests.swift; sourceTree = "<group>"; };
 		803F9CFE1B925B56002F728F /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		806097631B92F20400DB20CF /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		806097711B92F44F00DB20CF /* OrderedDictionary-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OrderedDictionary-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		806097711B92F44F00DB20CF /* OrderedDictionary_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80F94F181B926A60000A96E7 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,9 +117,9 @@
 			isa = PBXGroup;
 			children = (
 				803F9CC61B923207002F728F /* OrderedDictionary.framework */,
-				803F9CEF1B925B1C002F728F /* OrderedDictionary-OSX-Tests.xctest */,
+				803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */,
 				806097631B92F20400DB20CF /* OrderedDictionary.framework */,
-				806097711B92F44F00DB20CF /* OrderedDictionary-iOS-Tests.xctest */,
+				806097711B92F44F00DB20CF /* OrderedDictionary_iOS_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,7 +214,7 @@
 			);
 			name = "OrderedDictionary-OSX-Tests";
 			productName = OrderedDictionaryTests;
-			productReference = 803F9CEF1B925B1C002F728F /* OrderedDictionary-OSX-Tests.xctest */;
+			productReference = 803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		806097621B92F20400DB20CF /* OrderedDictionary-iOS */ = {
@@ -251,7 +251,7 @@
 			);
 			name = "OrderedDictionary-iOS-Tests";
 			productName = "OrderedDictionary-iOS-Tests";
-			productReference = 806097711B92F44F00DB20CF /* OrderedDictionary-iOS-Tests.xctest */;
+			productReference = 806097711B92F44F00DB20CF /* OrderedDictionary_iOS_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -517,7 +517,7 @@
 				INFOPLIST_FILE = "Supporting Files/Info-Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukaskubanek.OrderedDictionaryTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 			};
 			name = Debug;
 		};
@@ -529,7 +529,7 @@
 				INFOPLIST_FILE = "Supporting Files/Info-Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukaskubanek.OrderedDictionaryTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 			};
 			name = Release;
 		};
@@ -584,7 +584,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lukaskubanek.OrderedDictionary-iOS-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -597,7 +597,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lukaskubanek.OrderedDictionary-iOS-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
