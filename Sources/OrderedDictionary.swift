@@ -73,12 +73,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollectionType {
             
             _keysToValues[key] = value
             
-            return currentValue
+            return _keysToValues[key]
         } else {
             _orderedKeys.append(key)
             _keysToValues[key] = value
             
-            return nil
+            return _keysToValues[key]
         }
     }
     
