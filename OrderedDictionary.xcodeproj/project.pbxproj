@@ -60,7 +60,7 @@
 		803F9CD21B92324C002F728F /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		803F9CD41B92324C002F728F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		803F9CD71B9232EE002F728F /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
-		803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_OSX_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		803F9CEF1B925B1C002F728F /* OrderedDictionary_Mac_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_Mac_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		803F9CFC1B925B4C002F728F /* OrderedDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryTests.swift; sourceTree = "<group>"; };
 		803F9CFE1B925B56002F728F /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		806097631B92F20400DB20CF /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				803F9CC61B923207002F728F /* OrderedDictionary.framework */,
-				803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */,
+				803F9CEF1B925B1C002F728F /* OrderedDictionary_Mac_Tests.xctest */,
 				806097631B92F20400DB20CF /* OrderedDictionary.framework */,
 				806097711B92F44F00DB20CF /* OrderedDictionary_iOS_Tests.xctest */,
 			);
@@ -180,9 +180,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		803F9CC51B923207002F728F /* OrderedDictionary-OSX */ = {
+		803F9CC51B923207002F728F /* OrderedDictionary-Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 803F9CCE1B923207002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-OSX" */;
+			buildConfigurationList = 803F9CCE1B923207002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-Mac" */;
 			buildPhases = (
 				803F9CC11B923207002F728F /* Sources */,
 				803F9CC21B923207002F728F /* Frameworks */,
@@ -193,14 +193,14 @@
 			);
 			dependencies = (
 			);
-			name = "OrderedDictionary-OSX";
+			name = "OrderedDictionary-Mac";
 			productName = OrderedDictionary;
 			productReference = 803F9CC61B923207002F728F /* OrderedDictionary.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		803F9CEE1B925B1C002F728F /* OrderedDictionary-OSX-Tests */ = {
+		803F9CEE1B925B1C002F728F /* OrderedDictionary-Mac-Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-OSX-Tests" */;
+			buildConfigurationList = 803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-Mac-Tests" */;
 			buildPhases = (
 				803F9CEB1B925B1C002F728F /* Sources */,
 				803F9CEC1B925B1C002F728F /* Frameworks */,
@@ -212,9 +212,9 @@
 			dependencies = (
 				803F9CF61B925B1C002F728F /* PBXTargetDependency */,
 			);
-			name = "OrderedDictionary-OSX-Tests";
+			name = "OrderedDictionary-Mac-Tests";
 			productName = OrderedDictionaryTests;
-			productReference = 803F9CEF1B925B1C002F728F /* OrderedDictionary_OSX_Tests.xctest */;
+			productReference = 803F9CEF1B925B1C002F728F /* OrderedDictionary_Mac_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		806097621B92F20400DB20CF /* OrderedDictionary-iOS */ = {
@@ -291,8 +291,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				803F9CC51B923207002F728F /* OrderedDictionary-OSX */,
-				803F9CEE1B925B1C002F728F /* OrderedDictionary-OSX-Tests */,
+				803F9CC51B923207002F728F /* OrderedDictionary-Mac */,
+				803F9CEE1B925B1C002F728F /* OrderedDictionary-Mac-Tests */,
 				806097621B92F20400DB20CF /* OrderedDictionary-iOS */,
 				806097701B92F44F00DB20CF /* OrderedDictionary-iOS-Tests */,
 			);
@@ -368,7 +368,7 @@
 /* Begin PBXTargetDependency section */
 		803F9CF61B925B1C002F728F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 803F9CC51B923207002F728F /* OrderedDictionary-OSX */;
+			target = 803F9CC51B923207002F728F /* OrderedDictionary-Mac */;
 			targetProxy = 803F9CF51B925B1C002F728F /* PBXContainerItemProxy */;
 		};
 		806097781B92F44F00DB20CF /* PBXTargetDependency */ = {
@@ -625,7 +625,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		803F9CCE1B923207002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-OSX" */ = {
+		803F9CCE1B923207002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				803F9CCF1B923207002F728F /* Debug */,
@@ -634,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-OSX-Tests" */ = {
+		803F9CF71B925B1C002F728F /* Build configuration list for PBXNativeTarget "OrderedDictionary-Mac-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				803F9CF81B925B1C002F728F /* Debug */,
