@@ -88,10 +88,10 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testGenerator() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        var generator = orderedDictionary.generate()
+        var generator = orderedDictionary.makeIterator()
         
         let indexes = [0, 1, 2]
-        var indexesGenerator = indexes.generate()
+        var indexesGenerator = indexes.makeIterator()
         
         while let (actualKey, actualValue) = generator.next() {
             let index = indexesGenerator.next()
@@ -288,7 +288,7 @@ class OrderedDictionaryTests: XCTestCase {
         let actual: OrderedDictionary<String, Int> = {
             var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
             
-            orderedDictionary.sortInPlace { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
+            orderedDictionary.sort { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
                 if element1.value == element2.value {
                     return element1.key < element2.key
                 } else {
