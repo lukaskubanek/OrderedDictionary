@@ -59,9 +59,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         }
         set(newValue) {
             if let newValue = newValue {
-                updateValue(newValue, forKey: key)
+                _ = updateValue(newValue, forKey: key)
             } else {
-                removeValueForKey(key)
+                _ = removeValueForKey(key)
             }
         }
     }
@@ -124,7 +124,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
             return element
         }
         set(newValue) {
-            updateElement(newValue, atIndex: index)
+            _ = updateElement(newValue, atIndex: index)
         }
     }
     
