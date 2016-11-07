@@ -12,7 +12,7 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 ## Requirements
 
-- Swift 2.3
+- Swift 3.0
 - Xcode 8
 - iOS 8.0+ / OS X 10.10+
 
