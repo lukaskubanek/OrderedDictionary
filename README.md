@@ -66,7 +66,7 @@ Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 
 [image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build"
 [image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Swift-2.3-orange.svg?style=flat-square "Swift 2.2"
+[image-3]:	https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat-square "Swift 3.0"
 [image-4]:	https://img.shields.io/badge/platform-macOS/iOS-yellowgreen.svg?style=flat-square "Platform: OS X, iOS"
 [image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
 [image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT"
