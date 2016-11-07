@@ -24,7 +24,7 @@ This library is distributed as a Swift framework and can be integrated into your
 
 The easiest way is to use the package manager [Carthage][6].
 
-1. Add `github "lukaskubanek/OrderedDictionary"` to your `Cartfile`.
+1. Add `github "NSLogxiaoyu3/OrderedDictionary"` to your `Cartfile`.
 2. Run `carthage bootstrap`.
 3. Drag either the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
 4. Make sure the framework [gets copied][7] to your application bundle.
