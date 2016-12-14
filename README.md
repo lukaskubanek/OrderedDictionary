@@ -12,8 +12,8 @@ Internally `OrderedDictionary` uses a backing store composed of an instance of `
 
 ## Requirements
 
-- Swift 2.3
-- Xcode 8
+- Swift 3.0
+- Xcode 8.1
 - iOS 8.0+ / OS X 10.10+
 
 ## Installation
@@ -24,7 +24,7 @@ This library is distributed as a Swift framework and can be integrated into your
 
 The easiest way is to use the package manager [Carthage][6].
 
-1. Add `github "lukaskubanek/OrderedDictionary"` to your `Cartfile`.
+1. Add `github "NSLogxiaoyu3/OrderedDictionary"` to your `Cartfile`.
 2. Run `carthage bootstrap`.
 3. Drag either the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.framework` into your project/workspace and link your target against the `OrderedDictionary.framework`.
 4. Make sure the framework [gets copied][7] to your application bundle.
@@ -65,8 +65,8 @@ Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 [13]:	LICENSE.md
 
 [image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build"
-[image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Swift-2.3-orange.svg?style=flat-square "Swift 2.2"
+[image-2]:	https://img.shields.io/github/release/NSLogxiaoyu3/OrderedDictionary.svg?style=flat-square
+[image-3]:	https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat-square "Swift 3.0"
 [image-4]:	https://img.shields.io/badge/platform-macOS/iOS-yellowgreen.svg?style=flat-square "Platform: OS X, iOS"
 [image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
 [image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT"
