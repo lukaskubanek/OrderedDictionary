@@ -59,9 +59,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         }
         set(newValue) {
             if let newValue = newValue {
-                updateValue(newValue, forKey: key)
+                _ = updateValue(newValue, forKey: key)
             } else {
-                removeValueForKey(key)
+                _ = removeValueForKey(key)
             }
         }
     }
@@ -106,7 +106,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         }
     }
     
-    public mutating func removeAll(keepCapacity: Bool = true) {
+    public mutating func removeAll(_ keepCapacity: Bool = true) {
         _orderedKeys.removeAll(keepingCapacity: keepCapacity)
         _keysToValues.removeAll(keepingCapacity: keepCapacity)
     }
@@ -124,7 +124,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
             return element
         }
         set(newValue) {
-            updateElement(newValue, atIndex: index)
+            _ = updateElement(newValue, atIndex: index)
         }
     }
     
@@ -254,14 +254,14 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertible {
     
     public var description: String {
-        return constructDescription(debug: false)
+        return constructDescription(false)
     }
     
     public var debugDescription: String {
-        return constructDescription(debug: true)
+        return constructDescription(true)
     }
     
-    fileprivate func constructDescription(debug: Bool) -> String {
+    fileprivate func constructDescription(_ debug: Bool) -> String {
         // The implementation of the description is inspired by zwaldowski's implementation of the ordered dictionary.
         // See http://bit.ly/1VL4JUR
         

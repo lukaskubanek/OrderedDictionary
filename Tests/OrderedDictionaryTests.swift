@@ -172,10 +172,10 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionsOfElementsWithDistinctKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        orderedDictionary.insertElement(("T", 15), atIndex: 0)
-        orderedDictionary.insertElement(("U", 16), atIndex: 2)
-        orderedDictionary.insertElement(("V", 17), atIndex: 5)
-        orderedDictionary.insertElement(("W", 18), atIndex: 2)
+        _ = orderedDictionary.insertElement(("T", 15), atIndex: 0)
+        _ = orderedDictionary.insertElement(("U", 16), atIndex: 2)
+        _ = orderedDictionary.insertElement(("V", 17), atIndex: 5)
+        _ = orderedDictionary.insertElement(("W", 18), atIndex: 2)
         
         let expected: OrderedDictionary<String, Int> = ["T": 15, "A": 1, "W": 18, "U": 16, "B": 2, "C": 3, "V": 17]
         let actual = orderedDictionary
@@ -286,9 +286,9 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testSortingInPlace() {
         let actual: OrderedDictionary<String, Int> = {
-            var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
+            let orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
             
-            orderedDictionary.sort { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
+            _ = orderedDictionary.sorted { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
                 if element1.value == element2.value {
                     return element1.key < element2.key
                 } else {
