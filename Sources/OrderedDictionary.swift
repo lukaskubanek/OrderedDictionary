@@ -26,7 +26,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     /// Creates an ordered dictionary with an array of key-value pairs.
     ///
     /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. 
-    /// Each key in elements must be unique.
+    ///   Each key in elements must be unique.
     public init(elements: [Element]) {
         for (key, value) in elements {
             self[key] = value
@@ -71,7 +71,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     ///
     /// - Parameter key: The key to find in the ordered dictionary.
     /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; 
-    /// otherwise, `nil`.
+    ///   otherwise, `nil`.
     public subscript(key: Key) -> Value? {
         get {
             return value(forKey: key)
@@ -80,7 +80,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
             if let newValue = newValue {
                 updateValue(newValue, forKey: key)
             } else {
-                removeValueForKey(key)
+                removeValue(forKey: key)
             }
         }
     }
@@ -90,7 +90,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     ///
     /// - Parameter key: The key to be looked up.
     /// - Returns: `true` if the ordered dictionary contains the given key; otherwise, `false`.
-    public func contains(key: Key) -> Bool {
+    public func containsKey(_ key: Key) -> Bool {
         return _orderedKeys.contains(key)
     }
     
@@ -99,11 +99,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     ///
     /// - Parameter key: The key to find in the ordered dictionary.
     /// - Returns: The value associated with `key` if `key` is in the ordered dictionary;
-    /// otherwise, `nil`.
+    ///   otherwise, `nil`.
     public func value(forKey key: Key) -> Value? {
         return _keysToValues[key]
     }
     
+    /// Updates the value stored in the ordered dictionary for the given key, or appends
+    /// a new key-value pair if the key does not exist.
+    ///
+    /// - Parameter value: The new value to add to the ordered dictionary.
+    /// - Parameter key: The key to associate with `value`. If `key` already exists in the 
+    ///   ordered dictionary, `value` replaces the existing associated value. If `key` is not
+    ///   already a key of the ordered dictionary, the `(key, value)` pair is appended at the
+    ///   end of the ordered dictionary.
     @discardableResult
     public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
         if _orderedKeys.contains(key) {
@@ -122,8 +130,17 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
         }
     }
     
+    /// Removes the given key and its associated value from the ordered dictionary.
+    ///
+    /// If the key is found in the ordered dictionary, this method returns the key's associated
+    /// value. On removal, the index of the key-value pair is invalidated. If the key is not
+    /// found in the ordered dictionary, this method returns `nil`.
+    ///
+    /// - Parameter key: The key to remove along with its associated value.
+    /// - Returns: The value that was removed, or `nil` if the key was not present in the 
+    ///   ordered dictionary.
     @discardableResult
-    public mutating func removeValueForKey(_ key: Key) -> Value? {
+    public mutating func removeValue(forKey key: Key) -> Value? {
         if let index = _orderedKeys.index(of: key) {
             guard let currentValue = _keysToValues[key] else {
                 fatalError("Inconsistency error occured in OrderedDictionary")
@@ -138,9 +155,14 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
         }
     }
     
-    public mutating func removeAll(keepingCapacity: Bool = true) {
-        _orderedKeys.removeAll(keepingCapacity: keepingCapacity)
-        _keysToValues.removeAll(keepingCapacity: keepingCapacity)
+    /// Removes all key-value pairs from the ordered dictionary and invalidates all indices.
+    ///
+    /// - Parameter keepCapacity: Whether the ordered dictionary should keep its underlying 
+    ///   storage. If you pass `true`, the operation preserves the storage capacity that the
+    ///   collection has, otherwise the underlying storage is released. The default is `false`.
+    public mutating func removeAll(keepingCapacity keepCapacity: Bool = false) {
+        _orderedKeys.removeAll(keepingCapacity: keepCapacity)
+        _keysToValues.removeAll(keepingCapacity: keepCapacity)
     }
     
     // ======================================================= //
