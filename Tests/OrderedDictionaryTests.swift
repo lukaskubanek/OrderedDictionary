@@ -40,11 +40,29 @@ class OrderedDictionaryTests: XCTestCase {
         var debugDescription: String { return "debug(\(value))" }
     }
     
+    func testEmptyDescription() {
+        let expected = "[:]"
+        
+        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
+        let actual = orderedDictionary.description
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
     func testDescription() {
         let expected = "[A: 1, B: 2, C: 3]"
         
         let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
         let actual = orderedDictionary.description
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testEmptyDebugDescription() {
+        let expected = "[:]"
+        
+        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
+        let actual = orderedDictionary.debugDescription
         
         XCTAssertEqual(expected, actual)
     }
@@ -86,23 +104,23 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(orderedDictionary[2] == ("C", 3))
     }
     
-    func testGenerator() {
+    func testIterator() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        var generator = orderedDictionary.makeIterator()
+        var iterator = orderedDictionary.makeIterator()
         
         let indexes = [0, 1, 2]
-        var indexesGenerator = indexes.makeIterator()
+        var indexesIterator = indexes.makeIterator()
         
-        while let (actualKey, actualValue) = generator.next() {
-            let index = indexesGenerator.next()
+        while let (actualKey, actualValue) = iterator.next() {
+            let index = indexesIterator.next()
             let (expectedKey, expectedValue) = orderedDictionary[index!]
             
             XCTAssertEqual(expectedKey, actualKey)
             XCTAssertEqual(expectedValue, actualValue)
         }
         
-        XCTAssertNil(generator.next())
-        XCTAssertNil(indexesGenerator.next())
+        XCTAssertNil(iterator.next())
+        XCTAssertNil(indexesIterator.next())
     }
     
     func testOrderedKeys() {
@@ -284,24 +302,31 @@ class OrderedDictionaryTests: XCTestCase {
     // MARK: - Sorting
     // ======================================================= //
     
-    func testSortingInPlace() {
-        let actual: OrderedDictionary<String, Int> = {
-            var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
-            
-            orderedDictionary.sort { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
-                if element1.value == element2.value {
-                    return element1.key < element2.key
-                } else {
-                    return element1.value < element2.value
-                }
-            }
-            
-            return orderedDictionary
-        }()
+    private let areInIncreasingOrder: (OrderedDictionary<String, Int>.Element, OrderedDictionary<String, Int>.Element) -> Bool = { element1, element2 in
+        if element1.value == element2.value {
+            return element1.key < element2.key
+        } else {
+            return element1.value < element2.value
+        }
+    }
+    
+    func testSortingWithMutation() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
+        orderedDictionary.sort(by: areInIncreasingOrder)
+        let actual = orderedDictionary
         
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         
         XCTAssertTrue(actual == expected)
+    }
+    
+    func testSortingWithoutMutation() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
+        let actual = orderedDictionary.sorted(by: areInIncreasingOrder)
+        
+        let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
+        
+        XCTAssertTrue(actual.elementsEqual(expected, by: ==))
     }
 
 }

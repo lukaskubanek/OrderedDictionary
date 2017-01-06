@@ -29,8 +29,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     }
     
     // ======================================================= //
-    // MARK: - Ordered Keys & Values
+    // MARK: - Ordered Elements, Keys & Values
     // ======================================================= //
+    
+    public var orderedElements: [Element] {
+        return Array(self)
+    }
     
     public var orderedKeys: [Key] {
         return _orderedKeys
