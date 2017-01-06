@@ -65,6 +65,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         return _keysToValues[key]
     }
     
+    @discardableResult
     public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
         if _orderedKeys.contains(key) {
             guard let currentValue = _keysToValues[key] else {
@@ -82,6 +83,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         }
     }
     
+    @discardableResult
     public mutating func removeValueForKey(_ key: Key) -> Value? {
         if let index = _orderedKeys.index(of: key) {
             guard let currentValue = _keysToValues[key] else {
@@ -97,9 +99,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         }
     }
     
-    public mutating func removeAll(_ keepCapacity: Bool = true) {
-        _orderedKeys.removeAll(keepingCapacity: keepCapacity)
-        _keysToValues.removeAll(keepingCapacity: keepCapacity)
+    public mutating func removeAll(keepingCapacity: Bool = true) {
+        _orderedKeys.removeAll(keepingCapacity: keepingCapacity)
+        _keysToValues.removeAll(keepingCapacity: keepingCapacity)
     }
     
     // ======================================================= //
@@ -135,10 +137,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         return (key, value)
     }
     
+    @discardableResult
     public mutating func insertElementWithKey(_ key: Key, value: Value, atIndex index: Index) -> Value? {
         return insertElement((key, value), atIndex: index)
     }
     
+    @discardableResult
     public mutating func insertElement(_ newElement: Element, atIndex index: Index) -> Value? {
         guard index >= 0 else {
             fatalError("Negative OrderedDictionary index is out of range")
@@ -170,6 +174,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         return currentValue
     }
     
+    @discardableResult
     public mutating func updateElement(_ element: Element, atIndex index: Index) -> Element? {
         guard let currentElement = elementAtIndex(index) else {
             fatalError("OrderedDictionary index out of range")
@@ -183,6 +188,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         return currentElement
     }
     
+    @discardableResult
     public mutating func removeAtIndex(_ index: Index) -> Element? {
         if let element = elementAtIndex(index) {
             _orderedKeys.remove(at: index)
@@ -195,7 +201,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     }
     
     // ======================================================= //
-    // MARK: - CollectionType Conformance
+    // MARK: - MutableCollection Conformance
     // ======================================================= //
     
     public var startIndex: Index {
@@ -204,6 +210,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     
     public var endIndex: Index {
         return _orderedKeys.endIndex
+    }
+    
+    public func index(after i: Int) -> Int {
+        return _orderedKeys.index(after: i)
     }
     
     // ======================================================= //
