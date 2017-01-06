@@ -1,20 +1,20 @@
-//
-//  OrderedDictionary.swift
-//  OrderedDictionary
-//
-//  Created by Lukas Kubanek on 29/08/15.
-//  Copyright © 2015 Lukas Kubanek. All rights reserved.
-//
-
-public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
+public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, RandomAccessCollection {
     
     // ======================================================= //
     // MARK: - Type Aliases
     // ======================================================= //
     
-    public typealias Element = (Key, Value)
+    /// The type of the key-value pair stored in the ordered dictionary.
+    public typealias Element = (key: Key, value: Value)
     
+    /// The type of the index.
     public typealias Index = Int
+    
+    /// The type of the indices collection.
+    public typealias Indices = CountableRange<Int>
+    
+    /// The type of the contiguous subrange of the ordered dictionary's elements.
+    public typealias SubSequence = OrderedDictionarySlice<Key, Value>
     
     // ======================================================= //
     // MARK: - Initialization
@@ -29,7 +29,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     }
     
     // ======================================================= //
-    // MARK: - Accessing Keys & Values
+    // MARK: - Ordered Keys & Values
     // ======================================================= //
     
     public var orderedKeys: [Key] {
@@ -41,7 +41,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     }
     
     // ======================================================= //
-    // MARK: - Managing Content Using Keys
+    // MARK: - Key-based Access
     // ======================================================= //
     
     public subscript(key: Key) -> Value? {
@@ -105,19 +105,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     }
     
     // ======================================================= //
-    // MARK: - Managing Content Using Indexes
+    // MARK: - Position-based Access
     // ======================================================= //
     
-    public subscript(index: Index) -> Element {
+    public subscript(position: Index) -> Element {
         get {
-            guard let element = elementAtIndex(index) else {
+            guard let element = elementAtIndex(position) else {
                 fatalError("OrderedDictionary index out of range")
             }
             
             return element
         }
         set(newValue) {
-            updateElement(newValue, atIndex: index)
+            updateElement(newValue, atIndex: position)
         }
     }
     
@@ -201,7 +201,22 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
     }
     
     // ======================================================= //
-    // MARK: - MutableCollection Conformance
+    // MARK: - Slices
+    // ======================================================= //
+    
+    public subscript(bounds: Range<Index>) -> SubSequence {
+        get {
+            return OrderedDictionarySlice(base: self, bounds: bounds)
+        }
+        set(newSequence) {
+            for (index, element) in newSequence.enumerated() {
+                fatalError("set element \(element) for index \(index)")
+            }
+        }
+    }
+    
+    // ======================================================= //
+    // MARK: - Indices
     // ======================================================= //
     
     public var startIndex: Index {
@@ -212,24 +227,28 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection {
         return _orderedKeys.endIndex
     }
     
-    public func index(after i: Int) -> Int {
+    public func index(before i: Index) -> Index {
+        return _orderedKeys.index(before: i)
+    }
+    
+    public func index(after i: Index) -> Index {
         return _orderedKeys.index(after: i)
     }
     
     // ======================================================= //
-    // MARK: - Internal Backing Store
+    // MARK: - Internal Storage
     // ======================================================= //
     
-    /// The backing store for the ordered keys.
+    /// The backing storage for the ordered keys.
     fileprivate var _orderedKeys = [Key]()
     
-    /// The backing store for the mapping of keys to values.
+    /// The backing storage for the mapping of keys to values.
     fileprivate var _keysToValues = [Key: Value]()
     
 }
 
 // ======================================================= //
-// MARK: - Initializations from Literals
+// MARK: - Literals
 // ======================================================= //
 
 extension OrderedDictionary: ExpressibleByArrayLiteral {
@@ -242,7 +261,7 @@ extension OrderedDictionary: ExpressibleByArrayLiteral {
 
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
-    public init(dictionaryLiteral elements: Element...) {
+    public init(dictionaryLiteral elements: (Key, Value)...) {
         self.init(elements: elements)
     }
     
@@ -253,43 +272,47 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 // ======================================================= //
 
 extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     public var description: String {
         return constructDescription(false)
     }
-    
+
     public var debugDescription: String {
         return constructDescription(true)
     }
-    
+
     fileprivate func constructDescription(_ debug: Bool) -> String {
         // The implementation of the description is inspired by zwaldowski's implementation of the ordered dictionary.
         // See http://bit.ly/1VL4JUR
-        
+
         if isEmpty { return "[:]" }
-        
+
         func descriptionForItem(_ item: Any) -> String {
             var description = ""
-            
+
             if debug {
                 debugPrint(item, separator: "", terminator: "", to: &description)
             } else {
                 print(item, separator: "", terminator: "", to: &description)
             }
-            
+
             return description
         }
-        
+
         let bodyComponents = map({ (key: Key, value: Value) -> String in
             return descriptionForItem(key) + ": " + descriptionForItem(value)
         })
-        
+
         let body = bodyComponents.joined(separator: ", ")
-        
+
         return "[\(body)]"
     }
-    
+
 }
+
+// ======================================================= //
+// MARK: - Equality
+// ======================================================= //
 
 public func == <Key: Equatable, Value: Equatable>(lhs: OrderedDictionary<Key, Value>, rhs: OrderedDictionary<Key, Value>) -> Bool {
     return lhs._orderedKeys == rhs._orderedKeys && lhs._keysToValues == rhs._keysToValues
