@@ -284,24 +284,24 @@ class OrderedDictionaryTests: XCTestCase {
     // MARK: - Sorting
     // ======================================================= //
     
-    func testSortingInPlace() {
-        let actual: OrderedDictionary<String, Int> = {
-            var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
-            
-            orderedDictionary.sort { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
-                if element1.value == element2.value {
-                    return element1.key < element2.key
-                } else {
-                    return element1.value < element2.value
-                }
-            }
-            
-            return orderedDictionary
-        }()
-        
-        let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
-        
-        XCTAssertTrue(actual == expected)
-    }
+//    func testSortingInPlace() {
+//        let actual: OrderedDictionary<String, Int> = {
+//            var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
+//            
+//            orderedDictionary.sort { (element1: (key: String, value: Int), element2: (key: String, value: Int)) in
+//                if element1.value == element2.value {
+//                    return element1.key < element2.key
+//                } else {
+//                    return element1.value < element2.value
+//                }
+//            }
+//            
+//            return orderedDictionary
+//        }()
+//        
+//        let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
+//        
+//        XCTAssertTrue(actual == expected)
+//    }
 
 }
