@@ -20,8 +20,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     // MARK: - Initialization
     // ======================================================= //
     
+    /// Creates an empty ordered dictionary.
     public init() {}
     
+    /// Creates an ordered dictionary with an array of key-value pairs.
+    ///
+    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. 
+    /// Each key in elements must be unique.
     public init(elements: [Element]) {
         for (key, value) in elements {
             self[key] = value
@@ -32,14 +37,17 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     // MARK: - Ordered Elements, Keys & Values
     // ======================================================= //
     
+    /// A copied array of the ordered elements.
     public var orderedElements: [Element] {
         return Array(self)
     }
     
+    /// A copied array of the ordered keys.
     public var orderedKeys: [Key] {
         return _orderedKeys
     }
     
+    /// A copied array of the ordered values.
     public var orderedValues: [Value] {
         return _orderedKeys.flatMap { _keysToValues[$0] }
     }
@@ -48,9 +56,25 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     // MARK: - Key-based Access
     // ======================================================= //
     
+    /// Accesses the value associated with the given key for reading and writing.
+    ///
+    /// This key-based subscript returns the value for the given key if the key
+    /// is found in the ordered dictionary, or `nil` if the key is not found.
+    ///
+    /// When you assign a value for a key and that key already exists, the ordered
+    /// dictionary overwrites the existing value and preservers the index of the
+    /// key-value pair. If the ordered dictionary does not contain the key, a new
+    /// key-value pair is appended to the end of the ordered dictionary.
+    ///
+    /// If you assign `nil` as the value for the given key, the ordered dictionary
+    /// removes that key and its associated value if it exists.
+    ///
+    /// - Parameter key: The key to find in the ordered dictionary.
+    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; 
+    /// otherwise, `nil`.
     public subscript(key: Key) -> Value? {
         get {
-            return valueForKey(key)
+            return value(forKey: key)
         }
         set(newValue) {
             if let newValue = newValue {
@@ -61,11 +85,22 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
         }
     }
     
-    public func containsKey(_ key: Key) -> Bool {
+    /// Returns a Boolean value indicating whether the ordered dictionary contains
+    /// the given key.
+    ///
+    /// - Parameter key: The key to be looked up.
+    /// - Returns: `true` if the ordered dictionary contains the given key; otherwise, `false`.
+    public func contains(key: Key) -> Bool {
         return _orderedKeys.contains(key)
     }
     
-    public func valueForKey(_ key: Key) -> Value? {
+    /// Returns the value associated with the given key if the key is found in the ordered
+    /// dictionary, or `nil` if the key is not found.
+    ///
+    /// - Parameter key: The key to find in the ordered dictionary.
+    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary;
+    /// otherwise, `nil`.
+    public func value(forKey key: Key) -> Value? {
         return _keysToValues[key]
     }
     
@@ -263,6 +298,7 @@ extension OrderedDictionary: ExpressibleByArrayLiteral {
     
 }
 
+/// Creates an ordered dictionary initialized with a dictionary literal.
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
     public init(dictionaryLiteral elements: (Key, Value)...) {
@@ -318,6 +354,10 @@ extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertib
 // MARK: - Equality
 // ======================================================= //
 
-public func == <Key: Equatable, Value: Equatable>(lhs: OrderedDictionary<Key, Value>, rhs: OrderedDictionary<Key, Value>) -> Bool {
-    return lhs._orderedKeys == rhs._orderedKeys && lhs._keysToValues == rhs._keysToValues
+extension OrderedDictionary /* : Equatable */ where Key: Equatable, Value: Equatable {
+    
+    public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
+        return lhs._orderedKeys == rhs._orderedKeys && lhs._keysToValues == rhs._keysToValues
+    }
+    
 }
