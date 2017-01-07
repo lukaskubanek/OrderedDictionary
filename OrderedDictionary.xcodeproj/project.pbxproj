@@ -21,6 +21,8 @@
 		80E8E2251E205D5800395E49 /* OrderedDictionary+Migrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8E2231E205D5800395E49 /* OrderedDictionary+Migrations.swift */; };
 		80E8E22A1E2121E100395E49 /* OrderedDictionaryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8E2291E2121E100395E49 /* OrderedDictionaryError.swift */; };
 		80E8E22B1E2121E100395E49 /* OrderedDictionaryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8E2291E2121E100395E49 /* OrderedDictionaryError.swift */; };
+		80E8E2301E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */; };
+		80E8E2311E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,7 @@
 		80E8E2201E204D6E00395E49 /* OrderedDictionarySlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionarySlice.swift; sourceTree = "<group>"; };
 		80E8E2231E205D5800395E49 /* OrderedDictionary+Migrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Migrations.swift"; sourceTree = "<group>"; };
 		80E8E2291E2121E100395E49 /* OrderedDictionaryError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryError.swift; sourceTree = "<group>"; };
+		80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Description.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,7 @@
 			children = (
 				8055B0531E201D24009DC3EE /* OrderedDictionary.h */,
 				80E8E21C1E20301E00395E49 /* OrderedDictionary.swift */,
+				80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */,
 				80E8E2231E205D5800395E49 /* OrderedDictionary+Migrations.swift */,
 				80E8E2291E2121E100395E49 /* OrderedDictionaryError.swift */,
 				80E8E2201E204D6E00395E49 /* OrderedDictionarySlice.swift */,
@@ -327,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E8E2301E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */,
 				80E8E22A1E2121E100395E49 /* OrderedDictionaryError.swift in Sources */,
 				80E8E2211E204D6E00395E49 /* OrderedDictionarySlice.swift in Sources */,
 				80E8E2241E205D5800395E49 /* OrderedDictionary+Migrations.swift in Sources */,
@@ -346,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E8E2311E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */,
 				80E8E22B1E2121E100395E49 /* OrderedDictionaryError.swift in Sources */,
 				80E8E2221E204D6E00395E49 /* OrderedDictionarySlice.swift in Sources */,
 				80E8E2251E205D5800395E49 /* OrderedDictionary+Migrations.swift in Sources */,
