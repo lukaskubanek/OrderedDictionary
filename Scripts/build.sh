@@ -4,7 +4,7 @@
 # https://github.com/ReactiveCocoa/ReactiveSwift/blob/master/script/build
 
 BUILD_DIRECTORY="build"
-CONFIGURATION=Release
+CONFIGURATION="Release"
 
 if [[ -z $TRAVIS_XCODE_PROJECT ]]; then
     echo "Error: \$TRAVIS_XCODE_PROJECT is not set."
@@ -50,5 +50,5 @@ fi
 
 if [[ $XCODE_SDK = "macosx" ]]; then
     echo "SDK is ${XCODE_SDK}, validating playground..."
-    ./Scripts/validate-playgrounds.sh
+    . Scripts/validate-playgrounds.sh
 fi
