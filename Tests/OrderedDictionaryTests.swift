@@ -322,7 +322,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testSortingWithoutMutation() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
-        let actual = orderedDictionary.sorted(by: areInIncreasingOrder)
+        let actual: OrderedDictionary<String, Int> = orderedDictionary.sorted(by: areInIncreasingOrder)
         
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         

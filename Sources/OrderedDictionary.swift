@@ -1,5 +1,5 @@
-public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, RandomAccessCollection {
-    
+public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, BidirectionalCollection {
+
     // ======================================================= //
     // MARK: - Type Aliases
     // ======================================================= //
@@ -38,12 +38,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     // ======================================================= //
     
     /// A collection containing just the keys of the ordered dictionary in the correct order.
-    public var orderedKeys: LazyMapRandomAccessCollection<OrderedDictionary<Key, Value>, Key> {
+    public var orderedKeys: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Key> {
         return self.lazy.map { $0.key }
     }
     
     /// A collection containing just the values of the ordered dictionary in the correct order.
-    public var orderedValues: LazyMapRandomAccessCollection<OrderedDictionary<Key, Value>, Value> {
+    public var orderedValues: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Value> {
         return self.lazy.map { $0.value }
     }
     
@@ -154,6 +154,14 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     public mutating func removeAll(keepingCapacity keepCapacity: Bool = false) {
         _orderedKeys.removeAll(keepingCapacity: keepCapacity)
         _keysToValues.removeAll(keepingCapacity: keepCapacity)
+    }
+    
+    private func _unsafeValue(forKey key: Key) -> Value {
+        if let value = _keysToValues[key] {
+            return value
+        } else {
+            fatalError("Inconsistency error occured in OrderedDictionary")
+        }
     }
     
     // ======================================================= //
@@ -268,6 +276,40 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     }
     
     // ======================================================= //
+    // MARK: - Sorting
+    // ======================================================= //
+    
+    /// Sorts the ordered dictionary in place, using the given predicate as the comparison between elements.
+    ///
+    /// The predicate must be a *strict weak ordering* over the elements.
+    ///
+    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be 
+    ///   ordered before its second argument; otherwise, `false`.
+    ///
+    /// - SeeAlso: MutableCollection.sort(by:), sorted(by:)
+    public mutating func sort(by areInIncreasingOrder: (Element, Element) -> Bool) {
+        _orderedKeys = _sortedElements(by: areInIncreasingOrder).map { $0.key }
+    }
+    
+    /// Returns a new ordered dictionary, sorted using the given predicate as the comparison between elements.
+    ///
+    /// The predicate must be a *strict weak ordering* over the elements.
+    ///
+    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be
+    ///   ordered before its second argument; otherwise, `false`.
+    /// - Returns: A new ordered dictionary sorted according to the predicate.
+    ///
+    /// - SeeAlso: MutableCollection.sorted(by:), sort(by:)
+    /// - MutatingVariant: sort
+    public func sorted(by areInIncreasingOrder: (Element, Element) -> Bool) -> OrderedDictionary<Key, Value> {
+        return OrderedDictionary(elements: _sortedElements(by: areInIncreasingOrder))
+    }
+    
+    private func _sortedElements(by areInIncreasingOrder: (Element, Element) -> Bool) -> [Element] {
+        return sorted(by: areInIncreasingOrder)
+    }
+    
+    // ======================================================= //
     // MARK: - Slices
     // ======================================================= //
     
@@ -286,6 +328,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     // MARK: - Indices
     // ======================================================= //
     
+    public var indices: Indices {
+        return _orderedKeys.indices
+    }
+
     public var startIndex: Index {
         return _orderedKeys.startIndex
     }
@@ -300,18 +346,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     
     public func index(after i: Index) -> Index {
         return _orderedKeys.index(after: i)
-    }
-    
-    // ======================================================= //
-    // MARK: - Private Methods
-    // ======================================================= //
-    
-    private func _unsafeValue(forKey key: Key) -> Value {
-        if let value = _keysToValues[key] {
-            return value
-        } else {
-            fatalError("Inconsistency error occured in OrderedDictionary")
-        }
     }
     
     // ======================================================= //

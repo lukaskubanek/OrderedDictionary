@@ -1,4 +1,4 @@
-public struct OrderedDictionarySlice<Key: Hashable, Value>: RandomAccessCollection {
+public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollection {
     
     // ======================================================= //
     // MARK: - Type Aliases
@@ -25,23 +25,31 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: RandomAccessCollecti
     }
     
     // ======================================================= //
-    // MARK: - RandomAccessCollection Conformance
+    // MARK: - BidirectionalCollection Conformance
     // ======================================================= //
     
     public subscript(position: Index) -> Element {
         return _slice[position]
     }
     
+    public var indices: Indices {
+        return _slice.base.indices
+    }
+
     public var startIndex: Index {
-        return _slice.startIndex
+        return _slice.base.startIndex
     }
     
     public var endIndex: Index {
-        return _slice.endIndex
+        return _slice.base.endIndex
     }
     
     public func index(after i: Index) -> Index {
-        return _slice.index(after: i)
+        return _slice.base.index(after: i)
+    }
+
+    public func index(before i: Index) -> Index {
+        return _slice.base.index(before: i)
     }
     
     // ======================================================= //
