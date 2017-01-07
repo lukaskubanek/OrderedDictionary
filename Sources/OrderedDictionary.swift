@@ -23,12 +23,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// Creates an empty ordered dictionary.
     public init() {}
     
-    /// Creates an ordered dictionary with an array of key-value pairs.
+    /// Creates an ordered dictionary from a sequence of key-value pairs.
     ///
-    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. 
-    ///   Each key in elements must be unique.
-    public init(elements: [Element]) {
+    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. Each key
+    ///   in `elements` must be unique.
+    public init<S: Sequence>(_ elements: S) where S.Iterator.Element == Element {
         for (key, value) in elements {
+            precondition(!containsKey(key), "Elements sequence contains duplicate keys")
             self[key] = value
         }
     }
@@ -314,7 +315,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// - SeeAlso: MutableCollection.sorted(by:), sort(by:)
     /// - MutatingVariant: sort
     public func sorted(by areInIncreasingOrder: (Element, Element) -> Bool) -> OrderedDictionary<Key, Value> {
-        return OrderedDictionary(elements: _sortedElements(by: areInIncreasingOrder))
+        return OrderedDictionary(_sortedElements(by: areInIncreasingOrder))
     }
     
     private func _sortedElements(by areInIncreasingOrder: (Element, Element) -> Bool) -> [Element] {
@@ -378,7 +379,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 extension OrderedDictionary: ExpressibleByArrayLiteral {
     
     public init(arrayLiteral elements: Element...) {
-        self.init(elements: elements)
+        self.init(elements)
     }
     
 }
@@ -387,7 +388,7 @@ extension OrderedDictionary: ExpressibleByArrayLiteral {
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        self.init(elements: elements)
+        self.init(elements.map { (key: $0, value: $1) })
     }
     
 }

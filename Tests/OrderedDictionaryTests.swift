@@ -8,14 +8,22 @@ class OrderedDictionaryTests: XCTestCase {
     // ======================================================= //
     
     func testInitializationUsingArrayLiteral() {
-        let expected = OrderedDictionary<String, Int>(elements: [("A", 1), ("B", 2), ("C", 3)])
+        let expected = OrderedDictionary<String, Int>([
+            (key: "A", value: 1),
+            (key: "B", value: 2),
+            (key: "C", value: 3)
+        ])
         let actual: OrderedDictionary<String, Int> = [("A", 1), ("B", 2), ("C", 3)]
         
         XCTAssertTrue(expected == actual)
     }
     
     func testInitializationUsingDictionaryLiteral() {
-        let expected = OrderedDictionary<String, Int>(elements: [("A", 1), ("B", 2), ("C", 3)])
+        let expected = OrderedDictionary<String, Int>([
+            (key: "A", value: 1),
+            (key: "B", value: 2),
+            (key: "C", value: 3)
+        ])
         let actual: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
         XCTAssertTrue(expected == actual)

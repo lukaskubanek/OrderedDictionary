@@ -1,5 +1,12 @@
 extension OrderedDictionary {
     
+    @available(*, unavailable, message:"Use the init(:) initializer instead")
+    public init(elements: [Element]) {
+        // Removing the call to the empty initializer causes a seg fault
+        self.init()
+        fatalError()
+    }
+    
     @available(*, unavailable, renamed:"value(forKey:)")
     public func valueForKey(_ key: Key) -> Value? { fatalError() }
     
