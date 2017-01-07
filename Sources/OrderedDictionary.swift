@@ -375,18 +375,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 // MARK: - Literals
 // ======================================================= //
 
-/// Creates an ordered dictionary initialized from an array literal containing a list of key-value pairs.
 extension OrderedDictionary: ExpressibleByArrayLiteral {
     
+    /// Creates an ordered dictionary initialized from an array literal containing a list of 
+    /// key-value pairs.
     public init(arrayLiteral elements: Element...) {
         self.init(elements)
     }
     
 }
 
-/// Creates an ordered dictionary initialized from a dictionary literal.
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
+    /// Creates an ordered dictionary initialized from a dictionary literal.
     public init(dictionaryLiteral elements: (Key, Value)...) {
         self.init(elements.map { (key: $0, value: $1) })
     }
