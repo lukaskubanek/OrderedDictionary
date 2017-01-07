@@ -30,53 +30,6 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     // ======================================================= //
-    // MARK: - Description
-    // ======================================================= //
-    
-    struct DescribedValue: CustomStringConvertible, CustomDebugStringConvertible {
-        init(_ value: Int) { self.value = value }
-        let value: Int
-        var description: String { return "\(value)" }
-        var debugDescription: String { return "debug(\(value))" }
-    }
-    
-    func testEmptyDescription() {
-        let expected = "[:]"
-        
-        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
-        let actual = orderedDictionary.description
-        
-        XCTAssertEqual(expected, actual)
-    }
-    
-    func testDescription() {
-        let expected = "[A: 1, B: 2, C: 3]"
-        
-        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
-        let actual = orderedDictionary.description
-        
-        XCTAssertEqual(expected, actual)
-    }
-    
-    func testEmptyDebugDescription() {
-        let expected = "[:]"
-        
-        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
-        let actual = orderedDictionary.debugDescription
-        
-        XCTAssertEqual(expected, actual)
-    }
-    
-    func testDebugDescription() {
-        let expected = "[\"A\": debug(1), \"B\": debug(2), \"C\": debug(3)]"
-        
-        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
-        let actual = orderedDictionary.debugDescription
-        
-        XCTAssertEqual(expected, actual)
-    }
-    
-    // ======================================================= //
     // MARK: - Content Access
     // ======================================================= //
     
@@ -142,7 +95,7 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     // ======================================================= //
-    // MARK: - Content Modifications
+    // MARK: - Key-based Modifications
     // ======================================================= //
     
     func testKeyBasedModifications() {
@@ -171,29 +124,16 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(orderedDictionary.containsKey("D"))
     }
     
-    func testIndexBasedModifications() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        
-        orderedDictionary[0] = ("F", 10)
-        orderedDictionary[1] = ("B", 5)
-        
-        XCTAssertEqual(orderedDictionary.count, 3)
-        XCTAssertTrue(orderedDictionary[0] == ("F", 10))
-        XCTAssertTrue(orderedDictionary[1] == ("B", 5))
-        XCTAssertTrue(orderedDictionary[2] == ("C", 3))
-    }
+    // ======================================================= //
+    // MARK: - Index-based Insertions
+    // ======================================================= //
     
-    func testRetrievingElementAtNonExistentIndex() {
-        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        XCTAssertNil(orderedDictionary.elementAt(42))
-    }
-    
-    func testIndexBasedInsertionsOfElementsWithDistinctKeys() {
+    func testIndexBasedInsertionsWithUniqueKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        orderedDictionary.insert((key: "T", value: 15), at: 0)
-        orderedDictionary.insert((key: "U", value: 16), at: 2)
-        orderedDictionary.insert((key: "V", value: 17), at: 5)
-        orderedDictionary.insert((key: "W", value: 18), at: 2)
+        try! orderedDictionary.insert((key: "T", value: 15), at: 0)
+        try! orderedDictionary.insert((key: "U", value: 16), at: 2)
+        try! orderedDictionary.insert((key: "V", value: 17), at: 5)
+        try! orderedDictionary.insert((key: "W", value: 18), at: 2)
         
         let expected: OrderedDictionary<String, Int> = ["T": 15, "A": 1, "W": 18, "U": 16, "B": 2, "C": 3, "V": 17]
         let actual = orderedDictionary
@@ -201,43 +141,76 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(expected == actual)
     }
     
-    func testIndexBasedInsertionOfElementWithSameKeyBeforeItsCurrentIndex() {
+    func testIndexBasedInsertionWithDuplicateKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insert(("B", 5), at: 0)
+        
+        XCTAssertThrowsError(try orderedDictionary.insert((key: "A", value: 42), at: 3)) { error in
+            XCTAssertEqual(error as? OrderedDictionaryError, OrderedDictionaryError.nonUniqueKey("A"))
+        }
+    }
+    
+    // ======================================================= //
+    // MARK: - Index-based Updates
+    // ======================================================= //
+    
+    func testIndexBasedUpdateMethodWithNewUniqueKey() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let previousElement = try! orderedDictionary.update((key: "D", value: 4), at: 1)
         
         XCTAssertEqual(orderedDictionary.count, 3)
-        XCTAssertEqual(previousValue, 2)
+        XCTAssertTrue(previousElement! == ("B", 2))
         
-        let expected: OrderedDictionary<String, Int> = ["B": 5, "A": 1, "C": 3]
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "D": 4, "C": 3]
         let actual = orderedDictionary
         
         XCTAssertTrue(expected == actual)
     }
     
-    func testIndexBasedInsertionOfElementWithSameKeyAtItsCurrentIndex() {
+    func testIndexBasedUpdateMethodByReplacingSameKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insert(("B", 5), at: 1)
+        let previousElement = try! orderedDictionary.update((key: "B", value: 42), at: 1)
         
         XCTAssertEqual(orderedDictionary.count, 3)
-        XCTAssertEqual(previousValue, 2)
+        XCTAssertTrue(previousElement! == ("B", 2))
         
-        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 5, "C": 3]
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 42, "C": 3]
         let actual = orderedDictionary
         
         XCTAssertTrue(expected == actual)
     }
     
-    func testIndexBasedInsertionOfElementWithSameKeyAfterItsCurrentIndex() {
+    func testIndexBasedUpdateMethodByDuplicatingKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insert(("B", 5), at: 3)
         
-        XCTAssertEqual(orderedDictionary.count, 3)
-        XCTAssertEqual(previousValue, 2)
+        XCTAssertThrowsError(try orderedDictionary.update((key: "A", value: 3), at: 2)) { error in
+            XCTAssertEqual(error as? OrderedDictionaryError, OrderedDictionaryError.nonUniqueKey("A"))
+        }
+    }
+    
+    func testIndexBasedSubscriptWithNewUniqueKey() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        orderedDictionary[0] = ("F", 10)
         
-        let expected: OrderedDictionary<String, Int> = ["A": 1, "C": 3, "B": 5]
+        let expected: OrderedDictionary<String, Int> = ["F": 10, "B": 2, "C": 3]
         let actual = orderedDictionary
         
         XCTAssertTrue(expected == actual)
+    }
+    
+    func testIndexBasedSubscriptByReplacingSameKeys() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        orderedDictionary[1] = ("B", 42)
+        orderedDictionary[2] = ("C", 42)
+        
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 42, "C": 42]
+        let actual = orderedDictionary
+        
+        XCTAssertTrue(expected == actual)
+    }
+    
+    func testRetrievingElementAtNonExistentIndex() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        XCTAssertNil(orderedDictionary.elementAt(42))
     }
     
     // ======================================================= //
@@ -327,6 +300,53 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         
         XCTAssertTrue(actual.elementsEqual(expected, by: ==))
+    }
+    
+    // ======================================================= //
+    // MARK: - Description
+    // ======================================================= //
+    
+    struct DescribedValue: CustomStringConvertible, CustomDebugStringConvertible {
+        init(_ value: Int) { self.value = value }
+        let value: Int
+        var description: String { return "\(value)" }
+        var debugDescription: String { return "debug(\(value))" }
+    }
+    
+    func testEmptyDescription() {
+        let expected = "[:]"
+        
+        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
+        let actual = orderedDictionary.description
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testDescription() {
+        let expected = "[A: 1, B: 2, C: 3]"
+        
+        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
+        let actual = orderedDictionary.description
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testEmptyDebugDescription() {
+        let expected = "[:]"
+        
+        let orderedDictionary = OrderedDictionary<String, DescribedValue>()
+        let actual = orderedDictionary.debugDescription
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testDebugDescription() {
+        let expected = "[\"A\": debug(1), \"B\": debug(2), \"C\": debug(3)]"
+        
+        let orderedDictionary: OrderedDictionary<String, DescribedValue> = ["A": DescribedValue(1), "B": DescribedValue(2), "C": DescribedValue(3)]
+        let actual = orderedDictionary.debugDescription
+        
+        XCTAssertEqual(expected, actual)
     }
 
 }

@@ -132,18 +132,18 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     /// - Parameter key: The key to remove along with its associated value.
     /// - Returns: The value that was removed, or `nil` if the key was not present in the 
     ///   ordered dictionary.
+    ///
+    /// - SeeAlso: remove(at:)
     @discardableResult
     public mutating func removeValue(forKey key: Key) -> Value? {
-        if let index = _orderedKeys.index(of: key) {
-            let currentValue = self[index].value
-            
-            _orderedKeys.remove(at: index)
-            _keysToValues[key] = nil
-            
-            return currentValue
-        } else {
-            return nil
-        }
+        guard let index = index(forKey: key) else { return nil }
+        
+        let currentValue = self[index].value
+        
+        _orderedKeys.remove(at: index)
+        _keysToValues[key] = nil
+        
+        return currentValue
     }
     
     /// Removes all key-value pairs from the ordered dictionary and invalidates all indices.
@@ -157,11 +157,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     }
     
     private func _unsafeValue(forKey key: Key) -> Value {
-        if let value = _keysToValues[key] {
-            return value
-        } else {
-            fatalError("Inconsistency error occured in OrderedDictionary")
-        }
+        let value = _keysToValues[key]
+        precondition(value != nil, "Inconsistency error occured in OrderedDictionary")
+        return value!
     }
     
     // ======================================================= //
@@ -170,18 +168,20 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     
     /// Accesses the key-value pair at the specified position for reading and writing.
     ///
-    /// The specified position has to be a valid index inside of the ordered dictionary.
-    /// When reading the index-based subscript returns the key-value pair corresponding
+    /// The specified position has to be a valid index of the ordered dictionary.
+    ///
+    /// When reading the index-based subscript returns the key-value pair correspinding
     /// to the index.
     ///
-    /// When you assign a key-value pair for an index, the given key has to either be located
-    /// in the existing key-value pair at that index or not present in the ordered dictionary
-    /// at all. The existing key-value pair is then overwritten with the new one. If the given
-    /// key is present at another index of the ordered dictionary a runtime error is triggered.
+    /// When assigning a key-value pair for an index, the given key cannot be present in the
+    /// ordered dictionary at different position than the specified index. Otherwise a runtime
+    /// error is triggered.
     ///
     /// - Parameter position: The position of the key-value pair to access. `position` must be
     ///   a valid index of the ordered dictionary and not equal to `endIndex`.
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
+    ///
+    /// - SeeAlso: update(:at:)
     public subscript(position: Index) -> Element {
         get {
             precondition(indices.contains(position), "OrderedDictionary index is out of range")
@@ -192,7 +192,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
             return (key, value)
         }
         set(newElement) {
-            updateElement(newElement, atIndex: position)
+            do {
+                try update(newElement, at: position)
+            } catch OrderedDictionaryError.nonUniqueKey(let key) {
+                fatalError("Integrity error in OrderedDictionary caused by non-unique key '\(key)'")
+            } catch {
+                fatalError("Unknown error")
+            }
         }
     }
     
@@ -218,46 +224,71 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     
     /// Inserts a new key-value pair at the specified position.
     ///
-    /// ...
-    @discardableResult
-    public mutating func insert(_ newElement: Element, at index: Index) -> Value? {
+    /// If the key of the inserted pair already exists in the ordered dictionary, an error is thrown
+    /// and the dictionary is not modified.
+    ///
+    /// - Parameter newElement: The new key-value pair to insert into the ordered dictionary.
+    /// - Parameter index: The position at which to insert the new key-value pair. `index` must be a valid 
+    ///   index of the ordered dictionary or equal to the `endIndex` property.
+    /// - Throws: `OrderedDictionaryError.nonUniqueKey` if the inserted key is already present in the
+    ///   ordered dictionary.
+    ///
+    /// - SeeAlso: update(:at:)
+    public mutating func insert(_ newElement: Element, at index: Index) throws {
         precondition(index >= startIndex, "Negative OrderedDictionary index is out of range")
         precondition(index <= endIndex, "OrderedDictionary index is out of range")
         
         let (key, value) = newElement
         
-        let adjustedIndex: Int
-        let currentValue: Value?
-        
-        if let currentIndex = _orderedKeys.index(of: key) {
-            currentValue = _keysToValues[key]
-            adjustedIndex = (currentIndex < index - 1) ? index - 1 : index
-            
-            _orderedKeys.remove(at: currentIndex)
-            _keysToValues[key] = nil
-        } else {
-            currentValue = nil
-            adjustedIndex = index
+        if (containsKey(key)) {
+            throw OrderedDictionaryError.nonUniqueKey(key)
         }
         
-        _orderedKeys.insert(key, at: adjustedIndex)
+        _orderedKeys.insert(key, at: index)
         _keysToValues[key] = value
-        
-        return currentValue
     }
     
+    /// Updates the key-value pair located at the specified position.
+    ///
+    /// If the key of the updated pair already exists in the ordered dictionary *and* is located at different
+    /// position than the specified one, an error is thrown and the dictionary is not modified.
+    ///
+    /// - Parameter newElement: The key-value pair to be set at the specified position.
+    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid index
+    ///   of the ordered dictionary.
+    /// - Throws: `OrderedDictionaryError.nonUniqueKey` if the inserted key is already present in the
+    ///   ordered dictionary at different position than the specified one.
+    ///
+    /// - SeeAlso: insert(:at:)
     @discardableResult
-    public mutating func updateElement(_ element: Element, atIndex index: Index) -> Element? {
+    public mutating func update(_ newElement: Element, at index: Index) throws -> Element? {
         precondition(indices.contains(index), "OrderedDictionary index is out of range")
         
-        let currentElement = self[index]
+        let (key, value) = newElement
         
-        let (newKey, newValue) = element
+        // Locate the key in the ordered dictionary
+        let currentIndexOfKey = self.index(forKey: key)
+        let keyNotPresent = currentIndexOfKey == nil
+        let keyPresentAtIndex = currentIndexOfKey == index
         
-        _orderedKeys[index] = newKey
-        _keysToValues[newKey] = newValue
+        // Check key uniqueness
+        guard (keyNotPresent || keyPresentAtIndex) else {
+            throw OrderedDictionaryError.nonUniqueKey(key)
+        }
         
-        return currentElement
+        // Load the current element at the index
+        let replacedElement = self[index]
+        
+        // If its key differs, remove its associated value
+        if (!keyPresentAtIndex) {
+            _keysToValues.removeValue(forKey: replacedElement.key)
+        }
+        
+        // Store the new position of the key and the new value associated with the key
+        _orderedKeys[index] = key
+        _keysToValues[key] = value
+        
+        return replacedElement
     }
     
     /// Removes and returns the key-value pair at the specified position if there is any key-value pair,
@@ -265,6 +296,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     ///
     /// - Parameter index: The position of the key-value pair to remove.
     /// - Returns: The element at the specified index, or `nil` if the position is not taken.
+    ///
+    /// - SeeAlso: removeValue(forKey:)
     @discardableResult
     public mutating func remove(at index: Index) -> Element? {
         guard let element = elementAt(index) else { return nil }

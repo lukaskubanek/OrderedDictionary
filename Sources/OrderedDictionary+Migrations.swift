@@ -18,8 +18,11 @@ extension OrderedDictionary {
     @available(*, unavailable, message:"Use insertElement(_:at:) instead")
     public mutating func insertElementWithKey(_ key: Key, value: Value, atIndex index: Index) -> Value? { fatalError() }
     
-    @available(*, unavailable, renamed:"insert(_:at:)")
+    @available(*, unavailable, message:"Use insert(_:at:) with changed semantics instead")
     public mutating func insertElement(_ newElement: Element, atIndex index: Index) -> Value? { fatalError() }
+    
+    @available(*, unavailable, message:"Use update(_:at:) with changed semantics instead")
+    public mutating func updateElement(_ element: Element, atIndex index: Index) -> Element? { fatalError() }
     
     @available(*, unavailable, renamed:"remove(at:)")
     public mutating func removeAtIndex(_ index: Index) -> Element? { fatalError() }
