@@ -17,8 +17,8 @@ extension OrderedDictionary: CustomDebugStringConvertible {
 extension OrderedDictionary {
     
     fileprivate func constructDescription(debug: Bool) -> String {
-        // The implementation of the description is inspired by zwaldowski's implementation of the ordered dictionary.
-        // See http://bit.ly/1VL4JUR
+        // The implementation of the description is inspired by zwaldowski's implementation of the ordered 
+        // dictionary. See http://bit.ly/1VL4JUR
         
         if isEmpty { return "[:]" }
         
