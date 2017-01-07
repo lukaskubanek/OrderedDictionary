@@ -34,22 +34,17 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     }
     
     // ======================================================= //
-    // MARK: - Ordered Elements, Keys & Values
+    // MARK: - Ordered Keys & Values
     // ======================================================= //
     
-    /// A copied array of the ordered elements.
-    public var orderedElements: [Element] {
-        return Array(self)
+    /// A collection containing just the keys of the ordered dictionary in the correct order.
+    public var orderedKeys: LazyMapRandomAccessCollection<OrderedDictionary<Key, Value>, Key> {
+        return self.lazy.map { $0.key }
     }
     
-    /// A copied array of the ordered keys.
-    public var orderedKeys: [Key] {
-        return _orderedKeys
-    }
-    
-    /// A copied array of the ordered values.
-    public var orderedValues: [Value] {
-        return _orderedKeys.flatMap { _keysToValues[$0] }
+    /// A collection containing just the values of the ordered dictionary in the correct order.
+    public var orderedValues: LazyMapRandomAccessCollection<OrderedDictionary<Key, Value>, Value> {
+        return self.lazy.map { $0.value }
     }
     
     // ======================================================= //

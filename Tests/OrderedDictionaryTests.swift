@@ -127,7 +127,7 @@ class OrderedDictionaryTests: XCTestCase {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
         let expected = ["A", "B", "C"]
-        let actual = orderedDictionary.orderedKeys
+        let actual = Array(orderedDictionary.orderedKeys)
         
         XCTAssertEqual(expected, actual)
     }
@@ -136,7 +136,7 @@ class OrderedDictionaryTests: XCTestCase {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
         let expected = [1, 2, 3]
-        let actual = orderedDictionary.orderedValues
+        let actual = Array(orderedDictionary.orderedValues)
         
         XCTAssertEqual(expected, actual)
     }
