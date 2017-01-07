@@ -179,27 +179,6 @@ class OrderedDictionaryTests: XCTestCase {
         }
     }
     
-    func testIndexBasedSubscriptWithNewUniqueKey() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        orderedDictionary[0] = ("F", 10)
-        
-        let expected: OrderedDictionary<String, Int> = ["F": 10, "B": 2, "C": 3]
-        let actual = orderedDictionary
-        
-        XCTAssertTrue(expected == actual)
-    }
-    
-    func testIndexBasedSubscriptByReplacingSameKeys() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        orderedDictionary[1] = ("B", 42)
-        orderedDictionary[2] = ("C", 42)
-        
-        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 42, "C": 42]
-        let actual = orderedDictionary
-        
-        XCTAssertTrue(expected == actual)
-    }
-    
     func testRetrievingElementAtNonExistentIndex() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         XCTAssertNil(orderedDictionary.elementAt(42))

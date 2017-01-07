@@ -166,40 +166,23 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Index-based Access
     // ======================================================= //
     
-    /// Accesses the key-value pair at the specified position for reading and writing.
+    /// Accesses the key-value pair at the specified position.
     ///
-    /// The specified position has to be a valid index of the ordered dictionary.
+    /// The specified position has to be a valid index of the ordered dictionary. The index-base subscript
+    /// returns the key-value pair corresponding to the index.
     ///
-    /// When reading the index-based subscript returns the key-value pair correspinding
-    /// to the index.
-    ///
-    /// When assigning a key-value pair for an index, the given key cannot be present in the
-    /// ordered dictionary at different position than the specified index. Otherwise a runtime
-    /// error is triggered.
-    ///
-    /// - Parameter position: The position of the key-value pair to access. `position` must be
-    ///   a valid index of the ordered dictionary and not equal to `endIndex`.
+    /// - Parameter position: The position of the key-value pair to access. `position` must be a valid
+    ///   index of the ordered dictionary and not equal to `endIndex`.
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     ///
     /// - SeeAlso: update(:at:)
     public subscript(position: Index) -> Element {
-        get {
-            precondition(indices.contains(position), "OrderedDictionary index is out of range")
-            
-            let key = _orderedKeys[position]
-            let value = _unsafeValue(forKey: key)
-            
-            return (key, value)
-        }
-        set(newElement) {
-            do {
-                try update(newElement, at: position)
-            } catch OrderedDictionaryError.nonUniqueKey(let key) {
-                fatalError("Integrity error in OrderedDictionary caused by non-unique key '\(key)'")
-            } catch {
-                fatalError("Unknown error")
-            }
-        }
+        precondition(indices.contains(position), "OrderedDictionary index is out of range")
+        
+        let key = _orderedKeys[position]
+        let value = _unsafeValue(forKey: key)
+        
+        return (key, value)
     }
     
     /// Returns the index for the given key.
