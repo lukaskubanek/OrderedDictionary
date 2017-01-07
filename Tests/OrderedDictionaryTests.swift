@@ -1,11 +1,3 @@
-//
-//  OrderedDictionaryTests.swift
-//  OrderedDictionaryTests
-//
-//  Created by Lukas Kubanek on 29/08/15.
-//  Copyright © 2015 Lukas Kubanek. All rights reserved.
-//
-
 import XCTest
 import OrderedDictionary
 
@@ -300,6 +292,22 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         
         XCTAssertTrue(actual.elementsEqual(expected, by: ==))
+    }
+    
+    // ======================================================= //
+    // MARK: - Slices
+    // ======================================================= //
+    
+    func testSliceAccess() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        let slice = orderedDictionary[2..<4]
+        
+        XCTAssertEqual(slice.count, 2)
+        XCTAssertEqual(slice.startIndex, 2)
+        XCTAssertEqual(slice.endIndex, 4)
+        XCTAssertEqual(Array(slice.indices), [2, 3])
+        XCTAssert(slice[2] == (key: "C", value: 3))
+        XCTAssert(slice[3] == (key: "D", value: 4))
     }
     
     // ======================================================= //

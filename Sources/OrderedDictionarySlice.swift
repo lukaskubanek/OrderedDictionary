@@ -13,15 +13,15 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     /// The type of a single index of the base ordered dictionary.
     public typealias Index = Base.Index
     
-    /// The type of the indices collection of the base ordered dictionary.
-    public typealias Indices = Base.Indices
+    /// The type of the indices collection of the slice.
+    public typealias Indices = BidirectionalSlice<Base>.Indices
     
     // ======================================================= //
     // MARK: - Initialization
     // ======================================================= //
     
     internal init(base: Base, bounds: Range<Index>) {
-        self._slice = Slice(base: base, bounds: bounds)
+        self._slice = BidirectionalSlice(base: base, bounds: bounds)
     }
     
     // ======================================================= //
@@ -33,29 +33,30 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     }
     
     public var indices: Indices {
-        return _slice.base.indices
+        return _slice.indices
     }
 
     public var startIndex: Index {
-        return _slice.base.startIndex
+        return _slice.startIndex
     }
     
     public var endIndex: Index {
-        return _slice.base.endIndex
+        return _slice.endIndex
     }
     
     public func index(after i: Index) -> Index {
-        return _slice.base.index(after: i)
+        return _slice.index(after: i)
     }
 
     public func index(before i: Index) -> Index {
-        return _slice.base.index(before: i)
+        return _slice.index(before: i)
     }
     
     // ======================================================= //
     // MARK: - Internal Storage
     // ======================================================= //
     
-    private var _slice: Slice<OrderedDictionary<Key, Value>>
+    /// The underlying slice value.
+    private var _slice: BidirectionalSlice<Base>
     
 }
