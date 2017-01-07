@@ -133,8 +133,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     /// Removes the given key and its associated value from the ordered dictionary.
     ///
     /// If the key is found in the ordered dictionary, this method returns the key's associated
-    /// value. On removal, the index of the key-value pair is invalidated. If the key is not
-    /// found in the ordered dictionary, this method returns `nil`.
+    /// value. On removal, the indices of the ordered dictionary are invalidated. If the key is 
+    /// not found in the ordered dictionary, this method returns `nil`.
     ///
     /// - Parameter key: The key to remove along with its associated value.
     /// - Returns: The value that was removed, or `nil` if the key was not present in the 
@@ -166,12 +166,26 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     }
     
     // ======================================================= //
-    // MARK: - Position-based Access
+    // MARK: - Index-based Access
     // ======================================================= //
     
+    /// Accesses the key-value pair at the specified position for reading and writing.
+    ///
+    /// The specified position has to be a valid index inside of the ordered dictionary.
+    /// When reading the index-based subscript returns the key-value pair corresponding
+    /// to the index.
+    ///
+    /// When you assign a key-value pair for an index, the given key has to either be located
+    /// in the existing key-value pair at that index or not present in the ordered dictionary
+    /// at all. The existing key-value pair is then overwritten with the new one. If the given
+    /// key is present at another index of the ordered dictionary a runtime error is triggered.
+    ///
+    /// - Parameter position: The position of the key-value pair to access. `position` must be
+    ///   a valid index of the ordered dictionary and not equal to `endIndex`.
+    /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     public subscript(position: Index) -> Element {
         get {
-            guard let element = elementAtIndex(position) else {
+            guard let element = elementAt(position) else {
                 fatalError("OrderedDictionary index out of range")
             }
             
@@ -182,11 +196,23 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
         }
     }
     
-    public func indexForKey(_ key: Key) -> Index? {
+    /// Returns the index for the given key.
+    ///
+    /// - Parameter key: The key to find in the ordered dictionary.
+    /// - Returns: The index for `key` and its associated value if `key` is in the ordered dictionary;
+    ///   otherwise, `nil`.
+    public func index(forKey key: Key) -> Index? {
         return _orderedKeys.index(of: key)
     }
     
-    public func elementAtIndex(_ index: Index) -> Element? {
+    /// Returns the key-value pair at the specified index, or `nil` if there is no key-value pair
+    /// at that index.
+    ///
+    /// - Parameter index: The index of the key-value pair to be looked up. `index` does not have to
+    ///   be a valid index.
+    /// - Returns: A tuple containing the key-value pair corresponding to `index` if the index is valid;
+    ///   otherwise, `nil`.
+    public func elementAt(_ index: Index) -> Element? {
         guard _orderedKeys.indices.contains(index) else { return nil }
         
         let key = _orderedKeys[index]
@@ -237,7 +263,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     
     @discardableResult
     public mutating func updateElement(_ element: Element, atIndex index: Index) -> Element? {
-        guard let currentElement = elementAtIndex(index) else {
+        guard let currentElement = elementAt(index) else {
             fatalError("OrderedDictionary index out of range")
         }
         
@@ -251,7 +277,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     
     @discardableResult
     public mutating func removeAtIndex(_ index: Index) -> Element? {
-        if let element = elementAtIndex(index) {
+        if let element = elementAt(index) {
             _orderedKeys.remove(at: index)
             _keysToValues.removeValue(forKey: element.0)
             
@@ -379,7 +405,8 @@ extension OrderedDictionary: CustomStringConvertible, CustomDebugStringConvertib
 extension OrderedDictionary /* : Equatable */ where Key: Equatable, Value: Equatable {
     
     public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
-        return lhs._orderedKeys == rhs._orderedKeys && lhs._keysToValues == rhs._keysToValues
+        return lhs._orderedKeys == rhs._orderedKeys
+            && lhs._keysToValues == rhs._keysToValues
     }
     
 }

@@ -87,19 +87,19 @@ class OrderedDictionaryTests: XCTestCase {
         
         XCTAssertEqual(orderedDictionary["A"], 1)
         XCTAssertEqual(orderedDictionary.value(forKey: "A"), 1)
-        XCTAssertEqual(orderedDictionary.indexForKey("A"), 0)
+        XCTAssertEqual(orderedDictionary.index(forKey: "A"), 0)
         XCTAssertTrue(orderedDictionary.containsKey("A"))
         XCTAssertTrue(orderedDictionary[0] == ("A", 1))
         
         XCTAssertEqual(orderedDictionary["B"], 2)
         XCTAssertEqual(orderedDictionary.value(forKey: "B"), 2)
-        XCTAssertEqual(orderedDictionary.indexForKey("B"), 1)
+        XCTAssertEqual(orderedDictionary.index(forKey: "B"), 1)
         XCTAssertTrue(orderedDictionary.containsKey("B"))
         XCTAssertTrue(orderedDictionary[1] == ("B", 2))
         
         XCTAssertEqual(orderedDictionary["C"], 3)
         XCTAssertEqual(orderedDictionary.value(forKey: "C"), 3)
-        XCTAssertEqual(orderedDictionary.indexForKey("C"), 2)
+        XCTAssertEqual(orderedDictionary.index(forKey: "C"), 2)
         XCTAssertTrue(orderedDictionary.containsKey("C"))
         XCTAssertTrue(orderedDictionary[2] == ("C", 3))
     }
@@ -155,19 +155,19 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(orderedDictionary.count, 3)
         
         XCTAssertEqual(orderedDictionary["A"], 5)
-        XCTAssertEqual(orderedDictionary.indexForKey("A"), 0)
+        XCTAssertEqual(orderedDictionary.index(forKey: "A"), 0)
         XCTAssertTrue(orderedDictionary.containsKey("A"))
         
         XCTAssertNil(orderedDictionary["B"])
-        XCTAssertNil(orderedDictionary.indexForKey("B"))
+        XCTAssertNil(orderedDictionary.index(forKey: "B"))
         XCTAssertFalse(orderedDictionary.containsKey("B"))
         
         XCTAssertEqual(orderedDictionary["C"], 3)
-        XCTAssertEqual(orderedDictionary.indexForKey("C"), 1)
+        XCTAssertEqual(orderedDictionary.index(forKey: "C"), 1)
         XCTAssertTrue(orderedDictionary.containsKey("C"))
         
         XCTAssertEqual(orderedDictionary["D"], 10)
-        XCTAssertEqual(orderedDictionary.indexForKey("D"), 2)
+        XCTAssertEqual(orderedDictionary.index(forKey: "D"), 2)
         XCTAssertTrue(orderedDictionary.containsKey("D"))
     }
     
@@ -185,7 +185,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testRetrievingElementAtNonExistentIndex() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        XCTAssertNil(orderedDictionary.elementAtIndex(42))
+        XCTAssertNil(orderedDictionary.elementAt(42))
     }
     
     func testIndexBasedInsertionsOfElementsWithDistinctKeys() {
@@ -264,13 +264,13 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(orderedDictionary.count, 2)
         
         XCTAssertNil(orderedDictionary["A"])
-        XCTAssertNil(orderedDictionary.indexForKey("A"))
+        XCTAssertNil(orderedDictionary.index(forKey: "A"))
         
         XCTAssertEqual(orderedDictionary["B"], 2)
-        XCTAssertEqual(orderedDictionary.indexForKey("B"), 0)
+        XCTAssertEqual(orderedDictionary.index(forKey: "B"), 0)
         
         XCTAssertEqual(orderedDictionary["C"], 3)
-        XCTAssertEqual(orderedDictionary.indexForKey("C"), 1)
+        XCTAssertEqual(orderedDictionary.index(forKey: "C"), 1)
     }
     
     func testIndexBasedRemoval() {
