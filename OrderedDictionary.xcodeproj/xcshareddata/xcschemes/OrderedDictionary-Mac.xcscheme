@@ -34,7 +34,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8055B0401E201C5D009DC3EE"
-               BuildableName = "OrderedDictionary-Mac-Tests.xctest"
+               BuildableName = "OrderedDictionary_Mac_Tests.xctest"
                BlueprintName = "OrderedDictionary-Mac-Tests"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
             </BuildableReference>
