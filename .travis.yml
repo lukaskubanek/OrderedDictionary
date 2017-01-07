@@ -8,7 +8,7 @@ branches:
 script:
   - Scripts/build
 
-xcode_workspace: OrderedDictionary.xcodeproj
+xcode_project: OrderedDictionary.xcodeproj
 matrix:
   include:
     - xcode_scheme: OrderedDictionary-Mac

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script was taken from the ReactiveSwift repository.
+# https://github.com/ReactiveCocoa/ReactiveSwift/blob/master/script/build
+
 BUILD_DIRECTORY="build"
 CONFIGURATION=Release
 
