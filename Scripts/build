@@ -6,8 +6,8 @@
 BUILD_DIRECTORY="build"
 CONFIGURATION=Release
 
-if [[ -z $TRAVIS_XCODE_WORKSPACE ]]; then
-    echo "Error: \$TRAVIS_XCODE_WORKSPACE is not set."
+if [[ -z $TRAVIS_XCODE_PROJECT ]]; then
+    echo "Error: \$TRAVIS_XCODE_PROJECT is not set."
     exit 1
 fi
 
@@ -33,7 +33,7 @@ fi
 
 set -o pipefail
 xcodebuild $XCODE_ACTION \
-    -workspace "$TRAVIS_XCODE_WORKSPACE" \
+    -project "$TRAVIS_XCODE_PROJECT" \
     -scheme "$TRAVIS_XCODE_SCHEME" \
     -sdk "$XCODE_SDK" \
     -destination "$XCODE_DESTINATION" \
