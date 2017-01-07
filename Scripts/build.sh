@@ -12,22 +12,22 @@ if [[ -z $TRAVIS_XCODE_PROJECT ]]; then
 fi
 
 if [[ -z $TRAVIS_XCODE_SCHEME ]]; then
-    echo "Error: \$TRAVIS_XCODE_SCHEME is not set!"
+    echo "Error: \$TRAVIS_XCODE_SCHEME is not set."
     exit 1
 fi
 
 if [[ -z $XCODE_ACTION ]]; then
-    echo "Error: \$XCODE_ACTION is not set!"
+    echo "Error: \$XCODE_ACTION is not set."
     exit 1
 fi
 
 if [[ -z $XCODE_SDK ]]; then
-    echo "Error: \$XCODE_SDK is not set!"
+    echo "Error: \$XCODE_SDK is not set."
     exit 1
 fi
 
 if [[ -z $XCODE_DESTINATION ]]; then
-    echo "Error: \$XCODE_DESTINATION is not set!"
+    echo "Error: \$XCODE_DESTINATION is not set."
     exit 1
 fi
 
@@ -46,4 +46,9 @@ result=$?
 
 if [ "$result" -ne 0 ]; then
     exit $result
+fi
+
+if [[ $XCODE_SDK = "macosx" ]]; then
+    echo "SDK is ${XCODE_SDK}, validating playground..."
+    ./validate-playground.sh
 fi

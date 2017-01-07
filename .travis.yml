@@ -6,7 +6,7 @@ branches:
     - master
 
 script:
-  - Scripts/build
+  - Scripts/build.sh
 
 xcode_project: OrderedDictionary.xcodeproj
 matrix:
