@@ -110,9 +110,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     @discardableResult
     public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
         if _orderedKeys.contains(key) {
-            guard let currentValue = _keysToValues[key] else {
-                fatalError("Inconsistency error occured in OrderedDictionary")
-            }
+            let currentValue = _unsafeValue(forKey: key)
             
             _keysToValues[key] = value
             
@@ -137,9 +135,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     @discardableResult
     public mutating func removeValue(forKey key: Key) -> Value? {
         if let index = _orderedKeys.index(of: key) {
-            guard let currentValue = _keysToValues[key] else {
-                fatalError("Inconsistency error occured in OrderedDictionary")
-            }
+            let currentValue = self[index].value
             
             _orderedKeys.remove(at: index)
             _keysToValues[key] = nil
@@ -180,14 +176,15 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     public subscript(position: Index) -> Element {
         get {
-            guard let element = elementAt(position) else {
-                fatalError("OrderedDictionary index out of range")
-            }
+            precondition(indices.contains(position), "OrderedDictionary index is out of range")
             
-            return element
+            let key = _orderedKeys[position]
+            let value = _unsafeValue(forKey: key)
+            
+            return (key, value)
         }
-        set(newValue) {
-            updateElement(newValue, atIndex: position)
+        set(newElement) {
+            updateElement(newElement, atIndex: position)
         }
     }
     
@@ -208,31 +205,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     /// - Returns: A tuple containing the key-value pair corresponding to `index` if the index is valid;
     ///   otherwise, `nil`.
     public func elementAt(_ index: Index) -> Element? {
-        guard _orderedKeys.indices.contains(index) else { return nil }
-        
-        let key = _orderedKeys[index]
-        
-        guard let value = self._keysToValues[key] else {
-            fatalError("Inconsistency error occured in OrderedDictionary")
-        }
-        
-        return (key, value)
+        return indices.contains(index) ? self[index] : nil
     }
     
+    /// Inserts a new key-value pair at the specified position.
+    ///
+    /// ...
     @discardableResult
-    public mutating func insertElementWithKey(_ key: Key, value: Value, atIndex index: Index) -> Value? {
-        return insertElement((key, value), atIndex: index)
-    }
-    
-    @discardableResult
-    public mutating func insertElement(_ newElement: Element, atIndex index: Index) -> Value? {
-        guard index >= 0 else {
-            fatalError("Negative OrderedDictionary index is out of range")
-        }
-        
-        guard index <= count else {
-            fatalError("OrderedDictionary index out of range")
-        }
+    public mutating func insert(_ newElement: Element, at index: Index) -> Value? {
+        precondition(index >= startIndex, "Negative OrderedDictionary index is out of range")
+        precondition(index <= endIndex, "OrderedDictionary index is out of range")
         
         let (key, value) = newElement
         
@@ -258,9 +240,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     
     @discardableResult
     public mutating func updateElement(_ element: Element, atIndex index: Index) -> Element? {
-        guard let currentElement = elementAt(index) else {
-            fatalError("OrderedDictionary index out of range")
-        }
+        precondition(indices.contains(index), "OrderedDictionary index is out of range")
+        
+        let currentElement = self[index]
         
         let (newKey, newValue) = element
         
@@ -270,16 +252,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
         return currentElement
     }
     
+    /// Removes and returns the key-value pair at the specified position if there is any key-value pair,
+    /// or `nil` if there is none.
+    ///
+    /// - Parameter index: The position of the key-value pair to remove.
+    /// - Returns: The element at the specified index, or `nil` if the position is not taken.
     @discardableResult
-    public mutating func removeAtIndex(_ index: Index) -> Element? {
-        if let element = elementAt(index) {
-            _orderedKeys.remove(at: index)
-            _keysToValues.removeValue(forKey: element.0)
-            
-            return element
-        } else {
-            return nil
-        }
+    public mutating func remove(at index: Index) -> Element? {
+        guard let element = elementAt(index) else { return nil }
+        
+        _orderedKeys.remove(at: index)
+        _keysToValues.removeValue(forKey: element.key)
+        
+        return element
     }
     
     // ======================================================= //
@@ -315,6 +300,18 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Random
     
     public func index(after i: Index) -> Index {
         return _orderedKeys.index(after: i)
+    }
+    
+    // ======================================================= //
+    // MARK: - Private Methods
+    // ======================================================= //
+    
+    private func _unsafeValue(forKey key: Key) -> Value {
+        if let value = _keysToValues[key] {
+            return value
+        } else {
+            fatalError("Inconsistency error occured in OrderedDictionary")
+        }
     }
     
     // ======================================================= //

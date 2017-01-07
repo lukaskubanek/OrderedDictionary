@@ -190,10 +190,10 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionsOfElementsWithDistinctKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        orderedDictionary.insertElement(("T", 15), atIndex: 0)
-        orderedDictionary.insertElement(("U", 16), atIndex: 2)
-        orderedDictionary.insertElement(("V", 17), atIndex: 5)
-        orderedDictionary.insertElement(("W", 18), atIndex: 2)
+        orderedDictionary.insert((key: "T", value: 15), at: 0)
+        orderedDictionary.insert((key: "U", value: 16), at: 2)
+        orderedDictionary.insert((key: "V", value: 17), at: 5)
+        orderedDictionary.insert((key: "W", value: 18), at: 2)
         
         let expected: OrderedDictionary<String, Int> = ["T": 15, "A": 1, "W": 18, "U": 16, "B": 2, "C": 3, "V": 17]
         let actual = orderedDictionary
@@ -203,7 +203,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionOfElementWithSameKeyBeforeItsCurrentIndex() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insertElement(("B", 5), atIndex: 0)
+        let previousValue = orderedDictionary.insert(("B", 5), at: 0)
         
         XCTAssertEqual(orderedDictionary.count, 3)
         XCTAssertEqual(previousValue, 2)
@@ -216,7 +216,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionOfElementWithSameKeyAtItsCurrentIndex() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insertElement(("B", 5), atIndex: 1)
+        let previousValue = orderedDictionary.insert(("B", 5), at: 1)
         
         XCTAssertEqual(orderedDictionary.count, 3)
         XCTAssertEqual(previousValue, 2)
@@ -229,7 +229,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionOfElementWithSameKeyAfterItsCurrentIndex() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousValue = orderedDictionary.insertElement(("B", 5), atIndex: 3)
+        let previousValue = orderedDictionary.insert(("B", 5), at: 3)
         
         XCTAssertEqual(orderedDictionary.count, 3)
         XCTAssertEqual(previousValue, 2)
@@ -277,18 +277,18 @@ class OrderedDictionaryTests: XCTestCase {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
         
         let (expectedKey1, expectedValue1) = ("A", 1)
-        let (actualKey1, actualValue1) = orderedDictionary.removeAtIndex(0)!
+        let (actualKey1, actualValue1) = orderedDictionary.remove(at: 0)!
         
         XCTAssertEqual(expectedKey1, actualKey1)
         XCTAssertEqual(expectedValue1, actualValue1)
         
         let (expectedKey2, expectedValue2) = ("D", 4)
-        let (actualKey2, actualValue2) = orderedDictionary.removeAtIndex(2)!
+        let (actualKey2, actualValue2) = orderedDictionary.remove(at: 2)!
         
         XCTAssertEqual(expectedKey2, actualKey2)
         XCTAssertEqual(expectedValue2, actualValue2)
         
-        let nonExistentElement = orderedDictionary.removeAtIndex(42)
+        let nonExistentElement = orderedDictionary.remove(at: 42)
         
         XCTAssertNil(nonExistentElement)
         
