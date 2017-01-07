@@ -1,4 +1,4 @@
-public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, BidirectionalCollection {
+public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 
     // ======================================================= //
     // MARK: - Type Aliases
@@ -346,15 +346,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
     // MARK: - Slices
     // ======================================================= //
     
+    /// Accesses a contiguous subrange of the ordered dictionary.
+    ///
+    /// - Parameter bounds: A range of the ordered dictionary's indices. The bounds of the range must be valid 
+    ///   indices of the ordered dictionary.
+    /// - Returns: The slice view at the ordered dictionary in the specified subrange.
     public subscript(bounds: Range<Index>) -> SubSequence {
-        get {
-            return OrderedDictionarySlice(base: self, bounds: bounds)
-        }
-        set(newSequence) {
-            for (index, element) in newSequence.enumerated() {
-                fatalError("set element \(element) for index \(index)")
-            }
-        }
+        return OrderedDictionarySlice(base: self, bounds: bounds)
     }
     
     // ======================================================= //
@@ -397,6 +395,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: MutableCollection, Bidire
 // MARK: - Literals
 // ======================================================= //
 
+/// Creates an ordered dictionary initialized from an array literal containing a list of key-value pairs.
 extension OrderedDictionary: ExpressibleByArrayLiteral {
     
     public init(arrayLiteral elements: Element...) {
@@ -405,7 +404,7 @@ extension OrderedDictionary: ExpressibleByArrayLiteral {
     
 }
 
-/// Creates an ordered dictionary initialized with a dictionary literal.
+/// Creates an ordered dictionary initialized from a dictionary literal.
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
     public init(dictionaryLiteral elements: (Key, Value)...) {
