@@ -398,7 +398,7 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 // MARK: - Equality
 // ======================================================= //
 
-extension OrderedDictionary /* : Equatable */ where Key: Equatable, Value: Equatable {
+extension OrderedDictionary /* : Equatable */ where Value: Equatable {
     
     public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
         return lhs._orderedKeys == rhs._orderedKeys

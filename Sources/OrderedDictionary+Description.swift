@@ -1,7 +1,7 @@
 extension OrderedDictionary: CustomStringConvertible {
     
     public var description: String {
-        return constructDescription(debug: false)
+        return makeDescription(debug: false)
     }
     
 }
@@ -9,16 +9,16 @@ extension OrderedDictionary: CustomStringConvertible {
 extension OrderedDictionary: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        return constructDescription(debug: true)
+        return makeDescription(debug: true)
     }
     
 }
 
 extension OrderedDictionary {
     
-    fileprivate func constructDescription(debug: Bool) -> String {
+    fileprivate func makeDescription(debug: Bool) -> String {
         // The implementation of the description is inspired by zwaldowski's implementation of the ordered 
-        // dictionary. See http://bit.ly/1VL4JUR
+        // dictionary. See http://bit.ly/2iqGhrb
         
         if isEmpty { return "[:]" }
         
