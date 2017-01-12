@@ -1,13 +1,24 @@
 language: objective-c
-osx_image: xcode8
-
-xcode_project: OrderedDictionary.xcodeproj
-xcode_scheme: OrderedDictionary-iOS
-xcode_sdk: iphonesimulator
+osx_image: xcode8.2
 
 branches:
- only:
- - master
+  only:
+    - master
 
 script:
-- xcodebuild clean build test -project OrderedDictionary.xcodeproj -scheme OrderedDictionary-iOS -destination "platform=iOS Simulator,name=iPhone 6s,OS=10.0"
+  - Scripts/build.sh
+
+xcode_project: OrderedDictionary.xcodeproj
+matrix:
+  include:
+    - xcode_scheme: OrderedDictionary-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build test"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
+    - xcode_scheme: OrderedDictionary-iOS
+      env:
+        - XCODE_SDK=iphonesimulator
+        - XCODE_ACTION="build-for-testing test-without-building"
+        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"

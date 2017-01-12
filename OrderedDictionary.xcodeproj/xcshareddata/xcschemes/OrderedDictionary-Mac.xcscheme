@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "803F9CC51B923207002F728F"
+               BlueprintIdentifier = "8055B0371E201C5D009DC3EE"
                BuildableName = "OrderedDictionary.framework"
                BlueprintName = "OrderedDictionary-Mac"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "803F9CEE1B925B1C002F728F"
+               BlueprintIdentifier = "8055B0401E201C5D009DC3EE"
                BuildableName = "OrderedDictionary_Mac_Tests.xctest"
                BlueprintName = "OrderedDictionary-Mac-Tests"
                ReferencedContainer = "container:OrderedDictionary.xcodeproj">
@@ -43,7 +43,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "803F9CC51B923207002F728F"
+            BlueprintIdentifier = "8055B0371E201C5D009DC3EE"
             BuildableName = "OrderedDictionary.framework"
             BlueprintName = "OrderedDictionary-Mac"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
@@ -65,7 +65,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "803F9CC51B923207002F728F"
+            BlueprintIdentifier = "8055B0371E201C5D009DC3EE"
             BuildableName = "OrderedDictionary.framework"
             BlueprintName = "OrderedDictionary-Mac"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
@@ -83,7 +83,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "803F9CC51B923207002F728F"
+            BlueprintIdentifier = "8055B0371E201C5D009DC3EE"
             BuildableName = "OrderedDictionary.framework"
             BlueprintName = "OrderedDictionary-Mac"
             ReferencedContainer = "container:OrderedDictionary.xcodeproj">
