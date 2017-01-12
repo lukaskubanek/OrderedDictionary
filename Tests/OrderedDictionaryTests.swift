@@ -130,10 +130,10 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionsWithUniqueKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        try! orderedDictionary.insert((key: "T", value: 15), at: 0)
-        try! orderedDictionary.insert((key: "U", value: 16), at: 2)
-        try! orderedDictionary.insert((key: "V", value: 17), at: 5)
-        try! orderedDictionary.insert((key: "W", value: 18), at: 2)
+        orderedDictionary.insert((key: "T", value: 15), at: 0)
+        orderedDictionary.insert((key: "U", value: 16), at: 2)
+        orderedDictionary.insert((key: "V", value: 17), at: 5)
+        orderedDictionary.insert((key: "W", value: 18), at: 2)
         
         let expected: OrderedDictionary<String, Int> = ["T": 15, "A": 1, "W": 18, "U": 16, "B": 2, "C": 3, "V": 17]
         let actual = orderedDictionary
@@ -142,11 +142,10 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     func testIndexBasedInsertionWithDuplicateKey() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let invalidElement = (key: "A", value: 42)
         
-        XCTAssertThrowsError(try orderedDictionary.insert((key: "A", value: 42), at: 3)) { error in
-            XCTAssertEqual(error as? OrderedDictionaryError, OrderedDictionaryError.nonUniqueKey("A"))
-        }
+        XCTAssertFalse(orderedDictionary.canInsert(invalidElement))
     }
     
     // ======================================================= //
@@ -155,7 +154,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedUpdateMethodWithNewUniqueKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousElement = try! orderedDictionary.update((key: "D", value: 4), at: 1)
+        let previousElement = orderedDictionary.update((key: "D", value: 4), at: 1)
         
         XCTAssertEqual(orderedDictionary.count, 3)
         XCTAssertTrue(previousElement! == ("B", 2))
@@ -168,7 +167,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedUpdateMethodByReplacingSameKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let previousElement = try! orderedDictionary.update((key: "B", value: 42), at: 1)
+        let previousElement = orderedDictionary.update((key: "B", value: 42), at: 1)
         
         XCTAssertEqual(orderedDictionary.count, 3)
         XCTAssertTrue(previousElement! == ("B", 2))
@@ -180,11 +179,13 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     func testIndexBasedUpdateMethodByDuplicatingKey() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
-        XCTAssertThrowsError(try orderedDictionary.update((key: "A", value: 3), at: 2)) { error in
-            XCTAssertEqual(error as? OrderedDictionaryError, OrderedDictionaryError.nonUniqueKey("A"))
-        }
+        let element = (key: "A", value: 42)
+        
+        XCTAssertTrue(orderedDictionary.canUpdate(element, at: 0))
+        XCTAssertFalse(orderedDictionary.canUpdate(element, at: 1))
+        XCTAssertFalse(orderedDictionary.canUpdate(element, at: 2))
     }
     
     func testRetrievingElementAtNonExistentIndex() {
