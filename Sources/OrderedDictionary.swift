@@ -208,59 +208,78 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         return indices.contains(index) ? self[index] : nil
     }
     
+    /// Checks whether the given key-value pair can be inserted into the ordered dictionary. This
+    /// is not the case if the key is already present in the ordered dictionary.
+    ///
+    /// - Parameter newElement: The key-value pair to be inserted into the ordered dictionary.
+    /// - Returns: `true` if the key-value pair can be safely inserted; otherwise, `false`.
+    public func canInsert(_ newElement: Element) -> Bool {
+        return !containsKey(newElement.key)
+    }
+    
     /// Inserts a new key-value pair at the specified position.
     ///
-    /// If the key of the inserted pair already exists in the ordered dictionary, an error is thrown
-    /// and the dictionary is not modified.
+    /// If the key of the inserted pair already exists in the ordered dictionary, a runtime error
+    /// is triggered. Use `canInsert(_:)` for performing a check first, so that this method can
+    /// be executed safely.
     ///
-    /// - Parameter newElement: The new key-value pair to insert into the ordered dictionary.
+    /// - Parameter newElement: The new key-value pair to insert into the ordered dictionary. The key
+    ///   contained in the pair must not be already present in the ordered dictionary.
     /// - Parameter index: The position at which to insert the new key-value pair. `index` must be a valid 
-    ///   index of the ordered dictionary or equal to the `endIndex` property.
-    /// - Throws: `OrderedDictionaryError.nonUniqueKey` if the inserted key is already present in the
-    ///   ordered dictionary.
+    ///   index of the ordered dictionary or equal to `endIndex` property.
     ///
+    /// - SeeAlso: canInsert(_:)
     /// - SeeAlso: update(:at:)
-    public mutating func insert(_ newElement: Element, at index: Index) throws {
+    public mutating func insert(_ newElement: Element, at index: Index) {
         precondition(index >= startIndex, "Negative OrderedDictionary index is out of range")
         precondition(index <= endIndex, "OrderedDictionary index is out of range")
+        precondition(canInsert(newElement), "Cannot insert duplicate key in OrderedDictionary")
         
         let (key, value) = newElement
-        
-        if (containsKey(key)) {
-            throw OrderedDictionaryError.nonUniqueKey(key)
-        }
         
         _orderedKeys.insert(key, at: index)
         _keysToValues[key] = value
     }
     
-    /// Updates the key-value pair located at the specified position.
+    /// Checks whether the key-value pair at the given index can be updated with the given key-value
+    /// pair. This is not the case if the key of the updated element is already present in the ordered
+    /// dictionary and located at another index than the updated one.
     ///
-    /// If the key of the updated pair already exists in the ordered dictionary *and* is located at 
-    /// different position than the specified one, an error is thrown and the dictionary is not modified.
+    /// Although this is a checking method, a valid index has to be provided.
     ///
     /// - Parameter newElement: The key-value pair to be set at the specified position.
     /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid index
     ///   of the ordered dictionary.
-    /// - Throws: `OrderedDictionaryError.nonUniqueKey` if the inserted key is already present in the
-    ///   ordered dictionary at different position than the specified one.
+    public func canUpdate(_ newElement: Element, at index: Index) -> Bool {
+        var keyPresentAtIndex = false
+        return _canUpdate(newElement, at: index, keyPresentAtIndex: &keyPresentAtIndex)
+    }
+    
+    /// Updates the key-value pair located at the specified position.
     ///
+    /// If the key of the updated pair already exists in the ordered dictionary *and* is located at 
+    /// a different position than the specified one, a runtime error is triggered. Use `canUpdate(_:at:)`
+    /// for performing a check first, so that this method can be executed safely.
+    ///
+    /// - Parameter newElement: The key-value pair to be set at the specified position.
+    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid index
+    ///   of the ordered dictionary.
+    ///
+    /// - SeeAlso: canUpdate(_:at:)
     /// - SeeAlso: insert(:at:)
     @discardableResult
-    public mutating func update(_ newElement: Element, at index: Index) throws -> Element? {
-        precondition(indices.contains(index), "OrderedDictionary index is out of range")
+    public mutating func update(_ newElement: Element, at index: Index) -> Element? {
+        // Store the flag indicating whether the key of the inserted element
+        // is present at the updated index
+        var keyPresentAtIndex = false
         
+        precondition(
+            _canUpdate(newElement, at: index, keyPresentAtIndex: &keyPresentAtIndex),
+            "OrderedDictionary update duplicates key"
+        )
+        
+        // Decompose the element
         let (key, value) = newElement
-        
-        // Locate the key in the ordered dictionary
-        let currentIndexOfKey = self.index(forKey: key)
-        let keyNotPresent = currentIndexOfKey == nil
-        let keyPresentAtIndex = currentIndexOfKey == index
-        
-        // Check key uniqueness
-        guard (keyNotPresent || keyPresentAtIndex) else {
-            throw OrderedDictionaryError.nonUniqueKey(key)
-        }
         
         // Load the current element at the index
         let replacedElement = self[index]
@@ -292,6 +311,17 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         _keysToValues.removeValue(forKey: element.key)
         
         return element
+    }
+    
+    private func _canUpdate(_ newElement: Element, at index: Index, keyPresentAtIndex: inout Bool) -> Bool {
+        precondition(indices.contains(index), "OrderedDictionary index is out of range")
+        
+        let currentIndexOfKey = self.index(forKey: newElement.key)
+        
+        let keyNotPresent = currentIndexOfKey == nil
+        keyPresentAtIndex = currentIndexOfKey == index
+        
+        return keyNotPresent || keyPresentAtIndex
     }
     
     // ======================================================= //
