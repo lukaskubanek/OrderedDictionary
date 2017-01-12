@@ -1,3 +1,7 @@
+/// A view into an ordered dictionary.
+///
+/// - SeeAlso: OrderedDictionary
+/// - SeeAlso: BidirectionalSlice
 public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollection {
     
     // ======================================================= //
@@ -20,6 +24,11 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     // MARK: - Initialization
     // ======================================================= //
     
+    /// Initializes the view into the given ordered dictionary that allows access to elements within 
+    /// the given range.
+    ///
+    /// - Parameter base: The ordered dictionary to create a view into.
+    /// - Parameter bounds: The range of indices to allow access to in the new slice.
     internal init(base: Base, bounds: Range<Index>) {
         self._slice = BidirectionalSlice(base: base, bounds: bounds)
     }
@@ -28,26 +37,33 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     // MARK: - BidirectionalCollection Conformance
     // ======================================================= //
     
+    /// Accesses the key-value pair at the specified position.
     public subscript(position: Index) -> Element {
         return _slice[position]
     }
     
+    /// The indices that are valid for subscripting the ordered dictionary slice.
     public var indices: Indices {
         return _slice.indices
     }
 
+    /// The position of the first key-value pair in the ordered dictionary slice.
     public var startIndex: Index {
         return _slice.startIndex
     }
     
+    /// The position which is one greater than the position of the last valid key-value pair in the
+    /// ordered dictionary slice.
     public var endIndex: Index {
         return _slice.endIndex
     }
     
+    /// Returns the position immediately after the given index.
     public func index(after i: Index) -> Index {
         return _slice.index(after: i)
     }
 
+    /// Returns the position immediately before the given index.
     public func index(before i: Index) -> Index {
         return _slice.index(before: i)
     }

@@ -1,3 +1,8 @@
+/// A generic collection for storing key-value pairs in an ordered manner.
+///
+/// Same as in a dictionary all keys in the collection are unique and have an associated value.
+/// Same as in an array, all key-value pairs (elements) are kept sorted and accessible by
+/// a zero-based integer index.
 public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 
     // ======================================================= //
@@ -14,6 +19,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     public typealias Indices = CountableRange<Int>
     
     /// The type of the contiguous subrange of the ordered dictionary's elements.
+    /// 
+    /// - SeeAlso: OrderedDictionarySlice
     public typealias SubSequence = OrderedDictionarySlice<Key, Value>
     
     // ======================================================= //
@@ -339,24 +346,30 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Indices
     // ======================================================= //
     
+    /// The indices that are valid for subscripting the ordered dictionary.
     public var indices: Indices {
         return _orderedKeys.indices
     }
 
+    /// The position of the first key-value pair in a non-empty ordered dictionary.
     public var startIndex: Index {
         return _orderedKeys.startIndex
     }
     
+    /// The position which is one greater than the position of the last valid key-value pair in the
+    /// ordered dictionary.
     public var endIndex: Index {
         return _orderedKeys.endIndex
     }
     
-    public func index(before i: Index) -> Index {
-        return _orderedKeys.index(before: i)
-    }
-    
+    /// Returns the position immediately after the given index.
     public func index(after i: Index) -> Index {
         return _orderedKeys.index(after: i)
+    }
+    
+    /// Returns the position immediately before the given index.
+    public func index(before i: Index) -> Index {
+        return _orderedKeys.index(before: i)
     }
     
     // ======================================================= //
@@ -400,6 +413,8 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 
 extension OrderedDictionary /* : Equatable */ where Value: Equatable {
     
+    /// Returns a Boolean value that indicates whether the two given ordered dictionaries with
+    /// equatable values are equal.
     public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
         return lhs._orderedKeys == rhs._orderedKeys
             && lhs._keysToValues == rhs._keysToValues

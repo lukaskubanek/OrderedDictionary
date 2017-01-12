@@ -1,5 +1,6 @@
 extension OrderedDictionary: CustomStringConvertible {
     
+    /// A textual representation of the ordered dictionary.
     public var description: String {
         return makeDescription(debug: false)
     }
@@ -8,6 +9,7 @@ extension OrderedDictionary: CustomStringConvertible {
 
 extension OrderedDictionary: CustomDebugStringConvertible {
     
+    /// A textual representation of the ordered dictionary, suitable for debugging.
     public var debugDescription: String {
         return makeDescription(debug: true)
     }
