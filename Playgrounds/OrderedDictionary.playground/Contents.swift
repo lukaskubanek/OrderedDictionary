@@ -83,13 +83,13 @@ print(orderedDictionary) // => [A: 100, C: 3, D: 42, E: 5]
 // ======================================================= //
 
 // Modify an element at an existing index
-let replacedElement = try! orderedDictionary.update(("F", 235), at: 2)
+let replacedElement = orderedDictionary.update(("F", 235), at: 2)
 print(orderedDictionary[2]) // => ("F", 235)
 print(orderedDictionary) // => [A: 100, C: 3, F: 235, E: 5]
 print(replacedElement) // => Optional("D", 42)
 
 // Modify an element at a non-existent index
-// try! orderedDictionary.update(("L", 0), at: 100) // => fatal error
+//orderedDictionary.update(("L", 0), at: 100) // => fatal error
 
 // ======================================================= //
 // Sorting
