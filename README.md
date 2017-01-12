@@ -36,7 +36,7 @@ Another option is to use [Git submodules](http://git-scm.com/book/en/v2/Git-Tool
 
 ## Usage & Docs
 
-For the usage of this library please refer to [the example playground](Playgrounds/OrderedDictionary.playground/Contents.swift). For documentation please refer to [the documentation comments](https://github.com/lukaskubanek/OrderedDictionary/blob/master/Sources/OrderedDictionary.swift).
+For the usage of this library please refer to [the example playground](Playgrounds/OrderedDictionary.playground/Contents.swift). For documentation please refer to [the documentation comments](Sources/OrderedDictionary.swift).
 
 ## Changelog
 
