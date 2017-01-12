@@ -4,16 +4,16 @@
 
 **OrderedDictionary** is a lightweight implementation of an ordered dictionary data structure in Swift.
 
-The `OrderedDictionary` structure is an immutable generic collection which combines the features of `Dictionary` and `Array` from the Swift standard library. Like `Dictionary` it stores key-value pairs and maps each key to a value. Like `Array` it stores those pairs sorted and accessible by a zero-based integer index.
+The `OrderedDictionary` struct is a generic collection which combines the features of `Dictionary` and `Array` from the Swift standard library. Like `Dictionary` it stores key-value pairs with each key being unique and maps each key to an associated value. Like `Array` it stores those pairs sorted and accessible by a zero-based integer index.
 
-`OrderedDictionary` provides similar APIs like collections in the Swift standard library. This includes accessing contents by keys or indexes, inserting and removing elements, iterating, sorting etc.
+`OrderedDictionary` provides similar APIs like collections in the Swift standard library. This includes accessing contents by keys or indices, inserting and removing elements, iterating, sorting etc.
 
 Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys. This means it is not the most performant implementation possible, but it gets its job done by reusing most functionality from the Swift standard library.
 
 ## Requirements
 
-- Swift 2.3
-- Xcode 8
+- Swift 3
+- Xcode 8.2
 - iOS 8.0+ / OS X 10.10+
 
 ## Installation
@@ -34,9 +34,9 @@ The easiest way is to use the package manager [Carthage][6].
 
 Another option is to use [Git submodules][8] and integrating the Xcode project `OrderedDictionary.xcodeproj` directly to your Xcode workspace.
 
-## Usage
+## Usage & Docs
 
-For the usage of this library please refer to the [example playground][9].
+For the usage of this library please refer to [the example playground][9]. For documentation please refer to [the documentation comments][14].
 
 ## Changelog
 
@@ -63,10 +63,11 @@ Lukas Kubanek // [lukaskubanek.com][11] // [@kubanekl][12]
 [11]:	http://lukaskubanek.com
 [12]:	https://twitter.com/kubanekl
 [13]:	LICENSE.md
+[14]:   https://github.com/lukaskubanek/OrderedDictionary/blob/master/Sources/OrderedDictionary.swift
 
 [image-1]:	https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build"
 [image-2]:	https://img.shields.io/github/release/lukaskubanek/OrderedDictionary.svg?style=flat-square
-[image-3]:	https://img.shields.io/badge/Swift-2.3-orange.svg?style=flat-square "Swift 2.2"
-[image-4]:	https://img.shields.io/badge/platform-macOS/iOS-yellowgreen.svg?style=flat-square "Platform: OS X, iOS"
+[image-3]:	https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat-square "Swift 2.2"
+[image-4]:	https://img.shields.io/badge/platform-macOS%20|%20iOS-yellowgreen.svg?style=flat-square "Platform: OS X, iOS"
 [image-5]:	https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible"
 [image-6]:	https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT"
