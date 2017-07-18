@@ -34,7 +34,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. Each key
     ///   in `elements` must be unique.
-    public init<S: Sequence>(_ elements: S) where S.Iterator.Element == Element {
+    public init<S: Sequence>(_ elements: S) where S.Element == Element {
         for (key, value) in elements {
             precondition(!containsKey(key), "Elements sequence contains duplicate keys")
             self[key] = value
@@ -432,7 +432,10 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
     /// Creates an ordered dictionary initialized from a dictionary literal.
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        self.init(elements.map { (key: $0, value: $1) })
+        self.init(elements.map { element in
+            let (key, value) = element
+            return (key: key, value: value)
+        })
     }
     
 }

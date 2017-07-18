@@ -20,6 +20,9 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     /// The type of the indices collection of the slice.
     public typealias Indices = BidirectionalSlice<Base>.Indices
     
+    /// The type of the contiguous subrange of the ordered dictionary's slice.
+    public typealias SubSequence = OrderedDictionarySlice<Key, Value>
+    
     // ======================================================= //
     // MARK: - Initialization
     // ======================================================= //
