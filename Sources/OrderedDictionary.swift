@@ -75,6 +75,15 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     // ======================================================= //
+    // MARK: - Dictionary
+    // ======================================================= //
+    
+    /// Converts itself to a common unsorted dictionary.
+    public var unorderedDictionary: Dictionary<Key, Value> {
+        return _keysToValues
+    }
+    
+    // ======================================================= //
     // MARK: - Key-based Access
     // ======================================================= //
     

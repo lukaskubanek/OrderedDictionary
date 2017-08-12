@@ -95,7 +95,7 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(orderedDictionary[2] == ("C", 3))
     }
     
-    func testIterator() {
+    func testCreatingIterator() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         var iterator = orderedDictionary.makeIterator()
         
@@ -114,7 +114,7 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertNil(indexesIterator.next())
     }
     
-    func testOrderedKeys() {
+    func testAccessingOrderedKeys() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
         let expected = ["A", "B", "C"]
@@ -123,11 +123,20 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(expected, actual)
     }
     
-    func testOrderedValues() {
+    func testAccessingOrderedValues() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
         let expected = [1, 2, 3]
         let actual = Array(orderedDictionary.orderedValues)
+        
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testAccessingUnsortedDictionary() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        
+        let expected = ["A": 1, "B": 2, "C": 3]
+        let actual = orderedDictionary.unorderedDictionary
         
         XCTAssertEqual(expected, actual)
     }
