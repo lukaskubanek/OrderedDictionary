@@ -2,6 +2,13 @@ import OrderedDictionary
 import Foundation
 import XCTest
 
+struct TestValue: Equatable {
+    var string: String
+    static func == (lhs: TestValue, rhs: TestValue) -> Bool {
+        return lhs.string == rhs.string
+    }
+}
+
 class OrderedDictionaryTests: XCTestCase {
     
     // ======================================================= //
@@ -27,6 +34,36 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
+        XCTAssertTrue(expected == actual)
+    }
+    
+    func testInitializationUsingValuesAndKeyProviderClosure() {
+        let values = [1, 2, 3]
+        
+        let expected = OrderedDictionary<String, Int>([
+            (key: "1", value: 1),
+            (key: "2", value: 2),
+            (key: "3", value: 3)
+        ])
+        let actual = OrderedDictionary(values: values, keyedBy: { "\($0)" })
+        
+        XCTAssertTrue(expected == actual)
+    }
+    
+    func testInitializationUsingValuesAnyKeyPath() {
+        let values = [
+            TestValue(string: "A"),
+            TestValue(string: "B"),
+            TestValue(string: "C")
+        ]
+        
+        let expected = OrderedDictionary<String, TestValue>([
+            (key: "A", value: TestValue(string: "A")),
+            (key: "B", value: TestValue(string: "B")),
+            (key: "C", value: TestValue(string: "C"))
+        ])
+        let actual = OrderedDictionary(values: values, keyedBy: \.string)
+
         XCTAssertTrue(expected == actual)
     }
     

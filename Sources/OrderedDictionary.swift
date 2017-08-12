@@ -30,6 +30,25 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// Creates an empty ordered dictionary.
     public init() {}
     
+    /// Creates an ordered dictionary from a sequence of values keyed by a key which gets extracted
+    /// from the value in the provided closure.
+    ///
+    /// - Parameter values: The sequence of values.
+    /// - Parameter getKey: The closure which provides a key for the given value from the values
+    ///   sequence.
+    public init<Values: Sequence>(values: Values, keyedBy getKey: (Value) -> Key) where Values.Element == Value {
+        self.init(values.map { (getKey($0), $0) })
+    }
+    
+    /// Creates an ordered dictionary from a sequence of values keyed by a key loaded from the value
+    /// at the given key path.
+    ///
+    /// - Parameter values: The sequence of values.
+    /// - Parameter keyPath: The key path for the value to locate its key at.
+    public init(values: [Value], keyedBy keyPath: KeyPath<Value, Key>) {
+        self.init(values.map { ($0[keyPath: keyPath], $0) })
+    }
+    
     /// Creates an ordered dictionary from a sequence of key-value pairs.
     ///
     /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary.
