@@ -1,5 +1,6 @@
-import XCTest
 import OrderedDictionary
+import Foundation
+import XCTest
 
 class OrderedDictionaryTests: XCTestCase {
     
@@ -296,6 +297,51 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(Array(slice.indices), [2, 3])
         XCTAssert(slice[2] == (key: "C", value: 3))
         XCTAssert(slice[3] == (key: "D", value: 4))
+    }
+    
+    // ======================================================= //
+    // MARK: - Codable
+    // ======================================================= //
+    
+    func testEncodingAndDecodingViaJSON() {
+        let orderedDictionary: OrderedDictionary<String, Int> = [
+            "A": 42,
+            "B": 100,
+            "C": 11
+        ]
+        
+        let jsonEncoder = JSONEncoder()
+        let data = try! jsonEncoder.encode(orderedDictionary)
+        
+        let expectedString = "[\"A\",42,\"B\",100,\"C\",11]"
+        let actualString = String(data: data, encoding: .utf8)
+        
+        XCTAssertEqual(expectedString, actualString)
+        
+        let jsonDecoder = JSONDecoder()
+        
+        let expectedOrderedDictionary = orderedDictionary
+        let actualOrderedDictionary = try! jsonDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
+        
+        XCTAssertTrue(expectedOrderedDictionary == actualOrderedDictionary)
+    }
+    
+    func testEncodingAndDecodingViaPropertyList() {
+        let orderedDictionary: OrderedDictionary<String, Int> = [
+            "A": 42,
+            "B": 100,
+            "C": 11
+        ]
+        
+        let plistEncoder = PropertyListEncoder()
+        let plistDecoder = PropertyListDecoder()
+        
+        let data = try! plistEncoder.encode(orderedDictionary)
+        
+        let expectedOrderedDictionary = orderedDictionary
+        let actualOrderedDictionary = try! plistDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
+        
+        XCTAssertTrue(expectedOrderedDictionary == actualOrderedDictionary)
     }
     
     // ======================================================= //

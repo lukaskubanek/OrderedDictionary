@@ -32,8 +32,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     /// Creates an ordered dictionary from a sequence of key-value pairs.
     ///
-    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary. Each key
-    ///   in `elements` must be unique.
+    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary.
+    ///   Each key in `elements` must be unique.
     public init<S: Sequence>(_ elements: S) where S.Element == Element {
         for (key, value) in elements {
             precondition(!containsKey(key), "Elements sequence contains duplicate keys")
@@ -61,18 +61,20 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     /// Accesses the value associated with the given key for reading and writing.
     ///
-    /// This key-based subscript returns the value for the given key if the key is found in the ordered 
-    /// dictionary, or `nil` if the key is not found.
+    /// This key-based subscript returns the value for the given key if the key is found in the
+    /// ordered dictionary, or `nil` if the key is not found.
     ///
-    /// When you assign a value for a key and that key already exists, the ordered dictionary overwrites
-    /// the existing value and preservers the index of the key-value pair. If the ordered dictionary does 
-    /// not contain the key, a new key-value pair is appended to the end of the ordered dictionary.
+    /// When you assign a value for a key and that key already exists, the ordered dictionary
+    /// overwrites the existing value and preservers the index of the key-value pair. If the ordered
+    /// dictionary does not contain the key, a new key-value pair is appended to the end of the
+    /// ordered dictionary.
     ///
-    /// If you assign `nil` as the value for the given key, the ordered dictionary removes that key and
-    /// its associated value if it exists.
+    /// If you assign `nil` as the value for the given key, the ordered dictionary removes that key
+    /// and its associated value if it exists.
     ///
     /// - Parameter key: The key to find in the ordered dictionary.
-    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; otherwise, `nil`.
+    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; otherwise,
+    ///   `nil`.
     public subscript(key: Key) -> Value? {
         get {
             return value(forKey: key)
@@ -94,22 +96,24 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         return _orderedKeys.contains(key)
     }
     
-    /// Returns the value associated with the given key if the key is found in the ordered dictionary, 
-    /// or `nil` if the key is not found.
+    /// Returns the value associated with the given key if the key is found in the ordered
+    /// dictionary, or `nil` if the key is not found.
     ///
     /// - Parameter key: The key to find in the ordered dictionary.
-    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; otherwise, `nil`.
+    /// - Returns: The value associated with `key` if `key` is in the ordered dictionary; otherwise,
+    ///   `nil`.
     public func value(forKey key: Key) -> Value? {
         return _keysToValues[key]
     }
     
-    /// Updates the value stored in the ordered dictionary for the given key, or appends a new key-value 
-    /// pair if the key does not exist.
+    /// Updates the value stored in the ordered dictionary for the given key, or appends a new
+    /// key-value pair if the key does not exist.
     ///
     /// - Parameter value: The new value to add to the ordered dictionary.
     /// - Parameter key: The key to associate with `value`. If `key` already exists in the ordered 
-    ///   dictionary, `value` replaces the existing associated value. If `key` is not already a key of the 
-    ///   ordered dictionary, the `(key, value)` pair is appended at the end of the ordered dictionary.
+    ///   dictionary, `value` replaces the existing associated value. If `key` is not already a key
+    ///   of the ordered dictionary, the `(key, value)` pair is appended at the end of the ordered
+    ///   dictionary.
     @discardableResult
     public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
         if _orderedKeys.contains(key) {
@@ -171,11 +175,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     /// Accesses the key-value pair at the specified position.
     ///
-    /// The specified position has to be a valid index of the ordered dictionary. The index-base subscript
-    /// returns the key-value pair corresponding to the index.
+    /// The specified position has to be a valid index of the ordered dictionary. The index-base
+    /// subscript returns the key-value pair corresponding to the index.
     ///
-    /// - Parameter position: The position of the key-value pair to access. `position` must be a valid
-    ///   index of the ordered dictionary and not equal to `endIndex`.
+    /// - Parameter position: The position of the key-value pair to access. `position` must be
+    ///   a valid index of the ordered dictionary and not equal to `endIndex`.
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     ///
     /// - SeeAlso: update(:at:)
@@ -191,8 +195,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// Returns the index for the given key.
     ///
     /// - Parameter key: The key to find in the ordered dictionary.
-    /// - Returns: The index for `key` and its associated value if `key` is in the ordered dictionary;
-    ///   otherwise, `nil`.
+    /// - Returns: The index for `key` and its associated value if `key` is in the ordered
+    ///   dictionary; otherwise, `nil`.
     public func index(forKey key: Key) -> Index? {
         return _orderedKeys.index(of: key)
     }
@@ -202,8 +206,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - Parameter index: The index of the key-value pair to be looked up. `index` does not have to
     ///   be a valid index.
-    /// - Returns: A tuple containing the key-value pair corresponding to `index` if the index is valid;
-    ///   otherwise, `nil`.
+    /// - Returns: A tuple containing the key-value pair corresponding to `index` if the index is
+    ///   valid; otherwise, `nil`.
     public func elementAt(_ index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
@@ -223,10 +227,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// is triggered. Use `canInsert(_:)` for performing a check first, so that this method can
     /// be executed safely.
     ///
-    /// - Parameter newElement: The new key-value pair to insert into the ordered dictionary. The key
-    ///   contained in the pair must not be already present in the ordered dictionary.
-    /// - Parameter index: The position at which to insert the new key-value pair. `index` must be a valid 
-    ///   index of the ordered dictionary or equal to `endIndex` property.
+    /// - Parameter newElement: The new key-value pair to insert into the ordered dictionary. The
+    ///   key contained in the pair must not be already present in the ordered dictionary.
+    /// - Parameter index: The position at which to insert the new key-value pair. `index` must be
+    ///   a valid index of the ordered dictionary or equal to `endIndex` property.
     ///
     /// - SeeAlso: canInsert(_:)
     /// - SeeAlso: update(:at:)
@@ -242,14 +246,14 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     /// Checks whether the key-value pair at the given index can be updated with the given key-value
-    /// pair. This is not the case if the key of the updated element is already present in the ordered
-    /// dictionary and located at another index than the updated one.
+    /// pair. This is not the case if the key of the updated element is already present in the
+    /// ordered dictionary and located at another index than the updated one.
     ///
     /// Although this is a checking method, a valid index has to be provided.
     ///
     /// - Parameter newElement: The key-value pair to be set at the specified position.
-    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid index
-    ///   of the ordered dictionary.
+    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid
+    ///   index of the ordered dictionary.
     public func canUpdate(_ newElement: Element, at index: Index) -> Bool {
         var keyPresentAtIndex = false
         return _canUpdate(newElement, at: index, keyPresentAtIndex: &keyPresentAtIndex)
@@ -258,12 +262,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// Updates the key-value pair located at the specified position.
     ///
     /// If the key of the updated pair already exists in the ordered dictionary *and* is located at 
-    /// a different position than the specified one, a runtime error is triggered. Use `canUpdate(_:at:)`
-    /// for performing a check first, so that this method can be executed safely.
+    /// a different position than the specified one, a runtime error is triggered. Use
+    /// `canUpdate(_:at:)` for performing a check first, so that this method can be executed safely.
     ///
     /// - Parameter newElement: The key-value pair to be set at the specified position.
-    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid index
-    ///   of the ordered dictionary.
+    /// - Parameter index: The position at which to set the key-value pair. `index` must be a valid
+    ///   index of the ordered dictionary.
     ///
     /// - SeeAlso: canUpdate(_:at:)
     /// - SeeAlso: insert(:at:)
@@ -296,8 +300,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         return replacedElement
     }
     
-    /// Removes and returns the key-value pair at the specified position if there is any key-value pair,
-    /// or `nil` if there is none.
+    /// Removes and returns the key-value pair at the specified position if there is any key-value
+    /// pair, or `nil` if there is none.
     ///
     /// - Parameter index: The position of the key-value pair to remove.
     /// - Returns: The element at the specified index, or `nil` if the position is not taken.
@@ -328,12 +332,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Sorting
     // ======================================================= //
     
-    /// Sorts the ordered dictionary in place, using the given predicate as the comparison between elements.
+    /// Sorts the ordered dictionary in place, using the given predicate as the comparison between
+    /// elements.
     ///
     /// The predicate must be a *strict weak ordering* over the elements.
     ///
-    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be 
-    ///   ordered before its second argument; otherwise, `false`.
+    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument
+    ///   should be ordered before its second argument; otherwise, `false`.
     ///
     /// - SeeAlso: MutableCollection.sort(by:), sorted(by:)
     public mutating func sort(by areInIncreasingOrder: (Element, Element) -> Bool) {
@@ -345,8 +350,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// The predicate must be a *strict weak ordering* over the elements.
     ///
-    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be
-    ///   ordered before its second argument; otherwise, `false`.
+    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument
+    ///   should be ordered before its second argument; otherwise, `false`.
     /// - Returns: A new ordered dictionary sorted according to the predicate.
     ///
     /// - SeeAlso: MutableCollection.sorted(by:), sort(by:)
@@ -365,8 +370,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     /// Accesses a contiguous subrange of the ordered dictionary.
     ///
-    /// - Parameter bounds: A range of the ordered dictionary's indices. The bounds of the range must be 
-    ///   valid indices of the ordered dictionary.
+    /// - Parameter bounds: A range of the ordered dictionary's indices. The bounds of the range
+    ///   must be valid indices of the ordered dictionary.
     /// - Returns: The slice view at the ordered dictionary in the specified subrange.
     public subscript(bounds: Range<Index>) -> SubSequence {
         return OrderedDictionarySlice(base: self, bounds: bounds)
@@ -441,7 +446,7 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 }
 
 // ======================================================= //
-// MARK: - Equality
+// MARK: - Equatable Conformance
 // ======================================================= //
 
 extension OrderedDictionary /* : Equatable */ where Value: Equatable {
