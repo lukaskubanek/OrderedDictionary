@@ -10,6 +10,7 @@
 		8055B0421E201C5D009DC3EE /* OrderedDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8055B0381E201C5D009DC3EE /* OrderedDictionary.framework */; };
 		8055B0551E201D24009DC3EE /* OrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8055B0531E201D24009DC3EE /* OrderedDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8055B0591E201DF3009DC3EE /* OrderedDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8055B0581E201DF3009DC3EE /* OrderedDictionaryTests.swift */; };
+		80A203A11F3F483700622481 /* OrderedDictionary+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A203A01F3F483700622481 /* OrderedDictionary+Codable.swift */; };
 		80B28EA01E201EC9007E3A77 /* OrderedDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B28E971E201EC8007E3A77 /* OrderedDictionary.framework */; };
 		80B28EAE1E201F15007E3A77 /* OrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8055B0531E201D24009DC3EE /* OrderedDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		80B28EB01E201F1C007E3A77 /* OrderedDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8055B0581E201DF3009DC3EE /* OrderedDictionaryTests.swift */; };
@@ -48,6 +49,7 @@
 		8055B0531E201D24009DC3EE /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		8055B0581E201DF3009DC3EE /* OrderedDictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionaryTests.swift; sourceTree = "<group>"; };
 		807AA68F1F1E587A00576474 /* OrderedDictionary+Codable.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "OrderedDictionary+Codable.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		80A203A01F3F483700622481 /* OrderedDictionary+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Codable.swift"; sourceTree = "<group>"; };
 		80B28E971E201EC8007E3A77 /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B28E9F1E201EC9007E3A77 /* OrderedDictionary_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B28EB41E201F81007E3A77 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			children = (
 				8055B0531E201D24009DC3EE /* OrderedDictionary.h */,
 				80E8E21C1E20301E00395E49 /* OrderedDictionary.swift */,
+				80A203A01F3F483700622481 /* OrderedDictionary+Codable.swift */,
 				80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */,
 				80E8E2231E205D5800395E49 /* OrderedDictionary+Migrations.swift */,
 				80E8E2201E204D6E00395E49 /* OrderedDictionarySlice.swift */,
@@ -349,6 +352,7 @@
 				80E8E2211E204D6E00395E49 /* OrderedDictionarySlice.swift in Sources */,
 				80E8E2241E205D5800395E49 /* OrderedDictionary+Migrations.swift in Sources */,
 				80E8E21D1E20301E00395E49 /* OrderedDictionary.swift in Sources */,
+				80A203A11F3F483700622481 /* OrderedDictionary+Codable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
