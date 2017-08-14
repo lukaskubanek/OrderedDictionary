@@ -1,20 +1,20 @@
 # OrderedDictionary
 
-[![](https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build")](https://travis-ci.org/lukaskubanek/OrderedDictionary) [![](https://img.shields.io/badge/release-v1.0.0--beta.2-blue.svg?style=flat-square)](https://github.com/lukaskubanek/OrderedDictionary/releases) [![](https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat-square)](https://developer.apple.com/swift/ "Swift 4") ![](https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellowgreen.svg?style=flat-square "Platform: macOS, iOS") [![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible")](https://github.com/Carthage/Carthage) [![](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT")](LICENSE.md)
+[![](https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build")](https://travis-ci.org/lukaskubanek/OrderedDictionary) [![](https://img.shields.io/badge/release-v1.0.0--beta.3-blue.svg?style=flat-square)](https://github.com/lukaskubanek/OrderedDictionary/releases) [![](https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat-square)](https://developer.apple.com/swift/ "Swift 4") ![](https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellowgreen.svg?style=flat-square "Platform: macOS, iOS") [![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible")](https://github.com/Carthage/Carthage) [![](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT")](LICENSE.md)
 
 **OrderedDictionary** is a lightweight implementation of an ordered dictionary data structure in Swift.
 
 The `OrderedDictionary` struct is a generic collection which combines the features of `Dictionary` and `Array` from the Swift standard library. Like `Dictionary` it stores key-value pairs with each key being unique and maps each key to an associated value. Like `Array` it stores those pairs sorted and accessible by a zero-based integer index.
 
-`OrderedDictionary` provides similar APIs like collections in the Swift standard library. This includes accessing contents by keys or indices, inserting and removing elements, iterating, sorting etc.
+`OrderedDictionary` provides similar APIs like collections from the Swift standard library. This includes accessing contents by keys or indices, inserting and removing elements, iterating, sorting etc.
 
-Internally `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys. This means it is not the most performant implementation possible, but it gets its job done by reusing most functionality from the Swift standard library.
+Internally, `OrderedDictionary` uses a backing store composed of an instance of `Dictionary` for storing the key-value pairs and an instance of `Array` for managing the ordered keys. This means it is not the most performant implementation possible, but it gets its job done by reusing most functionality from the Swift standard library.
 
 ## Requirements
 
 - Swift 4
 - Xcode 9
-- iOS 8.0+ / OS X 10.10+
+- iOS 8.0+ / macOS 10.10+
 
 ## Installation
 
