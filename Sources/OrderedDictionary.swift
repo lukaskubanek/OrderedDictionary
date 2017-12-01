@@ -193,7 +193,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     private func _unsafeValue(forKey key: Key) -> Value {
         let value = _keysToValues[key]
-        precondition(value != nil, "Inconsistency error occured in OrderedDictionary")
+        precondition(value != nil, "Inconsistency error occurred in OrderedDictionary")
         return value!
     }
     
