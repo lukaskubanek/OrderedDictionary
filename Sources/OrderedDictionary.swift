@@ -49,6 +49,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         self.init(values.map { ($0[keyPath: keyPath], $0) })
     }
     
+    /// Creates an ordered dictionary from a regular unsorted dictionary by sorting it using the
+    /// the given sort function.
+    ///
+    /// - Parameter unsorted: The unsorted dictionary.
+    /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
+    public init(unsorted: Dictionary<Key, Value>, areInIncreasingOrder: (Element, Element) -> Bool) {
+        let elements = unsorted
+            .map { (key: $0.key, value: $0.value) }
+            .sorted(by: areInIncreasingOrder)
+        
+        self.init(elements)
+    }
+    
     /// Creates an ordered dictionary from a sequence of key-value pairs.
     ///
     /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary.

@@ -67,6 +67,27 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(expected == actual)
     }
     
+    func testInitializationUsingUnsortedDictionaryAndSortFunction() {
+        let unsorted = [
+            2: "foo",
+            1: "bar",
+            4: "baz",
+            5: "bat",
+            3: "bam"
+        ]
+        
+        let expected = OrderedDictionary([
+            (key: 1, value: "bar"),
+            (key: 2, value: "foo"),
+            (key: 3, value: "bam"),
+            (key: 4, value: "baz"),
+            (key: 5, value: "bat")
+        ])
+        let actual = OrderedDictionary(unsorted: unsorted, areInIncreasingOrder: { $0.key < $1.key })
+        
+        XCTAssertTrue(expected == actual)
+    }
+    
     // ======================================================= //
     // MARK: - Content Access
     // ======================================================= //
