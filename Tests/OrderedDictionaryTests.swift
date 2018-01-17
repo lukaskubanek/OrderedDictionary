@@ -190,9 +190,23 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testIndexBasedInsertionWithDuplicateKey() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let invalidElement = (key: "A", value: 42)
+        let invalidKey = "A"
         
-        XCTAssertFalse(orderedDictionary.canInsert(invalidElement))
+        XCTAssertFalse(orderedDictionary.canInsert(key: invalidKey))
+    }
+    
+    func testIndexBasedInsertionWithNegativeIndex() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let invalidIndex = -1
+        
+        XCTAssertFalse(orderedDictionary.canInsert(at: invalidIndex))
+    }
+    
+    func testIndexBasedInsertionWithIndexOutOfBounds() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let invalidIndex = 4
+        
+        XCTAssertFalse(orderedDictionary.canInsert(at: invalidIndex))
     }
     
     // ======================================================= //

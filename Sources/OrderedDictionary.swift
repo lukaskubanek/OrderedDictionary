@@ -240,13 +240,40 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         return indices.contains(index) ? self[index] : nil
     }
     
-    /// Checks whether the given key-value pair can be inserted into the ordered dictionary. This
-    /// is not the case if the key is already present in the ordered dictionary.
+    /// Checks whether the given key-value pair can be inserted into to ordered dictionary by
+    /// validating the presence of the key.
     ///
     /// - Parameter newElement: The key-value pair to be inserted into the ordered dictionary.
     /// - Returns: `true` if the key-value pair can be safely inserted; otherwise, `false`.
+    ///
+    /// - SeeAlso: canInsert(key:)
+    /// - SeeAlso: canInsert(at:)
+    @available(*, deprecated, message: "Use canInsert(key:) with the element's key instead")
     public func canInsert(_ newElement: Element) -> Bool {
-        return !containsKey(newElement.key)
+        return canInsert(key: newElement.key)
+    }
+
+    /// Checks whether a key-value pair with the given key can be inserted into the ordered
+    /// dictionary by validating its presence.
+    ///
+    /// - Parameter key: The key to be inserted into the ordered dictionary.
+    /// - Returns: `true` if the key can safely be inserted; ortherwise, `false`.
+    ///
+    /// - SeeAlso: canInsert(at:)
+    public func canInsert(key: Key) -> Bool {
+        return !containsKey(key)
+    }
+    
+    /// Checks whether a new key-value pair can be inserted into the ordered dictionary at the
+    /// given index.
+    ///
+    /// - Parameter index: The index the new key-value pair should be inserted at.
+    /// - Returns: `true` if a new key-value pair can be inserted at the specified index; otherwise,
+    ///   `false`.
+    ///
+    /// - SeeAlso: canInsert(key:)
+    public func canInsert(at index: Index) -> Bool {
+        return index >= startIndex && index <= endIndex
     }
     
     /// Inserts a new key-value pair at the specified position.
@@ -260,12 +287,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// - Parameter index: The position at which to insert the new key-value pair. `index` must be
     ///   a valid index of the ordered dictionary or equal to `endIndex` property.
     ///
-    /// - SeeAlso: canInsert(_:)
+    /// - SeeAlso: canInsert(key:)
+    /// - SeeAlso: canInsert(at:)
     /// - SeeAlso: update(:at:)
     public mutating func insert(_ newElement: Element, at index: Index) {
-        precondition(index >= startIndex, "Negative OrderedDictionary index is out of range")
-        precondition(index <= endIndex, "OrderedDictionary index is out of range")
-        precondition(canInsert(newElement), "Cannot insert duplicate key in OrderedDictionary")
+        precondition(canInsert(key: newElement.key), "Cannot insert duplicate key in OrderedDictionary")
+        precondition(canInsert(at: index), "Cannot insert at invalid index in OrderedDictionary")
         
         let (key, value) = newElement
         
