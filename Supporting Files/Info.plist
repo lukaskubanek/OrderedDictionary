@@ -15,13 +15,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015 Lukas Kubanek. All rights reserved.</string>
+	<string>Copyright © 2015-2018 Lukas Kubanek. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>
