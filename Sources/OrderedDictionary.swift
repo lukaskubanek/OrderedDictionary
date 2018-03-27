@@ -592,13 +592,19 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 // MARK: - Equatable Conformance
 // ======================================================= //
 
-extension OrderedDictionary /* : Equatable */ where Value: Equatable {
-    
+#if swift(>=4.1)
+
+extension OrderedDictionary: Equatable where Value: Equatable {}
+
+#endif
+
+extension OrderedDictionary where Value: Equatable {
+
     /// Returns a Boolean value that indicates whether the two given ordered dictionaries with
     /// equatable values are equal.
     public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
         return lhs._orderedKeys == rhs._orderedKeys
             && lhs._keysToValues == rhs._keysToValues
     }
-    
+
 }
