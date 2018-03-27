@@ -1,28 +1,49 @@
-language: objective-c
-
-matrix:
-  include:
-    - osx_image: xcode9.2
-    - osx_image: xcode9.3beta
-
+# Git
 branches:
   only:
     - master
 
-script:
-  - Scripts/build.sh
+# OS
+os: osx
+language: objective-c
 
+#  Xcode Project
 xcode_project: OrderedDictionary.xcodeproj
+
+# Build Matrix
 matrix:
   include:
-    - xcode_scheme: OrderedDictionary-Mac
+    # Swift 4.0 / macOS
+    - osx_image: xcode9.2
+      xcode_scheme: OrderedDictionary-Mac 
       env:
         - XCODE_SDK=macosx
         - XCODE_ACTION="build test"
         - XCODE_DESTINATION="arch=x86_64"
         - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
-    - xcode_scheme: OrderedDictionary-iOS
+    # Swift 4.0 / iOS
+    - osx_image: xcode9.2
+      xcode_scheme: OrderedDictionary-iOS
       env:
         - XCODE_SDK=iphonesimulator
         - XCODE_ACTION="build-for-testing test-without-building"
         - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
+    # Swift 4.1 / macOS
+    - osx_image: xcode9.3beta
+      xcode_scheme: OrderedDictionary-Mac 
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build test"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
+    # Swift 4.1 / iOS
+    - osx_image: xcode9.3beta
+      xcode_scheme: OrderedDictionary-iOS
+      env:
+        - XCODE_SDK=iphonesimulator
+        - XCODE_ACTION="build-for-testing test-without-building"
+        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
+
+# Build Script
+script:
+  - Scripts/build.sh
