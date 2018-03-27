@@ -521,6 +521,24 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 }
 
 // ======================================================= //
+// MARK: - Slice Type
+// ======================================================= //
+
+#if swift(>=4.1)
+
+/// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
+/// dictionary.
+public typealias OrderedDictionarySlice<Key: Hashable, Value> = Slice<OrderedDictionary<Key, Value>>
+    
+#else
+
+/// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
+/// dictionary.
+public typealias OrderedDictionarySlice<Key: Hashable, Value> = BidirectionalSlice<OrderedDictionary<Key, Value>>
+    
+#endif
+
+// ======================================================= //
 // MARK: - Literals
 // ======================================================= //
 
