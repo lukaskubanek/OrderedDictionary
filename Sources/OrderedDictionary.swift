@@ -78,12 +78,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // ======================================================= //
     
     /// A collection containing just the keys of the ordered dictionary in the correct order.
-    public var orderedKeys: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Key> {
+    public var orderedKeys: OrderedDictionaryKeys<Key, Value> {
         return self.lazy.map { $0.key }
     }
     
     /// A collection containing just the values of the ordered dictionary in the correct order.
-    public var orderedValues: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Value> {
+    public var orderedValues: OrderedDictionaryValues<Key, Value> {
         return self.lazy.map { $0.value }
     }
     
@@ -521,7 +521,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 }
 
 // ======================================================= //
-// MARK: - Slice Type
+// MARK: - Subtypes
 // ======================================================= //
 
 #if swift(>=4.1)
@@ -529,12 +529,36 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 /// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
 /// dictionary.
 public typealias OrderedDictionarySlice<Key: Hashable, Value> = Slice<OrderedDictionary<Key, Value>>
-    
+
+/// A collection containing the keys of the ordered dictionary.
+///
+/// Under the hood this is a lazily evaluated bidirectional collection deriving the keys from
+/// the base ordered dictionary on-the-fly.
+public typealias OrderedDictionaryKeys<Key: Hashable, Value> = LazyMapCollection<OrderedDictionary<Key, Value>, Key>
+
+/// A collection containing the values of the ordered dictionary.
+///
+/// Under the hood this is a lazily evaluated bidirectional collection deriving the values from
+/// the base ordered dictionary on-the-fly.
+public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapCollection<OrderedDictionary<Key, Value>, Value>
+
 #else
 
 /// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
 /// dictionary.
 public typealias OrderedDictionarySlice<Key: Hashable, Value> = BidirectionalSlice<OrderedDictionary<Key, Value>>
+
+/// A collection containing the keys of the ordered dictionary.
+///
+/// Under the hood this is a lazily evaluated bidirectional collection deriving the keys from
+/// the base ordered dictionary on-the-fly.
+public typealias OrderedDictionaryKeys<Key: Hashable, Value> = LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Key>
+    
+/// A collection containing the values of the ordered dictionary.
+///
+/// Under the hood this is a lazily evaluated bidirectional collection deriving the values from
+/// the base ordered dictionary on-the-fly.
+public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Value>
     
 #endif
 
