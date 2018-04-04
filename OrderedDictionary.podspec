@@ -5,6 +5,6 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/zyggit/OrderedDictionary.git", :tag => s.version.to_s }
   s.ios.deployment_target     = '9.0'
   s.requires_arc = true
-  s.source_files     = 'OrderedDictionary/**/*.swift'
+  s.source_files     = 'Sources/**/*'
   s.frameworks  = "Foundation"
 end
