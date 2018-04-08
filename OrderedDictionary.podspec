@@ -7,4 +7,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files     = 'Sources/**/*'
   s.frameworks  = "Foundation"
+  s.license= { :type => "MIT", :file => "LICENSE"}
 end
