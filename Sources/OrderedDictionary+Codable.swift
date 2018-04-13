@@ -19,8 +19,7 @@ extension OrderedDictionary: Decodable where Key: Decodable, Value: Decodable {
     
     /// __inheritdoc__
     public init(from decoder: Decoder) throws {
-        // Decoding the ordered dictionary from an array of alternating key-value pairs.
-    
+        // Decode the ordered dictionary from an array of alternating key-value pairs.
         self.init()
     
         var container = try decoder.unkeyedContainer()
