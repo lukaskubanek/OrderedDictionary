@@ -2,6 +2,27 @@ import OrderedDictionary
 import Foundation
 import XCTest
 
+#if swift(>=4.1)
+#else
+
+/// This is a shim for testing the equality in Swift <4.1.
+public func XCTAssertEqual<K, V: Equatable>(
+    _ expression1: OrderedDictionary<K, V>,
+    _ expression2: OrderedDictionary<K, V>,
+    _ message: @autoclosure () -> String = "",
+    file: StaticString = #file,
+    line: UInt = #line
+) {
+    return XCTAssertTrue(
+        expression1 == expression2,
+        message,
+        file: file,
+        line: line
+    )
+}
+    
+#endif
+
 struct TestValue: Equatable {
     var string: String
     static func == (lhs: TestValue, rhs: TestValue) -> Bool {
@@ -23,7 +44,7 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual: OrderedDictionary<String, Int> = [("A", 1), ("B", 2), ("C", 3)]
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testInitializationUsingDictionaryLiteral() {
@@ -34,7 +55,7 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testInitializationUsingValuesAndKeyProviderClosure() {
@@ -47,7 +68,7 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual = OrderedDictionary(values: values, keyedBy: { "\($0)" })
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testInitializationUsingValuesAnyKeyPath() {
@@ -64,7 +85,7 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual = OrderedDictionary(values: values, keyedBy: \.string)
 
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testInitializationUsingUnsortedDictionaryAndSortFunction() {
@@ -85,7 +106,7 @@ class OrderedDictionaryTests: XCTestCase {
         ])
         let actual = OrderedDictionary(unsorted: unsorted, areInIncreasingOrder: { $0.key < $1.key })
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     // ======================================================= //
@@ -206,7 +227,7 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["T": 15, "A": 1, "W": 18, "U": 16, "B": 2, "C": 3, "V": 17]
         let actual = orderedDictionary
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testIndexBasedInsertionWithDuplicateKey() {
@@ -244,7 +265,7 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["A": 1, "D": 4, "C": 3]
         let actual = orderedDictionary
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testIndexBasedUpdateMethodByReplacingSameKey() {
@@ -257,7 +278,7 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 42, "C": 3]
         let actual = orderedDictionary
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     func testIndexBasedUpdateMethodByDuplicatingKey() {
@@ -330,7 +351,7 @@ class OrderedDictionaryTests: XCTestCase {
         let expected: OrderedDictionary<String, Int> = ["B": 2, "C": 3]
         let actual = orderedDictionary
         
-        XCTAssertTrue(expected == actual)
+        XCTAssertEqual(expected, actual)
     }
     
     // ======================================================= //
@@ -420,10 +441,10 @@ class OrderedDictionaryTests: XCTestCase {
         
         let jsonDecoder = JSONDecoder()
         
-        let expectedOrderedDictionary = orderedDictionary
-        let actualOrderedDictionary = try! jsonDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
+        let expected = orderedDictionary
+        let actual = try! jsonDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
         
-        XCTAssertTrue(expectedOrderedDictionary == actualOrderedDictionary)
+        XCTAssertEqual(expected, actual)
     }
     
     func testEncodingAndDecodingViaPropertyList() {
@@ -438,10 +459,10 @@ class OrderedDictionaryTests: XCTestCase {
         
         let data = try! plistEncoder.encode(orderedDictionary)
         
-        let expectedOrderedDictionary = orderedDictionary
-        let actualOrderedDictionary = try! plistDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
+        let expected = orderedDictionary
+        let actual = try! plistDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
         
-        XCTAssertTrue(expectedOrderedDictionary == actualOrderedDictionary)
+        XCTAssertEqual(expected, actual)
     }
     
     // ======================================================= //
