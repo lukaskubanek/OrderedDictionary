@@ -134,7 +134,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// - Parameter key: The key to be looked up.
     /// - Returns: `true` if the ordered dictionary contains the given key; otherwise, `false`.
     public func containsKey(_ key: Key) -> Bool {
-        return _orderedKeys.contains(key)
+        return _keysToValues[key] != nil
     }
     
     /// Returns the value associated with the given key if the key is found in the ordered
@@ -151,13 +151,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// key-value pair if the key does not exist.
     ///
     /// - Parameter value: The new value to add to the ordered dictionary.
-    /// - Parameter key: The key to associate with `value`. If `key` already exists in the ordered 
+    /// - Parameter key: The key to associate with `value`. If `key` already exists in the ordered
     ///   dictionary, `value` replaces the existing associated value. If `key` is not already a key
     ///   of the ordered dictionary, the `(key, value)` pair is appended at the end of the ordered
     ///   dictionary.
     @discardableResult
     public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
-        if _orderedKeys.contains(key) {
+        if containsKey(key) {
             let currentValue = _unsafeValue(forKey: key)
             
             _keysToValues[key] = value
