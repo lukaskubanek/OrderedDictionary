@@ -103,6 +103,49 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     // ======================================================= //
+    // MARK: - Indices
+    // ======================================================= //
+    
+    /// The indices that are valid for subscripting the ordered dictionary.
+    public var indices: Indices {
+        return _orderedKeys.indices
+    }
+    
+    /// The position of the first key-value pair in a non-empty ordered dictionary.
+    public var startIndex: Index {
+        return _orderedKeys.startIndex
+    }
+    
+    /// The position which is one greater than the position of the last valid key-value pair in the
+    /// ordered dictionary.
+    public var endIndex: Index {
+        return _orderedKeys.endIndex
+    }
+    
+    /// Returns the position immediately after the given index.
+    public func index(after i: Index) -> Index {
+        return _orderedKeys.index(after: i)
+    }
+    
+    /// Returns the position immediately before the given index.
+    public func index(before i: Index) -> Index {
+        return _orderedKeys.index(before: i)
+    }
+    
+    // ======================================================= //
+    // MARK: - Slices
+    // ======================================================= //
+    
+    /// Accesses a contiguous subrange of the ordered dictionary.
+    ///
+    /// - Parameter bounds: A range of the ordered dictionary's indices. The bounds of the range
+    ///   must be valid indices of the ordered dictionary.
+    /// - Returns: The slice view at the ordered dictionary in the specified subrange.
+    public subscript(bounds: Range<Index>) -> SubSequence {
+        return OrderedDictionarySlice(base: self, bounds: bounds)
+    }
+    
+    // ======================================================= //
     // MARK: - Key-based Access
     // ======================================================= //
     
@@ -473,49 +516,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     
     private func _sortedElements(by areInIncreasingOrder: (Element, Element) -> Bool) -> [Element] {
         return sorted(by: areInIncreasingOrder)
-    }
-    
-    // ======================================================= //
-    // MARK: - Slices
-    // ======================================================= //
-    
-    /// Accesses a contiguous subrange of the ordered dictionary.
-    ///
-    /// - Parameter bounds: A range of the ordered dictionary's indices. The bounds of the range
-    ///   must be valid indices of the ordered dictionary.
-    /// - Returns: The slice view at the ordered dictionary in the specified subrange.
-    public subscript(bounds: Range<Index>) -> SubSequence {
-        return OrderedDictionarySlice(base: self, bounds: bounds)
-    }
-    
-    // ======================================================= //
-    // MARK: - Indices
-    // ======================================================= //
-    
-    /// The indices that are valid for subscripting the ordered dictionary.
-    public var indices: Indices {
-        return _orderedKeys.indices
-    }
-
-    /// The position of the first key-value pair in a non-empty ordered dictionary.
-    public var startIndex: Index {
-        return _orderedKeys.startIndex
-    }
-    
-    /// The position which is one greater than the position of the last valid key-value pair in the
-    /// ordered dictionary.
-    public var endIndex: Index {
-        return _orderedKeys.endIndex
-    }
-    
-    /// Returns the position immediately after the given index.
-    public func index(after i: Index) -> Index {
-        return _orderedKeys.index(after: i)
-    }
-    
-    /// Returns the position immediately before the given index.
-    public func index(before i: Index) -> Index {
-        return _orderedKeys.index(before: i)
     }
     
     // ======================================================= //
