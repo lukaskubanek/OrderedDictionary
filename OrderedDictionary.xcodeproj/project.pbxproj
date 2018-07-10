@@ -49,6 +49,7 @@
 		80B28EB41E201F81007E3A77 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		80B28EB51E201F81007E3A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80B28EB71E2020DD007E3A77 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		80DE329220F4CAFA0053EDA7 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		80E8E21C1E20301E00395E49 /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Description.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +100,7 @@
 		8055B02E1E201C5D009DC3EE = {
 			isa = PBXGroup;
 			children = (
+				80DE329220F4CAFA0053EDA7 /* Package.swift */,
 				8055B0521E201D24009DC3EE /* Sources */,
 				80B28EB11E201F72007E3A77 /* Playgrounds */,
 				8055B0571E201DF3009DC3EE /* Tests */,

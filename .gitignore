@@ -27,3 +27,6 @@ DerivedData
 
 # Carthage
 Carthage
+
+# SPM
+.build
