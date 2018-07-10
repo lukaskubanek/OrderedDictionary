@@ -2,8 +2,7 @@ import OrderedDictionary
 import Foundation
 import XCTest
 
-#if swift(>=4.1)
-#else
+#if !swift(>=4.1)
 
 /// This is a shim for testing the equality in Swift <4.1.
 public func XCTAssertEqual<K, V: Equatable>(
