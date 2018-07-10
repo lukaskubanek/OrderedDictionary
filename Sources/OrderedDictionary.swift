@@ -36,7 +36,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// - Parameter values: The sequence of values.
     /// - Parameter getKey: The closure which provides a key for the given value from the values
     ///   sequence.
-    public init<Values: Sequence>(values: Values, keyedBy getKey: (Value) -> Key) where Values.Element == Value {
+    public init<Values: Sequence>(
+        values: Values,
+        keyedBy getKey: (Value) -> Key
+    ) where Values.Element == Value {
         self.init(values.map { (getKey($0), $0) })
     }
     
@@ -54,7 +57,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - Parameter unsorted: The unsorted dictionary.
     /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
-    public init(unsorted: Dictionary<Key, Value>, areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows {
+    public init(
+        unsorted: Dictionary<Key, Value>,
+        areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows {
         let elements = try unsorted
             .map { (key: $0.key, value: $0.value) }
             .sorted(by: areInIncreasingOrder)
@@ -385,7 +391,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         return element
     }
     
-    private func _canUpdate(_ newElement: Element, at index: Index, keyPresentAtIndex: inout Bool) -> Bool {
+    private func _canUpdate(
+        _ newElement: Element,
+        at index: Index,
+        keyPresentAtIndex: inout Bool
+    ) -> Bool {
         precondition(indices.contains(index), "OrderedDictionary index is out of range")
         
         let currentIndexOfKey = self.index(forKey: newElement.key)
