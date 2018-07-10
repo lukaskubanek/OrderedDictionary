@@ -54,8 +54,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - Parameter unsorted: The unsorted dictionary.
     /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
-    public init(unsorted: Dictionary<Key, Value>, areInIncreasingOrder: (Element, Element) -> Bool) {
-        let elements = unsorted
+    public init(unsorted: Dictionary<Key, Value>, areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows {
+        let elements = try unsorted
             .map { (key: $0.key, value: $0.value) }
             .sorted(by: areInIncreasingOrder)
         
@@ -607,4 +607,26 @@ extension OrderedDictionary where Value: Equatable {
             && lhs._keysToValues == rhs._keysToValues
     }
 
+}
+
+// ======================================================= //
+// MARK: - Dictionary Extension
+// ======================================================= //
+
+public extension Dictionary {
+    
+    /// Returns an ordered dictionary containing the key-value pairs from the dictionary, sorted
+    /// using the given sort function.
+    ///
+    /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
+    /// - Returns: The ordered dictionary.
+    public func sorted(
+        by areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows -> OrderedDictionary<Key, Value> {
+        return try OrderedDictionary(
+            unsorted: self,
+            areInIncreasingOrder: areInIncreasingOrder
+        )
+    }
+    
 }
