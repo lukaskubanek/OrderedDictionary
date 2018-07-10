@@ -450,6 +450,34 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     // ======================================================= //
+    // MARK: - Removing First & Last Elements
+    // ======================================================= //
+    
+    /// Removes and returns the first key-value pair of the ordered dictionary if it is not empty.
+    public mutating func popFirst() -> Element? {
+        guard !isEmpty else { return nil }
+        return remove(at: startIndex)
+    }
+    
+    /// Removes and returns the last key-value pair of the ordered dictionary if it is not empty.
+    public mutating func popLast() -> Element? {
+        guard !isEmpty else { return nil }
+        return remove(at: index(before: endIndex))
+    }
+    
+    /// Removes and returns the first key-value pair of the ordered dictionary.
+    public mutating func removeFirst() -> Element {
+        precondition(!isEmpty, "Cannot remove key-value pairs from empty OrderedDictionary")
+        return remove(at: startIndex)!
+    }
+    
+    /// Removes and returns the last key-value pair of the ordered dictionary.
+    public mutating func removeLast() -> Element {
+        precondition(!isEmpty, "Cannot remove key-value pairs from empty OrderedDictionary")
+        return remove(at: index(before: endIndex))!
+    }
+    
+    // ======================================================= //
     // MARK: - Moving Elements
     // ======================================================= //
     

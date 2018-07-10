@@ -390,6 +390,80 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
+    func testPopFirstEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = []
+        let first = orderedDictionary.popFirst()
+        
+        XCTAssertNil(first)
+    }
+    
+    func testPopFirstNonEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let (actualKey, actualValue) = orderedDictionary.popFirst()!
+        let (expectedKey, expectedValue) = ("A", 1)
+        
+        XCTAssertEqual(actualKey, expectedKey)
+        XCTAssertEqual(actualValue, expectedValue)
+        
+        let actual = orderedDictionary
+        let expected: OrderedDictionary<String, Int> = ["B": 2, "C": 3, "D": 4]
+
+        XCTAssertTrue(actual == expected)
+    }
+    
+    func testPopLastEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = []
+        let last = orderedDictionary.popLast()
+        
+        XCTAssertNil(last)
+    }
+    
+    func testPopLastNonEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let (actualKey, actualValue) = orderedDictionary.popLast()!
+        let (expectedKey, expectedValue) = ("D", 4)
+        
+        XCTAssertEqual(actualKey, expectedKey)
+        XCTAssertEqual(actualValue, expectedValue)
+        
+        let actual = orderedDictionary
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        
+        XCTAssertTrue(actual == expected)
+    }
+    
+    func testRemoveFirstNonEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let (actualKey, actualValue) = orderedDictionary.removeFirst()
+        let (expectedKey, expectedValue) = ("A", 1)
+        
+        XCTAssertEqual(actualKey, expectedKey)
+        XCTAssertEqual(actualValue, expectedValue)
+        
+        let actual = orderedDictionary
+        let expected: OrderedDictionary<String, Int> = ["B": 2, "C": 3, "D": 4]
+        
+        XCTAssertTrue(actual == expected)
+    }
+    
+    func testRemoveLastNonEmpty() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let (actualKey, actualValue) = orderedDictionary.removeLast()
+        let (expectedKey, expectedValue) = ("D", 4)
+        
+        XCTAssertEqual(actualKey, expectedKey)
+        XCTAssertEqual(actualValue, expectedValue)
+        
+        let actual = orderedDictionary
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        
+        XCTAssertTrue(actual == expected)
+    }
+    
     // ======================================================= //
     // MARK: - Moving Elements
     // ======================================================= //
