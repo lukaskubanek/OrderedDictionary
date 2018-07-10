@@ -45,7 +45,7 @@ Yet another option is using [Git submodules](http://git-scm.com/book/en/v2/Git-T
 
 #### ⚠️ Note About CocoaPods
 
-Although there is high demand for [CocoaPods](https://cocoapods.org) support, this method won't be officially supported by this library. Since I'm not using CocoaPods myself and since I think this method will be once replaced by the Swift Package Manager, I don't want to put any effort in maintaining official podspec. If you really want to include this library via CocoaPods, there is still a way by creating a custom podspec. See the last section of [this post](https://guides.cocoapods.org/syntax/podfile.html#pod).
+Although there is high demand for [CocoaPods](https://cocoapods.org) support, this method won't be officially supported by this library. Since I'm not using CocoaPods myself and since I think this method will be once replaced by the Swift Package Manager, I don't want to put any effort in maintaining an official podspec. If you really want to include this library via CocoaPods, there is still a way by creating a custom podspec (see the last section of [this post](https://guides.cocoapods.org/syntax/podfile.html#pod)).
 
 ## Usage & Docs
 
