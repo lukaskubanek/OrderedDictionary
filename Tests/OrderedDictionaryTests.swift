@@ -125,6 +125,26 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
+    func testCreationFromDictionary() {
+        let actual = [
+            2: "foo",
+            1: "bar",
+            4: "baz",
+            5: "bat",
+            3: "bam"
+        ].sorted(by: { $0.key < $1.key })
+        
+        let expected = OrderedDictionary([
+            (key: 1, value: "bar"),
+            (key: 2, value: "foo"),
+            (key: 3, value: "bam"),
+            (key: 4, value: "baz"),
+            (key: 5, value: "bat")
+        ])
+        
+        XCTAssertEqual(actual, expected)
+    }
+    
     // ======================================================= //
     // MARK: - Content Access
     // ======================================================= //
