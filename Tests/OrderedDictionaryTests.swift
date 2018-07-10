@@ -409,7 +409,7 @@ class OrderedDictionaryTests: XCTestCase {
         let actual = orderedDictionary
         let expected: OrderedDictionary<String, Int> = ["B": 2, "C": 3, "D": 4]
 
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     func testPopLastEmpty() {
@@ -431,7 +431,7 @@ class OrderedDictionaryTests: XCTestCase {
         let actual = orderedDictionary
         let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     func testRemoveFirstNonEmpty() {
@@ -446,7 +446,7 @@ class OrderedDictionaryTests: XCTestCase {
         let actual = orderedDictionary
         let expected: OrderedDictionary<String, Int> = ["B": 2, "C": 3, "D": 4]
         
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     func testRemoveLastNonEmpty() {
@@ -461,7 +461,7 @@ class OrderedDictionaryTests: XCTestCase {
         let actual = orderedDictionary
         let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     // ======================================================= //
@@ -480,38 +480,36 @@ class OrderedDictionaryTests: XCTestCase {
         let actual = orderedDictionary
         let expected: OrderedDictionary<String, Int> = ["C": 3, "A": 1, "D": 4, "B": 2]
         
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     // ======================================================= //
     // MARK: - Sorting Elements
     // ======================================================= //
     
-    private let areInIncreasingOrder: (OrderedDictionary<String, Int>.Element, OrderedDictionary<String, Int>.Element) -> Bool = { element1, element2 in
-        if element1.value == element2.value {
-            return element1.key < element2.key
-        } else {
-            return element1.value < element2.value
-        }
-    }
-    
     func testSortingWithMutation() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
-        orderedDictionary.sort(by: areInIncreasingOrder)
+        orderedDictionary.sort { element1, element2 in
+            if element1.value != element2.value { return element1.value < element2.value }
+            return element1.key < element2.key
+        }
         let actual = orderedDictionary
         
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         
-        XCTAssertTrue(actual == expected)
+        XCTAssertEqual(actual, expected)
     }
     
     func testSortingWithoutMutation() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
-        let actual: OrderedDictionary<String, Int> = orderedDictionary.sorted(by: areInIncreasingOrder)
+        let actual: OrderedDictionary<String, Int> = orderedDictionary.sorted { element1, element2 in
+            if element1.value != element2.value { return element1.value < element2.value }
+            return element1.key < element2.key
+        }
         
         let expected: OrderedDictionary<String, Int> = ["D": 1, "A": 3, "G": 3, "B": 4, "E": 4]
         
-        XCTAssertTrue(actual.elementsEqual(expected, by: ==))
+        XCTAssertEqual(actual, expected)
     }
     
     // ======================================================= //
@@ -565,9 +563,9 @@ class OrderedDictionaryTests: XCTestCase {
         ]
         
         let plistEncoder = PropertyListEncoder()
-        let plistDecoder = PropertyListDecoder()
-        
         let data = try! plistEncoder.encode(orderedDictionary)
+        
+        let plistDecoder = PropertyListDecoder()
         let actual = try! plistDecoder.decode(OrderedDictionary<String, Int>.self, from: data)
         
         let expected = orderedDictionary
