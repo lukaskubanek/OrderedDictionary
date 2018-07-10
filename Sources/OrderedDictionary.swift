@@ -523,8 +523,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///   should be ordered before its second argument; otherwise, `false`.
     ///
     /// - SeeAlso: MutableCollection.sort(by:), sorted(by:)
-    public mutating func sort(by areInIncreasingOrder: (Element, Element) -> Bool) {
-        _orderedKeys = _sortedElements(by: areInIncreasingOrder).map { $0.key }
+    public mutating func sort(
+        by areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows {
+        _orderedKeys = try _sortedElements(by: areInIncreasingOrder).map { $0.key }
     }
     
     /// Returns a new ordered dictionary, sorted using the given predicate as the comparison between 
@@ -538,12 +540,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - SeeAlso: MutableCollection.sorted(by:), sort(by:)
     /// - MutatingVariant: sort
-    public func sorted(by areInIncreasingOrder: (Element, Element) -> Bool) -> OrderedDictionary<Key, Value> {
-        return OrderedDictionary(_sortedElements(by: areInIncreasingOrder))
+    public func sorted(
+        by areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows -> OrderedDictionary<Key, Value> {
+        return OrderedDictionary(try _sortedElements(by: areInIncreasingOrder))
     }
     
-    private func _sortedElements(by areInIncreasingOrder: (Element, Element) -> Bool) -> [Element] {
-        return sorted(by: areInIncreasingOrder)
+    private func _sortedElements(
+        by areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows -> [Element] {
+        return try sorted(by: areInIncreasingOrder)
     }
     
     // ======================================================= //
@@ -658,6 +664,7 @@ public extension Dictionary {
     ///
     /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
     /// - Returns: The ordered dictionary.
+    /// - SeeAlso: OrderedDictionary.init(unsorted:areInIncreasingOrder:)
     public func sorted(
         by areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows -> OrderedDictionary<Key, Value> {
