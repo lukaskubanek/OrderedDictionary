@@ -23,5 +23,5 @@ let package = Package(
             path: "Tests"
         )
     ],
-    swiftLanguageVersions: [.v4, .v4_2]
+    swiftLanguageVersions: [4]
 )
