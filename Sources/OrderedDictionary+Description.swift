@@ -20,7 +20,7 @@ extension OrderedDictionary {
     
     fileprivate func makeDescription(debug: Bool) -> String {
         // The implementation of the description is inspired by zwaldowski's implementation of the
-        // ordered dictionary. See http://bit.ly/2iqGhrb
+        // ordered dictionary. See https://bit.ly/2RiWfJu
         
         if isEmpty { return "[:]" }
         
