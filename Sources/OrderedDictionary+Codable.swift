@@ -122,7 +122,7 @@ extension OrderedDictionary: Decodable {
 
 fileprivate extension DecodingError {
     
-    fileprivate static func unkeyedContainerReachedEndBeforeValue(_ codingPath: [CodingKey]) -> DecodingError {
+    static func unkeyedContainerReachedEndBeforeValue(_ codingPath: [CodingKey]) -> DecodingError {
         return DecodingError.dataCorrupted(
             DecodingError.Context(
                 codingPath: codingPath,
