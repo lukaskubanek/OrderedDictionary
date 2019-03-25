@@ -657,7 +657,7 @@ extension OrderedDictionary where Value: Equatable {
 // MARK: - Dictionary Extension
 // ======================================================= //
 
-public extension Dictionary {
+extension Dictionary {
     
     /// Returns an ordered dictionary containing the key-value pairs from the dictionary, sorted
     /// using the given sort function.
@@ -665,7 +665,7 @@ public extension Dictionary {
     /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
     /// - Returns: The ordered dictionary.
     /// - SeeAlso: OrderedDictionary.init(unsorted:areInIncreasingOrder:)
-    func sorted(
+    public func sorted(
         by areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows -> OrderedDictionary<Key, Value> {
         return try OrderedDictionary(
