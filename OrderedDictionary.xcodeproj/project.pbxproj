@@ -37,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8024947E2277123600AB44C7 /* Package@swift-4.2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-4.2.swift"; sourceTree = "<group>"; };
+		8024947F2277136D00AB44C7 /* Package@swift-5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.swift"; sourceTree = "<group>"; };
 		804879371E217C7700AD31A3 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		804879381E217CA100AD31A3 /* validate-playgrounds.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "validate-playgrounds.sh"; sourceTree = "<group>"; };
 		8055B0381E201C5D009DC3EE /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,8 @@
 				80DE329320F4DD910053EDA7 /* README.md */,
 				80DE329420F4DD910053EDA7 /* LICENSE.md */,
 				80DE329220F4CAFA0053EDA7 /* Package.swift */,
+				8024947E2277123600AB44C7 /* Package@swift-4.2.swift */,
+				8024947F2277136D00AB44C7 /* Package@swift-5.swift */,
 				8055B0521E201D24009DC3EE /* Sources */,
 				80B28EB11E201F72007E3A77 /* Playgrounds */,
 				8055B0571E201DF3009DC3EE /* Tests */,

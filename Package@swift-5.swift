@@ -1,4 +1,4 @@
-// swift-tools-version:4
+// swift-tools-version:5.0
 
 import PackageDescription
 
@@ -23,5 +23,5 @@ let package = Package(
             path: "Tests"
         )
     ],
-    swiftLanguageVersions: [4]
+    swiftLanguageVersions: [.v5]
 )
