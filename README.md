@@ -1,6 +1,6 @@
 # OrderedDictionary
 
-[![](https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build")](https://travis-ci.org/lukaskubanek/OrderedDictionary) [![](https://img.shields.io/badge/release-v2.2.0-blue.svg?style=flat-square)](https://github.com/lukaskubanek/OrderedDictionary/releases) [![](https://img.shields.io/badge/Swift-4.0+-orange.svg?style=flat-square)](https://developer.apple.com/swift/ "Swift 4") ![](https://img.shields.io/badge/platform-macOS/iOS-yellowgreen.svg?style=flat-square "Platform: macOS/iOS") [![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible")](https://github.com/Carthage/Carthage)
+[![](https://img.shields.io/travis/lukaskubanek/OrderedDictionary.svg?style=flat-square "Build")](https://travis-ci.org/lukaskubanek/OrderedDictionary) [![](https://img.shields.io/badge/release-v2.2.2-blue.svg?style=flat-square)](https://github.com/lukaskubanek/OrderedDictionary/releases) [![](https://img.shields.io/badge/Swift-4.0+-orange.svg?style=flat-square)](https://developer.apple.com/swift/ "Swift 4") ![](https://img.shields.io/badge/platform-macOS/iOS-yellowgreen.svg?style=flat-square "Platform: macOS/iOS") [![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square "Carthage compatible")](https://github.com/Carthage/Carthage)
 [![](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?style=flat-square "SPM compatible")](https://github.com/Carthage/Carthage) [![](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square "License: MIT")](LICENSE.md)
 
 **OrderedDictionary** is a lightweight implementation of an ordered dictionary data structure in Swift.
@@ -36,7 +36,7 @@ Then, drag either the `OrderedDictionary.xcodeproj` or the `OrderedDictionary.fr
 Another option is to use the [Swift Package Manager](https://swift.org/package-manager/). If you prefer this option, put OrderedDictionary as a dependency to your `Package.swift`:
 
 ```plain
-.package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "2.2.0")
+.package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "2.2.2")
 ```
 
 #### Git Submodules
