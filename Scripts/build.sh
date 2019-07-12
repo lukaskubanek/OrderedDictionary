@@ -32,6 +32,9 @@ if [[ -z $XCODE_DESTINATION ]]; then
 fi
 
 set -o pipefail
+
+swift --version
+
 xcodebuild $XCODE_ACTION \
     -project "$TRAVIS_XCODE_PROJECT" \
     -scheme "$TRAVIS_XCODE_SCHEME" \
