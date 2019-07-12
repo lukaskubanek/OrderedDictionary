@@ -27,32 +27,43 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Initialization
     // ======================================================= //
     
-    /// Creates an empty ordered dictionary.
+    /// Initializes an empty ordered dictionary.
     public init() {}
     
-    /// Creates an ordered dictionary from a sequence of values keyed by a key which gets extracted
-    /// from the value in the provided closure.
+    /// Initializes an ordered dictionary from a sequence of values keyed by a uniqe key extracted
+    /// from the value using the given closure.
     ///
     /// - Parameter values: The sequence of values.
-    /// - Parameter getKey: The closure which provides a key for the given value from the values
-    ///   sequence.
-    public init<Values: Sequence>(
-        values: Values,
-        keyedBy getKey: (Value) -> Key
-    ) where Values.Element == Value {
-        self.init(values.map { (getKey($0), $0) })
+    /// - Parameter extractKey: The closure which extracts a key from the value. The returned keys
+    ///   must be unique for all values from the sequence.
+    public init<S: Sequence>(
+        values: S,
+        uniquelyKeyedBy extractKey: (Value) -> Key
+    ) where S.Element == Value {
+        let keysAndValues = values.map { value in
+            return (extractKey(value), value)
+        }
+        
+        self.init(keysAndValues)
     }
     
-    /// Creates an ordered dictionary from a sequence of values keyed by a key loaded from the value
-    /// at the given key path.
+    /// Initializes an ordered dictionary from a sequence of values keyed by a unique key extracted
+    /// from the value using the given key path.
     ///
     /// - Parameter values: The sequence of values.
-    /// - Parameter keyPath: The key path for the value to locate its key at.
-    public init(values: [Value], keyedBy keyPath: KeyPath<Value, Key>) {
-        self.init(values.map { ($0[keyPath: keyPath], $0) })
+    /// - Parameter keyPath: The key path to use for extracting a key from the value. The extracted
+    ///   keys must be unique for all values from the sequence.
+    public init<S: Sequence>(
+        values: S,
+        uniquelyKeyedBy keyPath: KeyPath<Value, Key>
+    ) where S.Element == Value {
+        self.init(
+            values: values,
+            uniquelyKeyedBy: { $0[keyPath: keyPath] }
+        )
     }
     
-    /// Creates an ordered dictionary from a regular unsorted dictionary by sorting it using the
+    /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it using the
     /// the given sort function.
     ///
     /// - Parameter unsorted: The unsorted dictionary.
@@ -68,7 +79,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         self.init(elements)
     }
     
-    /// Creates an ordered dictionary from a sequence of key-value pairs.
+    /// Initializes an ordered dictionary from a sequence of key-value pairs.
     ///
     /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary.
     ///   Each key in `elements` must be unique.

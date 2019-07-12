@@ -70,7 +70,7 @@ class OrderedDictionaryTests: XCTestCase {
     func testInitializationUsingValuesAndKeyProviderClosure() {
         let actual = OrderedDictionary(
             values: [1, 2, 3],
-            keyedBy: { "\($0)" }
+            uniquelyKeyedBy: { "\($0)" }
         )
         
         let expected = OrderedDictionary<String, Int>([
@@ -89,7 +89,7 @@ class OrderedDictionaryTests: XCTestCase {
                 TestValue(string: "B"),
                 TestValue(string: "C")
             ],
-            keyedBy: \.string
+            uniquelyKeyedBy: \.string
         )
         
         let expected = OrderedDictionary<String, TestValue>([
