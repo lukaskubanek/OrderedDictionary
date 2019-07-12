@@ -21,6 +21,7 @@ matrix:
         - XCODE_ACTION="build test"
         - XCODE_DESTINATION="arch=x86_64"
         - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
+        - SWIFT_VERSION=4.1
     # Swift 4.0 / iOS
     - osx_image: xcode10.2
       xcode_scheme: OrderedDictionary-iOS
@@ -28,6 +29,7 @@ matrix:
         - XCODE_SDK=iphonesimulator
         - XCODE_ACTION="build-for-testing test-without-building"
         - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
+        - SWIFT_VERSION=5.0
 
 # Build Script
 script:
