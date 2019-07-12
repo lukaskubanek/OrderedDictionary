@@ -30,6 +30,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// Initializes an empty ordered dictionary.
     public init() {}
     
+    /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it using the
+    /// the given sort function.
+    ///
+    /// - Parameter unsorted: The unsorted dictionary.
+    /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
+    public init(
+        unsorted: Dictionary<Key, Value>,
+        areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows {
+        let keysAndValues = try Array(unsorted).sorted(by: areInIncreasingOrder)
+        self.init(uniqueKeysWithValues: keysAndValues)
+    }
+    
     /// Initializes an ordered dictionary from a sequence of values keyed by a uniqe key extracted
     /// from the value using the given closure.
     ///
@@ -44,7 +57,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
             return (extractKey(value), value)
         }
         
-        self.init(keysAndValues)
+        self.init(uniqueKeysWithValues: keysAndValues)
     }
     
     /// Initializes an ordered dictionary from a sequence of values keyed by a unique key extracted
@@ -63,29 +76,13 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         )
     }
     
-    /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it using the
-    /// the given sort function.
-    ///
-    /// - Parameter unsorted: The unsorted dictionary.
-    /// - Parameter areInIncreasingOrder: The sort function which compares the key-value pairs.
-    public init(
-        unsorted: Dictionary<Key, Value>,
-        areInIncreasingOrder: (Element, Element) throws -> Bool
-    ) rethrows {
-        let elements = try unsorted
-            .map { (key: $0.key, value: $0.value) }
-            .sorted(by: areInIncreasingOrder)
-        
-        self.init(elements)
-    }
-    
     /// Initializes an ordered dictionary from a sequence of key-value pairs.
     ///
-    /// - Parameter elements: The key-value pairs that will make up the new ordered dictionary.
-    ///   Each key in `elements` must be unique.
-    public init<S: Sequence>(_ elements: S) where S.Element == Element {
-        for (key, value) in elements {
-            precondition(!containsKey(key), "Elements sequence contains duplicate keys")
+    /// - Parameter keysAndValues: A sequence of key-value pairs to use for the new ordered
+    ///   dictionary. Every key in `keysAndValues` must be unique.
+    public init<S: Sequence>(uniqueKeysWithValues keysAndValues: S) where S.Element == Element {
+        for (key, value) in keysAndValues {
+            precondition(!containsKey(key), "Sequence of key-value pairs contains duplicate keys")
             self[key] = value
         }
     }
@@ -554,7 +551,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     public func sorted(
         by areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows -> OrderedDictionary<Key, Value> {
-        return OrderedDictionary(try _sortedElements(by: areInIncreasingOrder))
+        return OrderedDictionary(uniqueKeysWithValues: try _sortedElements(by: areInIncreasingOrder))
     }
     
     private func _sortedElements(
@@ -658,19 +655,20 @@ public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapBidirect
 
 extension OrderedDictionary: ExpressibleByArrayLiteral {
     
-    /// Creates an ordered dictionary initialized from an array literal containing a list of 
-    /// key-value pairs.
+    /// Initializes an ordered dictionary initialized from an array literal containing a list of
+    /// key-value pairs. Every key in `elements` must be unique.
     public init(arrayLiteral elements: Element...) {
-        self.init(elements)
+        self.init(uniqueKeysWithValues: elements)
     }
     
 }
 
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     
-    /// Creates an ordered dictionary initialized from a dictionary literal.
+    /// Initializes an ordered dictionary initialized from a dictionary literal. Every key in
+    /// `elements` must be unique.
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        self.init(elements.map { element in
+        self.init(uniqueKeysWithValues: elements.map { element in
             let (key, value) = element
             return (key: key, value: value)
         })

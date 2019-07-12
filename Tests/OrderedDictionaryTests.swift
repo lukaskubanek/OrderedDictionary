@@ -42,7 +42,7 @@ class OrderedDictionaryTests: XCTestCase {
             ("C", 3)
         ]
         
-        let expected = OrderedDictionary<String, Int>([
+        let expected = OrderedDictionary<String, Int>(uniqueKeysWithValues: [
             (key: "A", value: 1),
             (key: "B", value: 2),
             (key: "C", value: 3)
@@ -58,7 +58,7 @@ class OrderedDictionaryTests: XCTestCase {
             "C": 3
         ]
         
-        let expected = OrderedDictionary<String, Int>([
+        let expected = OrderedDictionary<String, Int>(uniqueKeysWithValues: [
             (key: "A", value: 1),
             (key: "B", value: 2),
             (key: "C", value: 3)
@@ -73,7 +73,7 @@ class OrderedDictionaryTests: XCTestCase {
             uniquelyKeyedBy: { "\($0)" }
         )
         
-        let expected = OrderedDictionary<String, Int>([
+        let expected = OrderedDictionary<String, Int>(uniqueKeysWithValues: [
             (key: "1", value: 1),
             (key: "2", value: 2),
             (key: "3", value: 3)
@@ -92,7 +92,7 @@ class OrderedDictionaryTests: XCTestCase {
             uniquelyKeyedBy: \.string
         )
         
-        let expected = OrderedDictionary<String, TestValue>([
+        let expected = OrderedDictionary<String, TestValue>(uniqueKeysWithValues: [
             (key: "A", value: TestValue(string: "A")),
             (key: "B", value: TestValue(string: "B")),
             (key: "C", value: TestValue(string: "C"))
@@ -113,7 +113,7 @@ class OrderedDictionaryTests: XCTestCase {
             areInIncreasingOrder: { $0.key < $1.key }
         )
         
-        let expected = OrderedDictionary([
+        let expected = OrderedDictionary(uniqueKeysWithValues: [
             (key: 1, value: "bar"),
             (key: 2, value: "foo"),
             (key: 3, value: "bam"),
@@ -133,7 +133,7 @@ class OrderedDictionaryTests: XCTestCase {
             3: "bam"
         ].sorted(by: { $0.key < $1.key })
         
-        let expected = OrderedDictionary([
+        let expected = OrderedDictionary(uniqueKeysWithValues: [
             (key: 1, value: "bar"),
             (key: 2, value: "foo"),
             (key: 3, value: "bam"),

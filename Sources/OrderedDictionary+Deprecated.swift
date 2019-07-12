@@ -16,4 +16,9 @@ extension OrderedDictionary {
         self.init(values: values, uniquelyKeyedBy: keyPath)
     }
     
+    @available(*, deprecated, message: "Please use init(uniqueKeysWithValues:).", renamed: "init(uniqueKeysWithValues:)")
+    public init<S: Sequence>(_ elements: S) where S.Element == Element {
+        self.init(uniqueKeysWithValues: elements)
+    }
+    
 }
