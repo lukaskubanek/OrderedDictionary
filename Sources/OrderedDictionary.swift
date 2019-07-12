@@ -53,11 +53,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         values: S,
         uniquelyKeyedBy extractKey: (Value) -> Key
     ) where S.Element == Value {
-        let keysAndValues = values.map { value in
+        self.init(uniqueKeysWithValues: values.map { value in
             return (extractKey(value), value)
-        }
-        
-        self.init(uniqueKeysWithValues: keysAndValues)
+        })
     }
     
     /// Initializes an ordered dictionary from a sequence of values keyed by a unique key extracted
