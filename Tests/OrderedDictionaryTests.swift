@@ -512,6 +512,28 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     // ======================================================= //
+    // MARK: - Mapping Values
+    // ======================================================= //
+    
+    func testMapValues() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let actual = orderedDictionary.mapValues { String($0) }
+        let expected: OrderedDictionary<String, String> = ["A": "1", "B": "2", "C": "3", "D": "4"]
+        
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testCompactMapValues() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
+        
+        let actual = orderedDictionary.compactMapValues { $0.isMultiple(of: 2) ? String($0) : nil }
+        let expected: OrderedDictionary<String, String> = ["B": "2", "D": "4"]
+        
+        XCTAssertEqual(actual, expected)
+    }
+    
+    // ======================================================= //
     // MARK: - Slices
     // ======================================================= //
     

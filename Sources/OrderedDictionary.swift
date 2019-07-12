@@ -553,6 +553,41 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     // ======================================================= //
+    // MARK: - Mapping Values
+    // ======================================================= //
+    
+    /// Returns a new ordered dictionary containing the keys of this ordered dictionary with the
+    /// values transformed by the given closure by preserving the original order.
+    public func mapValues<T>(
+        _ transform: (Value) throws -> T
+    ) rethrows -> OrderedDictionary<Key, T> {
+        var result = OrderedDictionary<Key, T>()
+        
+        for (key, value) in self {
+            result[key] = try transform(value)
+        }
+        
+        return result
+    }
+    
+    /// Returns a new ordered dictionary containing only the key-value pairs that have non-nil
+    /// values as the result of transformation by the given closure by preserving the original
+    /// order.
+    public func compactMapValues<T>(
+        _ transform: (Value) throws -> T?
+    ) rethrows -> OrderedDictionary<Key, T> {
+        var result = OrderedDictionary<Key, T>()
+        
+        for (key, value) in self {
+            if let transformedValue = try transform(value) {
+                result[key] = transformedValue
+            }
+        }
+        
+        return result
+    }
+    
+    // ======================================================= //
     // MARK: - Internal Storage
     // ======================================================= //
     
