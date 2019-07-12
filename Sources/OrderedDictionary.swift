@@ -296,7 +296,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// - Returns: The index for `key` and its associated value if `key` is in the ordered
     ///   dictionary; otherwise, `nil`.
     public func index(forKey key: Key) -> Index? {
+        #if swift(>=5.0)
+        return _orderedKeys.firstIndex(of: key)
+        #else
         return _orderedKeys.index(of: key)
+        #endif
     }
     
     /// Returns the key-value pair at the specified index, or `nil` if there is no key-value pair
