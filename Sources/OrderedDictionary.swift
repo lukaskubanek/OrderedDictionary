@@ -68,10 +68,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         values: S,
         uniquelyKeyedBy keyPath: KeyPath<Value, Key>
     ) where S.Element == Value {
-        self.init(
-            values: values,
-            uniquelyKeyedBy: { $0[keyPath: keyPath] }
-        )
+        self.init(uniqueKeysWithValues: values.map { value in
+            return (value[keyPath: keyPath], value)
+        })
     }
     
     /// Initializes an ordered dictionary from a sequence of key-value pairs.
