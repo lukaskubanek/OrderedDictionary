@@ -5,7 +5,7 @@ extension OrderedDictionary {
         values: S,
         keyedBy extractKey: (Value) -> Key
     ) where S.Element == Value {
-        #if swift(>=4.1)
+        #if swift(>=4.1.3)
         self.init(values: values, uniquelyKeyedBy: extractKey)
         #else
         try! self.init(values: values, uniquelyKeyedBy: extractKey)
