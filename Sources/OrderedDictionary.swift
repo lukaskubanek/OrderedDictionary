@@ -43,7 +43,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         self.init(uniqueKeysWithValues: keysAndValues)
     }
     
-    /// Initializes an ordered dictionary from a sequence of values keyed by a uniqe key extracted
+    /// Initializes an ordered dictionary from a sequence of values keyed by a unique key extracted
     /// from the value using the given closure.
     ///
     /// - Parameter values: The sequence of values.
@@ -51,10 +51,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///   must be unique for all values from the sequence.
     public init<S: Sequence>(
         values: S,
-        uniquelyKeyedBy extractKey: (Value) -> Key
-    ) where S.Element == Value {
-        self.init(uniqueKeysWithValues: values.map { value in
-            return (extractKey(value), value)
+        uniquelyKeyedBy extractKey: (Value) throws -> Key
+    ) rethrows where S.Element == Value {
+        self.init(uniqueKeysWithValues: try values.map { value in
+            return (try extractKey(value), value)
         })
     }
     
