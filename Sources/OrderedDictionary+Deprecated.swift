@@ -3,9 +3,13 @@ extension OrderedDictionary {
     @available(*, deprecated, message: "Please use init(values:uniquelyKeyedBy:).", renamed: "init(values:uniquelyKeyedBy:)")
     public init<S: Sequence>(
         values: S,
-        keyedBy extractKey: (Value) throws -> Key
-    ) rethrows where S.Element == Value {
-        try self.init(values: values, uniquelyKeyedBy: extractKey)
+        keyedBy extractKey: (Value) -> Key
+    ) where S.Element == Value {
+        #if swift(>=4.1)
+        self.init(values: values, uniquelyKeyedBy: extractKey)
+        #else
+        try! self.init(values: values, uniquelyKeyedBy: extractKey)
+        #endif
     }
     
     @available(*, deprecated, message: "Please use init(values:uniquelyKeyedBy:).", renamed: "init(values:uniquelyKeyedBy:)")
