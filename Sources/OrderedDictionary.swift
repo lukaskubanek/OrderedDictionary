@@ -631,7 +631,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     /// The total number of elements that the ordered dictionary can contain without allocating
     /// new storage.
     public var capacity: Int {
-        return _keysToValues.capacity
+        return Swift.min(_orderedKeys.capacity, _keysToValues.capacity)
     }
 
     /// Reserves enough space to store the specified number of elements, when appropriate
