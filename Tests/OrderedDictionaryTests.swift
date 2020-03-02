@@ -549,6 +549,46 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssert(slice[3] == (key: "D", value: 4))
     }
     
+    // ============================================================================ //
+    // MARK: - Capacity
+    // ============================================================================ //
+    
+    func testCapacityReservationViaInit() {
+        let orderedDictionary = OrderedDictionary<String, Int>(minimumCapacity: 10)
+        
+        XCTAssertGreaterThanOrEqual(orderedDictionary.capacity, 10)
+    }
+    
+    func testCapacityReservationViaMethod() {
+        var orderedDictionary = OrderedDictionary<String, Int>()
+        
+        XCTAssertEqual(orderedDictionary.capacity, 0)
+        
+        orderedDictionary.reserveCapacity(10)
+        
+        XCTAssertGreaterThanOrEqual(orderedDictionary.capacity, 10)
+        XCTAssertLessThan(orderedDictionary.capacity, 20)
+        
+        orderedDictionary.reserveCapacity(20)
+        
+        XCTAssertGreaterThanOrEqual(orderedDictionary.capacity, 20)
+    }
+    
+    func testCapacityGrowForElementInsertion() {
+        var orderedDictionary = OrderedDictionary<String, Int>()
+        
+        XCTAssertEqual(orderedDictionary.capacity, 0)
+        
+        orderedDictionary["A"] = 1
+        
+        XCTAssertEqual(orderedDictionary.capacity, 1)
+        
+        orderedDictionary["B"] = 2
+        orderedDictionary["A"] = 3
+        
+        XCTAssertEqual(orderedDictionary.capacity, 2)
+    }
+    
     // ======================================================= //
     // MARK: - Codable
     // ======================================================= //

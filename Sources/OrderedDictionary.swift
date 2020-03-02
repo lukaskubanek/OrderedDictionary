@@ -28,9 +28,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // ======================================================= //
     
     /// Initializes an empty ordered dictionary.
-    public init() {}
+    public init() {
+        self._orderedKeys = [Key]()
+        self._keysToValues = [Key: Value]()
+    }
     
-    /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it using the
+    /// Initializes an empty ordered dictionary with preallocated space for at least the specified
+    /// number of elements.
+    public init(minimumCapacity: Int) {
+        self.init()
+        self.reserveCapacity(minimumCapacity)
+    }
+    
+    /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it using
     /// the given sort function.
     ///
     /// - Parameter unsorted: The unsorted dictionary.
@@ -40,7 +50,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
         areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows {
         let keysAndValues = try Array(unsorted).sorted(by: areInIncreasingOrder)
-        self.init(uniqueKeysWithValues: keysAndValues)
+        
+        self.init(
+            uniqueKeysWithValues: keysAndValues,
+            minimumCapacity: unsorted.count
+        )
     }
     
     /// Initializes an ordered dictionary from a sequence of values keyed by a unique key extracted
@@ -77,7 +91,21 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///
     /// - Parameter keysAndValues: A sequence of key-value pairs to use for the new ordered
     ///   dictionary. Every key in `keysAndValues` must be unique.
-    public init<S: Sequence>(uniqueKeysWithValues keysAndValues: S) where S.Element == Element {
+    public init<S: Sequence>(
+        uniqueKeysWithValues keysAndValues: S
+    ) where S.Element == Element {
+        self.init(
+            uniqueKeysWithValues: keysAndValues,
+            minimumCapacity: keysAndValues.underestimatedCount
+        )
+    }
+    
+    private init<S: Sequence>(
+        uniqueKeysWithValues keysAndValues: S,
+        minimumCapacity: Int
+    ) where S.Element == Element {
+        self.init(minimumCapacity: minimumCapacity)
+        
         for (key, value) in keysAndValues {
             precondition(!containsKey(key), "Sequence of key-value pairs contains duplicate keys")
             self[key] = value
@@ -597,14 +625,37 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     }
     
     // ======================================================= //
+    // MARK: - Capacity
+    // ======================================================= //
+
+    /// The total number of elements that the ordered dictionary can contain without allocating
+    /// new storage.
+    public var capacity: Int {
+        return Swift.min(_orderedKeys.capacity, _keysToValues.capacity)
+    }
+
+    /// Reserves enough space to store the specified number of elements, when appropriate
+    /// for the underlying types.
+    ///
+    /// If you are adding a known number of elements to an ordered dictionary, use this method
+    /// to avoid multiple reallocations. This method ensures that the underlying types of the
+    /// ordered dictionary have space allocated for at least the requested number of elements.
+    ///
+    /// - Parameter minimumCapacity: The requested number of elements to store.
+    public mutating func reserveCapacity(_ minimumCapacity: Int) {
+        _orderedKeys.reserveCapacity(minimumCapacity)
+        _keysToValues.reserveCapacity(minimumCapacity)
+    }
+    
+    // ======================================================= //
     // MARK: - Internal Storage
     // ======================================================= //
     
     /// The backing storage for the ordered keys.
-    fileprivate var _orderedKeys = [Key]()
+    fileprivate var _orderedKeys: [Key]
     
     /// The backing storage for the mapping of keys to values.
-    fileprivate var _keysToValues = [Key: Value]()
+    fileprivate var _keysToValues: [Key: Value]
     
 }
 
