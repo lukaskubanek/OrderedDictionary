@@ -600,25 +600,23 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Capacity
     // ======================================================= //
 
-    /// The total number of elements that the orderedDictionary can contain without
-    /// allocating new storage.
+    /// The total number of elements that the ordered dictionary can contain without allocating
+    /// new storage.
     public var capacity: Int {
         return _keysToValues.capacity
     }
 
-    /// Prepares the collection to store the specified number of elements, when
-    /// doing so is appropriate for the underlying type.
+    /// Reserves enough space to store the specified number of elements, when appropriate
+    /// for the underlying types.
     ///
-    /// If you will be adding a known number of elements to a collection, use
-    /// this method to avoid multiple reallocations. A type that conforms to
-    /// `RangeReplaceableCollection` can choose how to respond when this method
-    /// is called. Depending on the type, it may make sense to allocate more or
-    /// less storage than requested or to take no action at all.
+    /// If you are adding a known number of elements to an ordered dictionary, use this method
+    /// to avoid multiple reallocations. This method ensures that the underlying types of the
+    /// ordered dictionary have space allocated for at least the requested number of elements.
     ///
-    /// - Parameter n: The requested number of elements to store.
-    public mutating func reserveCapacity(_ n: Int) {
-        _keysToValues.reserveCapacity(n)
-        _orderedKeys.reserveCapacity(n)
+    /// - Parameter minimumCapacity: The requested number of elements to store.
+    public mutating func reserveCapacity(_ minimumCapacity: Int) {
+        _orderedKeys.reserveCapacity(minimumCapacity)
+        _keysToValues.reserveCapacity(minimumCapacity)
     }
     
     // ======================================================= //
