@@ -5,7 +5,7 @@
         <img src="https://img.shields.io/github/release/lukaskubanek/OrderedDictionary/all.svg?style=flat-square">
     </a>
     <a href="https://developer.apple.com/swift">
-        <img src="https://img.shields.io/badge/Swift-4.0+-orange.svg?style=flat-square" alt="Swift 4.0+">
+        <img src="https://img.shields.io/badge/Swift-4.2+-orange.svg?style=flat-square" alt="Swift 4.2+">
     </a>
     <a href="https://swift.org/package-manager">
         <img src="https://img.shields.io/badge/SPM-compatible-brightgreen.svg?style=flat-square" alt="Swift Package Manager">
@@ -31,8 +31,8 @@ Internally, `OrderedDictionary` uses a backing storage composed of a `Dictionary
 
 ## Requirements
 
-- Swift 4.0+
-- Xcode 9.2+
+- Swift 4.2+
+- Xcode 10.0+
 - iOS 8.0+ / macOS 10.10+
 
 *The Xcode and OS requirements apply only when the library is integrated as a framework or via the Xcode project.*
