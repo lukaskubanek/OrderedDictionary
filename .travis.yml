@@ -1,64 +1,29 @@
-# Git
 branches:
   only:
     - master
 
-# OS
 os: osx
 language: swift
 
-#  Xcode Project
 xcode_project: OrderedDictionary.xcodeproj
 
-# Build Matrix
 matrix:
   include:
-    # Swift 5.0.1 / macOS
-    - osx_image: xcode10.2
-      xcode_scheme: OrderedDictionary-Mac 
+    # macOS 10.13 / Xcode 10.0 / Swift 4.2 / Target: macOS
+    - osx_image: xcode10
+      xcode_scheme: OrderedDictionary-Mac
       env:
         - XCODE_SDK=macosx
         - XCODE_ACTION="build test"
         - XCODE_DESTINATION="arch=x86_64"
         - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
-    # Swift 5.0.1 / iOS
-    - osx_image: xcode10.2
-      xcode_scheme: OrderedDictionary-iOS
-      env:
-        - XCODE_SDK=iphonesimulator
-        - XCODE_ACTION="build-for-testing test-without-building"
-        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
-    # Swift 4.1.2 / macOS
-    - osx_image: xcode9.4
-      xcode_scheme: OrderedDictionary-Mac 
-      env:
-        - XCODE_SDK=macosx
-        - XCODE_ACTION="build test"
-        - XCODE_DESTINATION="arch=x86_64"
-        - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
-    # Swift 4.1.2 / iOS
-    - osx_image: xcode9.4
-      xcode_scheme: OrderedDictionary-iOS
-      env:
-        - XCODE_SDK=iphonesimulator
-        - XCODE_ACTION="build-for-testing test-without-building"
-        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
-    # Swift 4.0.3 / macOS
-    - osx_image: xcode9.2
-      xcode_scheme: OrderedDictionary-Mac 
-      env:
-        - XCODE_SDK=macosx
-        - XCODE_ACTION="build test"
-        - XCODE_DESTINATION="arch=x86_64"
-        - XCODE_PLAYGROUND_TARGET="x86_64-apple-macosx10.10"
-    # Swift 4.0.3 / iOS
-    - osx_image: xcode9.2
+    # macOS 10.13 / Xcode 10.0 / Swift 4.2 / Target: iOS 
+    - osx_image: xcode10
       xcode_scheme: OrderedDictionary-iOS
       env:
         - XCODE_SDK=iphonesimulator
         - XCODE_ACTION="build-for-testing test-without-building"
         - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 6s,OS=10.1"
 
-# Build Script
 script:
-  - Scripts/build.sh
+  - .travis/build.sh
