@@ -5,7 +5,10 @@ extension OrderedDictionary {
         values: S,
         keyedBy extractKey: (Value) -> Key
     ) where S.Element == Value {
-        self.init(values: values, uniquelyKeyedBy: extractKey)
+        try! self.init(
+            values: values,
+            uniquelyKeyedBy: { extractKey($0) } as (Value) throws -> Key
+        )
     }
     
     @available(*, deprecated, message: "Please use init(values:uniquelyKeyedBy:).", renamed: "init(values:uniquelyKeyedBy:)")
