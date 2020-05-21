@@ -663,8 +663,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
 // MARK: - Subtypes
 // ======================================================= //
 
-#if swift(>=4.1)
-
 /// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
 /// dictionary.
 public typealias OrderedDictionarySlice<Key: Hashable, Value> = Slice<OrderedDictionary<Key, Value>>
@@ -680,26 +678,6 @@ public typealias OrderedDictionaryKeys<Key: Hashable, Value> = LazyMapCollection
 /// Under the hood this is a lazily evaluated bidirectional collection deriving the values from
 /// the base ordered dictionary on-the-fly.
 public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapCollection<OrderedDictionary<Key, Value>, Value>
-
-#else
-
-/// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
-/// dictionary.
-public typealias OrderedDictionarySlice<Key: Hashable, Value> = BidirectionalSlice<OrderedDictionary<Key, Value>>
-
-/// A collection containing the keys of the ordered dictionary.
-///
-/// Under the hood this is a lazily evaluated bidirectional collection deriving the keys from
-/// the base ordered dictionary on-the-fly.
-public typealias OrderedDictionaryKeys<Key: Hashable, Value> = LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Key>
-    
-/// A collection containing the values of the ordered dictionary.
-///
-/// Under the hood this is a lazily evaluated bidirectional collection deriving the values from
-/// the base ordered dictionary on-the-fly.
-public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Value>
-    
-#endif
 
 // ======================================================= //
 // MARK: - Literals
@@ -732,22 +710,7 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
 // MARK: - Equatable Conformance
 // ======================================================= //
 
-#if swift(>=4.1)
-
 extension OrderedDictionary: Equatable where Value: Equatable {}
-
-#endif
-
-extension OrderedDictionary where Value: Equatable {
-
-    /// Returns a Boolean value that indicates whether the two given ordered dictionaries with
-    /// equatable values are equal.
-    public static func == (lhs: OrderedDictionary, rhs: OrderedDictionary) -> Bool {
-        return lhs._orderedKeys == rhs._orderedKeys
-            && lhs._keysToValues == rhs._keysToValues
-    }
-
-}
 
 // ======================================================= //
 // MARK: - Dictionary Extension
