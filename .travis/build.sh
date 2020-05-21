@@ -53,5 +53,5 @@ fi
 
 if [[ $XCODE_SDK = "macosx" ]]; then
     echo "SDK is ${XCODE_SDK}, validating playground..."
-    . Scripts/validate-playgrounds.sh
+    . .travis/validate-playgrounds.sh
 fi
