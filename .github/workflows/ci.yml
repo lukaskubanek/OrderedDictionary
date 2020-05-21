@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  macos:
+    name: macOS (Xcode ${{ matrix.xcode }})
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        # See https://github.com/actions/virtual-environments/tree/master/images/macos
+        # No Xcode with support for Swift 4.2 available
+        xcode:
+          - "11.5_beta" # Swift 5.2.4
+          - "11.4"      # Swift 5.2
+          - "11"        # Swift 5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: Build
+        run: swift build -v
+      - name: Test
+        run: swift test -v
+  
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    container:
+      image: swift:5.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: swift build -v
+      - name: Test
+        run: swift test -v
