@@ -1,16 +1,14 @@
 extension OrderedDictionary {
     
+    #if swift(>=5.0)
     @available(*, deprecated, message: "Please use init(values:uniquelyKeyedBy:).", renamed: "init(values:uniquelyKeyedBy:)")
     public init<S: Sequence>(
         values: S,
         keyedBy extractKey: (Value) -> Key
     ) where S.Element == Value {
-        #if swift(>=4.1.3)
         self.init(values: values, uniquelyKeyedBy: extractKey)
-        #else
-        try! self.init(values: values, uniquelyKeyedBy: extractKey)
-        #endif
     }
+    #endif
     
     @available(*, deprecated, message: "Please use init(values:uniquelyKeyedBy:).", renamed: "init(values:uniquelyKeyedBy:)")
     public init(

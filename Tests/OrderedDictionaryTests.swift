@@ -2,26 +2,6 @@ import OrderedDictionary
 import Foundation
 import XCTest
 
-#if !swift(>=4.1)
-
-/// This is a shim for testing the equality in Swift <4.1.
-public func XCTAssertEqual<K, V: Equatable>(
-    _ expression1: OrderedDictionary<K, V>,
-    _ expression2: OrderedDictionary<K, V>,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line
-) {
-    return XCTAssertTrue(
-        expression1 == expression2,
-        message,
-        file: file,
-        line: line
-    )
-}
-
-#endif
-
 struct TestValue: Equatable {
     var string: String
     static func == (lhs: TestValue, rhs: TestValue) -> Bool {
