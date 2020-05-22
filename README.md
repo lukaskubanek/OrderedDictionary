@@ -35,6 +35,7 @@ Internally, `OrderedDictionary` uses a backing storage composed of a `Dictionary
 - Xcode 10.0+
 - iOS 8.0+ / macOS 10.10+
 
+*For support of Swift 4.0 and 4.1 please refer to version 2.x of this library.*
 *The Xcode and OS requirements apply only when the library is integrated as a framework or via the Xcode project.*
 
 ## Installation
