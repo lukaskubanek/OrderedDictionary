@@ -48,7 +48,7 @@ To install OrderedDictionary using the [Swift Package Manager](https://swift.org
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "3.0.0")
+        .package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "3.0.1")
     ],
     ...
 )
