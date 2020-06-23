@@ -40,8 +40,6 @@
 
 /* Begin PBXFileReference section */
 		8024947E2277123600AB44C7 /* Package@swift-4.2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-4.2.swift"; sourceTree = "<group>"; };
-		804879371E217C7700AD31A3 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
-		804879381E217CA100AD31A3 /* validate-playgrounds.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "validate-playgrounds.sh"; sourceTree = "<group>"; };
 		8048C8AA22D8911B0086B88B /* OrderedDictionary+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Deprecated.swift"; sourceTree = "<group>"; };
 		8055B0381E201C5D009DC3EE /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8055B0411E201C5D009DC3EE /* OrderedDictionary_Mac_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_Mac_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,15 +92,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		804879361E217C7700AD31A3 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				804879371E217C7700AD31A3 /* build.sh */,
-				804879381E217CA100AD31A3 /* validate-playgrounds.sh */,
-			);
-			path = Scripts;
-			sourceTree = "<group>";
-		};
 		8055B02E1E201C5D009DC3EE = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +103,6 @@
 				80B28EB11E201F72007E3A77 /* Playgrounds */,
 				8055B0571E201DF3009DC3EE /* Tests */,
 				80B28EB31E201F81007E3A77 /* Supporting Files */,
-				804879361E217C7700AD31A3 /* Scripts */,
 				8055B0391E201C5D009DC3EE /* Products */,
 			);
 			sourceTree = "<group>";
