@@ -5,7 +5,7 @@
         <img src="https://img.shields.io/github/release/lukaskubanek/OrderedDictionary/all.svg?style=flat-square">
     </a>
     <a href="https://developer.apple.com/swift">
-        <img src="https://img.shields.io/badge/Swift-4.2+-orange.svg?style=flat-square" alt="Swift 4.2+">
+        <img src="https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat-square" alt="Swift 5.0">
     </a>
     <a href="https://swift.org/package-manager">
         <img src="https://img.shields.io/badge/SPM-compatible-brightgreen.svg?style=flat-square" alt="Swift Package Manager">
@@ -31,12 +31,13 @@ Internally, `OrderedDictionary` uses a backing storage composed of a `Dictionary
 
 ## Requirements
 
-- Swift 4.2+
-- Xcode 10.0+
-- iOS 8.0+ / macOS 10.10+
+- Swift 5.0 or later
+- Xcode 11 or later
+- iOS 8 or later / macOS 10.10 or later
 
-*For support of Swift 4.0 and 4.1 please refer to version 2.x of this library.*
-*The Xcode and OS requirements apply only when the library is integrated as a framework or via the Xcode project.*
+*For support of older Swift version please refer to older versions of this library. For Swift 4.2 use version 3.x and for Swift 4.0 and 4.1 use version 2.x.*
+
+*The requirements for Xcode and OS versions apply only when the library is integrated as a framework or via the Xcode project.*
 
 ## Installation
 
@@ -48,7 +49,7 @@ To install OrderedDictionary using the [Swift Package Manager](https://swift.org
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "3.0.1")
+        .package(url: "https://github.com/lukaskubanek/OrderedDictionary.git", from: "4.0.0")
     ],
     ...
 )
