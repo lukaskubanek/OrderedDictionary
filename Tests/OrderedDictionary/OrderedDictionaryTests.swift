@@ -444,25 +444,6 @@ class OrderedDictionaryTests: XCTestCase {
     }
     
     // ============================================================================ //
-    // MARK: - Moving Elements
-    // ============================================================================ //
-    
-    func testMovingElements() {
-        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
-        
-        XCTAssertEqual(orderedDictionary.moveElement(forKey: "A", to: 2), 0) // B, C, A, D
-        XCTAssertEqual(orderedDictionary.moveElement(forKey: "D", to: 3), 3) // B, C, A, D
-        XCTAssertEqual(orderedDictionary.moveElement(forKey: "C", to: 0), 1) // C, B, A, D
-        XCTAssertEqual(orderedDictionary.moveElement(forKey: "B", to: 3), 1) // C, A, D, B
-        XCTAssertEqual(orderedDictionary.moveElement(forKey: "E", to: 0), nil)
-        
-        let actual = orderedDictionary
-        let expected: OrderedDictionary<String, Int> = ["C": 3, "A": 1, "D": 4, "B": 2]
-        
-        XCTAssertEqual(actual, expected)
-    }
-    
-    // ============================================================================ //
     // MARK: - Sorting Elements
     // ============================================================================ //
     
