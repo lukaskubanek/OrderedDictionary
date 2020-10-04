@@ -19,9 +19,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     public typealias Indices = CountableRange<Int>
     
     /// The type of the contiguous subrange of the ordered dictionary's elements.
-    /// 
-    /// - SeeAlso: OrderedDictionarySlice
-    public typealias SubSequence = OrderedDictionarySlice<Key, Value>
+    public typealias SubSequence = Slice<OrderedDictionary<Key, Value>>
+
+    /// The type for a lazily evaluated collection of the ordered dictionary's values.
+    public typealias LazyValues = LazyMapCollection<OrderedDictionary<Key, Value>, Value>
     
     // ======================================================= //
     // MARK: - Initialization
@@ -116,14 +117,15 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // MARK: - Ordered Keys & Values
     // ======================================================= //
     
-    /// A collection containing just the keys of the ordered dictionary in the correct order.
-    public var orderedKeys: OrderedDictionaryKeys<Key, Value> {
-        return self.lazy.map { $0.key }
+    /// An array containing just the keys of the ordered dictionary in the correct order.
+    public var orderedKeys: [Key] {
+        return _orderedKeys
     }
     
-    /// A collection containing just the values of the ordered dictionary in the correct order.
-    public var orderedValues: OrderedDictionaryValues<Key, Value> {
-        return self.lazy.map { $0.value }
+    /// A lazily evaluated collection containing just the values of the ordered dictionary
+    /// in the correct order.
+    public var orderedValues: LazyValues {
+        return lazy.map(\.value)
     }
     
     // ======================================================= //
@@ -175,7 +177,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     ///   must be valid indices of the ordered dictionary.
     /// - Returns: The slice view at the ordered dictionary in the specified subrange.
     public subscript(bounds: Range<Index>) -> SubSequence {
-        return OrderedDictionarySlice(base: self, bounds: bounds)
+        return SubSequence(base: self, bounds: bounds)
     }
     
     // ======================================================= //
@@ -654,26 +656,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     fileprivate var _keysToValues: [Key: Value]
     
 }
-
-// ======================================================= //
-// MARK: - Subtypes
-// ======================================================= //
-
-/// A view into an ordered dictionary whose indices are a subrange of the indices of the ordered
-/// dictionary.
-public typealias OrderedDictionarySlice<Key: Hashable, Value> = Slice<OrderedDictionary<Key, Value>>
-
-/// A collection containing the keys of the ordered dictionary.
-///
-/// Under the hood this is a lazily evaluated bidirectional collection deriving the keys from
-/// the base ordered dictionary on-the-fly.
-public typealias OrderedDictionaryKeys<Key: Hashable, Value> = LazyMapCollection<OrderedDictionary<Key, Value>, Key>
-
-/// A collection containing the values of the ordered dictionary.
-///
-/// Under the hood this is a lazily evaluated bidirectional collection deriving the values from
-/// the base ordered dictionary on-the-fly.
-public typealias OrderedDictionaryValues<Key: Hashable, Value> = LazyMapCollection<OrderedDictionary<Key, Value>, Value>
 
 // ======================================================= //
 // MARK: - Literals

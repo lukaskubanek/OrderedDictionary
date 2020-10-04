@@ -173,7 +173,7 @@ class OrderedDictionaryTests: XCTestCase {
     
     func testAccessingOrderedKeys() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
-        let actual = Array(orderedDictionary.orderedKeys)
+        let actual = orderedDictionary.orderedKeys
         
         let expected = ["A", "B", "C"]
         
