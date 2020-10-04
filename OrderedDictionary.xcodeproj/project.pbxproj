@@ -130,9 +130,17 @@
 		8055B0571E201DF3009DC3EE /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8055B0581E201DF3009DC3EE /* OrderedDictionaryTests.swift */,
+				80AF1630252A48080065B656 /* OrderedDictionary */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		80AF1630252A48080065B656 /* OrderedDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				8055B0581E201DF3009DC3EE /* OrderedDictionaryTests.swift */,
+			);
+			path = OrderedDictionary;
 			sourceTree = "<group>";
 		};
 		80B28EB11E201F72007E3A77 /* Playgrounds */ = {

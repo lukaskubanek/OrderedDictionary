@@ -20,7 +20,7 @@ let package = Package(
         .testTarget(
             name: "OrderedDictionaryTests",
             dependencies: ["OrderedDictionary"],
-            path: "Tests"
+            path: "Tests/OrderedDictionary"
         )
     ]
 )
