@@ -314,7 +314,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection {
     ///     index of the ordered dictionary and not equal to `endIndex`.
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     ///
-    /// - SeeAlso: `update(:at:)`
+    /// - SeeAlso: `update(_:at:)`
     public subscript(position: Index) -> Element {
         precondition(indices.contains(position), "OrderedDictionary index is out of range")
         
@@ -385,7 +385,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection {
     ///
     /// - SeeAlso: `canInsert(key:)`
     /// - SeeAlso: `canInsert(at:)`
-    /// - SeeAlso: `update(:at:)`
+    /// - SeeAlso: `update(_:at:)`
     public mutating func insert(_ newElement: Element, at index: Index) {
         precondition(canInsert(key: newElement.key), "Cannot insert duplicate key in OrderedDictionary")
         precondition(canInsert(at: index), "Cannot insert at invalid index in OrderedDictionary")
@@ -423,7 +423,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection {
     ///     of the ordered dictionary.
     ///
     /// - SeeAlso: `canUpdate(_:at:)`
-    /// - SeeAlso: `insert(:at:)`
+    /// - SeeAlso: `insert(_:at:)`
     @discardableResult
     public mutating func update(_ newElement: Element, at index: Index) -> Element? {
         // Store the flag indicating whether the key of the inserted element
