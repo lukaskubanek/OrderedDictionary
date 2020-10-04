@@ -11,9 +11,9 @@ struct TestValue: Equatable {
 
 class OrderedDictionaryTests: XCTestCase {
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Initialization
-    // ======================================================= //
+    // ============================================================================ //
     
     func testInitializationUsingArrayLiteral() {
         let actual: OrderedDictionary<String, Int> = [
@@ -124,9 +124,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Content Access
-    // ======================================================= //
+    // ============================================================================ //
     
     func testAccessingContent() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
@@ -198,9 +198,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Key-based Modifications
-    // ======================================================= //
+    // ============================================================================ //
     
     func testKeyBasedModifications() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
@@ -228,9 +228,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertTrue(orderedDictionary.containsKey("D"))
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Index-based Insertions
-    // ======================================================= //
+    // ============================================================================ //
     
     func testIndexBasedInsertionsWithUniqueKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
@@ -266,9 +266,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertFalse(orderedDictionary.canInsert(at: invalidIndex))
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Index-based Updates
-    // ======================================================= //
+    // ============================================================================ //
     
     func testIndexBasedUpdateMethodWithNewUniqueKey() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
@@ -311,9 +311,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertNil(orderedDictionary.elementAt(42))
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Content Removal
-    // ======================================================= //
+    // ============================================================================ //
     
     func testRemoveAll() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
@@ -443,9 +443,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Moving Elements
-    // ======================================================= //
+    // ============================================================================ //
     
     func testMovingElements() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
@@ -462,9 +462,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Sorting Elements
-    // ======================================================= //
+    // ============================================================================ //
     
     func testSortingWithMutation() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["E": 4, "G": 3, "A": 3, "D": 1, "B": 4]
@@ -491,9 +491,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Mapping Values
-    // ======================================================= //
+    // ============================================================================ //
     
     func testMapValues() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
@@ -513,9 +513,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Slices
-    // ======================================================= //
+    // ============================================================================ //
     
     func testSliceAccess() {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
@@ -569,9 +569,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(orderedDictionary.capacity, 2)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Codable
-    // ======================================================= //
+    // ============================================================================ //
     
     func testEncodingAndDecodingViaJSON() {
         let orderedDictionary: OrderedDictionary<String, Int> = [
@@ -614,9 +614,9 @@ class OrderedDictionaryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    // ======================================================= //
+    // ============================================================================ //
     // MARK: - Description
-    // ======================================================= //
+    // ============================================================================ //
     
     struct DescribedValue: CustomStringConvertible, CustomDebugStringConvertible {
         init(_ value: Int) { self.value = value }

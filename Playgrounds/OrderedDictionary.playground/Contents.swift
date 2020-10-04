@@ -1,16 +1,16 @@
 import OrderedDictionary
 
-// ======================================================= //
+// ============================================================================ //
 // Helpers
-// ======================================================= //
+// ============================================================================ //
 
 func print(_ optional: Any?) {
     print(optional as Any)
 }
 
-// ======================================================= //
+// ============================================================================ //
 // Construction
-// ======================================================= //
+// ============================================================================ //
 
 // Construct an ordered dictionary using a dictionary literal
 var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4]
@@ -18,9 +18,9 @@ var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3,
 // Output the ordered dictionary
 print(orderedDictionary) // => [A: 1, B: 2, C: 3, D: 4]
 
-// ======================================================= //
+// ============================================================================ //
 // Enumeration
-// ======================================================= //
+// ============================================================================ //
 
 // Loop through the ordered dictionary
 for (key, value) in orderedDictionary {
@@ -32,9 +32,9 @@ for (index, element) in orderedDictionary.enumerated() {
     print("(\(index): [\(element.key): \(element.value)])") // => (0: [A: 1]), => (1: [B: 2]), => (2: [C: 3]), => (3: [D: 4])
 }
 
-// ======================================================= //
+// ============================================================================ //
 // Acessing Content
-// ======================================================= //
+// ============================================================================ //
 
 // Access the value for an existing key using the subscript
 print(orderedDictionary["A"]) // => Optional(1)
@@ -57,9 +57,9 @@ print(orderedDictionary[2]) // => ("C", 3)
 // Get the index for an existing key
 print(orderedDictionary.index(forKey: "D")) // => Optional(3)
 
-// ======================================================= //
+// ============================================================================ //
 // Modifying Content Using Keys
-// ======================================================= //
+// ============================================================================ //
 
 // Modify the value for an existing key using the subscript
 orderedDictionary["A"] = 100
@@ -78,9 +78,9 @@ orderedDictionary["B"] = nil
 print(orderedDictionary["B"]) // => nil
 print(orderedDictionary) // => [A: 100, C: 3, D: 42, E: 5]
 
-// ======================================================= //
+// ============================================================================ //
 // Modifying Content Using Indexes
-// ======================================================= //
+// ============================================================================ //
 
 // Modify an element at an existing index
 let replacedElement = orderedDictionary.update(("F", 235), at: 2)
@@ -91,9 +91,9 @@ print(replacedElement) // => Optional("D", 42)
 // Modify an element at a non-existent index
 //orderedDictionary.update(("L", 0), at: 100) // => fatal error
 
-// ======================================================= //
+// ============================================================================ //
 // Sorting
-// ======================================================= //
+// ============================================================================ //
 
 // Sort the ordered dictionary using a closure
 orderedDictionary.sort {
@@ -106,9 +106,9 @@ orderedDictionary.sort {
 
 print(orderedDictionary) // => [C: 3, E: 5, A: 100, F: 235]
 
-// ======================================================= //
+// ============================================================================ //
 // Removing Content
-// ======================================================= //
+// ============================================================================ //
 
 // Remove value for an existing key
 let removedValue = orderedDictionary.removeValue(forKey: "F")

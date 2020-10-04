@@ -7,9 +7,9 @@ let orderedDictionary1: OrderedDictionary<String, Int> = [
     "C": 11
 ]
 
-// ======================================================= //
+// ============================================================================ //
 // MARK: - JSON Encoding & Decoding
-// ======================================================= //
+// ============================================================================ //
 
 let jsonEncoder = JSONEncoder()
 let jsonData = try! jsonEncoder.encode(orderedDictionary1)
@@ -20,9 +20,9 @@ let orderedDictionary2 = try! jsonDecoder.decode(OrderedDictionary<String, Int>.
 
 orderedDictionary1 == orderedDictionary2
 
-// ======================================================= //
+// ============================================================================ //
 // MARK: - Property List Encoding & Decoding
-// ======================================================= //
+// ============================================================================ //
 
 let plistEncoder = PropertyListEncoder()
 let plistData = try! plistEncoder.encode(orderedDictionary1)
