@@ -636,10 +636,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection {
     // ============================================================================ //
     
     /// The backing storage for the ordered keys.
-    fileprivate var _orderedKeys: [Key]
+    private var _orderedKeys: [Key]
     
     /// The backing storage for the mapping of keys to values.
-    fileprivate var _keysToValues: [Key: Value]
+    private var _keysToValues: [Key: Value]
     
 }
 
