@@ -1,5 +1,5 @@
 /// A generic collection for storing key-value pairs in an ordered manner.
-public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
+public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection {
 
     // ============================================================================ //
     // MARK: - Type Aliases
