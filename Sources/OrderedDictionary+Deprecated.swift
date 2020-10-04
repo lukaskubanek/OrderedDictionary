@@ -26,6 +26,24 @@ extension OrderedDictionary {
     }
     
     // ============================================================================ //
+    // MARK: - Insertion Checks
+    // ============================================================================ //
+    
+    /// Checks whether the given key-value pair can be inserted into to ordered dictionary
+    /// by validating the presence of the key.
+    ///
+    /// - Parameters:
+    ///   - newElement: The key-value pair to be inserted into the ordered dictionary.
+    /// - Returns: `true` if the key-value pair can be safely inserted; otherwise, `false`.
+    ///
+    /// - SeeAlso: `canInsert(key:)`
+    /// - SeeAlso: `canInsert(at:)`
+    @available(*, deprecated, message: "Use canInsert(key:) with the element's key instead.")
+    public func canInsert(_ newElement: Element) -> Bool {
+        return canInsert(key: newElement.key)
+    }
+    
+    // ============================================================================ //
     // MARK: - Moving Elements
     // ============================================================================ //
     
