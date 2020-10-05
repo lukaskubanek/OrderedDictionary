@@ -125,7 +125,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// A lazily evaluated collection containing just the values of the ordered dictionary
     /// in the correct order.
     public var orderedValues: LazyValues {
-        return lazy.map(\.value)
+        return lazy.map { $0.value }
     }
     
     // ============================================================================ //
@@ -545,7 +545,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ) rethrows {
         var array = ContiguousArray(self)
         try array.sort(by: areInIncreasingOrder)
-        _orderedKeys = array.map(\.key)
+        _orderedKeys = array.map { $0.key }
     }
     
     /// Returns a new ordered dictionary, sorted using the given predicate as the comparison
