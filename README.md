@@ -27,7 +27,7 @@ The `OrderedDictionary` struct is a generic collection that combines the feature
 
 `OrderedDictionary` provides similar APIs to collections in the Swift standard library like accessing contents by keys or indices, inserting and removing elements, iterating, sorting, filtering, etc.
 
-Internally, `OrderedDictionary` uses a backing storage composed of a `Dictionary` for storing the key-value pairs and an `Array` for managing the ordered keys. This architecture makes it not the most pefromant implementation possible, but it gets its job done while reusing most functionality from the Swift standard library.
+Internally, `OrderedDictionary` uses a backing storage composed of a `Dictionary` for storing the key-value pairs and an `Array` for managing the ordered keys. This architecture makes it not the most peformant implementation possible, but it gets its job done while reusing most functionality from the Swift standard library.
 
 ## Requirements
 
