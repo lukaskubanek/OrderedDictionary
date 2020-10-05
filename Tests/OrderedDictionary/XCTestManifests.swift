@@ -82,6 +82,7 @@ extension MapFilterTests {
     // to regenerate.
     static let __allTests__MapFilterTests = [
         ("testCompactMapValues", testCompactMapValues),
+        ("testFilter", testFilter),
         ("testMapValues", testMapValues),
     ]
 }

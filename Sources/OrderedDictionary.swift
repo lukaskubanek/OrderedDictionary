@@ -572,7 +572,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     // ============================================================================ //
     
     /// Returns a new ordered dictionary containing the keys of this ordered dictionary with
-    /// the values transformed by the given closure by preserving the original order.
+    /// the values transformed by the given closure while preserving the original order.
     public func mapValues<T>(
         _ transform: (Value) throws -> T
     ) rethrows -> OrderedDictionary<Key, T> {
@@ -586,7 +586,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     }
     
     /// Returns a new ordered dictionary containing only the key-value pairs that have non-nil
-    /// values as the result of transformation by the given closure by preserving the original
+    /// values as the result of transformation by the given closure while preserving the original
     /// order.
     public func compactMapValues<T>(
         _ transform: (Value) throws -> T?
@@ -600,6 +600,18 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         }
         
         return result
+    }
+    
+    // ============================================================================ //
+    // MARK: - Filtering
+    // ============================================================================ //
+    
+    /// Returns a new ordered dictionary container the key-value pairs that satisfy the given
+    /// predicate while preserving the original order.
+    public func filter(
+        _ isIncluded: (Element) throws -> Bool
+    ) rethrows -> Self {
+        return Self(uniqueKeysWithValues: try lazy.filter(isIncluded))
     }
     
     // ============================================================================ //
