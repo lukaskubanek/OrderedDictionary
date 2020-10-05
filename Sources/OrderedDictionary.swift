@@ -11,13 +11,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// The type of the index.
     public typealias Index = Int
     
-    /// The type of the indices collection.
-    public typealias Indices = CountableRange<Int>
-    
     /// The type of the contiguous subrange of the ordered dictionary's elements.
-    public typealias SubSequence = Slice<Self>
+    public typealias SubSequence = OrderedDictionarySlice<Key, Value>
 
-    /// The type for a lazily evaluated collection of the ordered dictionary's values.
+    /// The type of the lazily evaluated collection of the ordered dictionary's values.
     public typealias LazyValues = LazyMapCollection<Self, Value>
     
     // ============================================================================ //
@@ -108,7 +105,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         self.init(minimumCapacity: minimumCapacity)
         
         for (key, value) in keysAndValues {
-            precondition(!containsKey(key), "Sequence of key-value pairs contains duplicate keys")
+            precondition(
+                !containsKey(key),
+                "[OrderedDictionary] Sequence of key-value pairs contains duplicate keys"
+            )
+            
             self[key] = value
         }
     }
@@ -142,7 +143,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     // ============================================================================ //
     
     /// The indices that are valid for subscripting the ordered dictionary.
-    public var indices: Indices {
+    public var indices: CountableRange<Index> {
         return _orderedKeys.indices
     }
     
@@ -173,6 +174,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///   - key: The key to find in the ordered dictionary.
     /// - Returns: The index for `key` and its associated value if `key` is in the ordered
     ///   dictionary; otherwise, `nil`.
+    ///
+    /// - Complexity: O(*n*), where *n* is the length of the ordered dictionary.
     public func index(forKey key: Key) -> Index? {
         return _orderedKeys.firstIndex(of: key)
     }
@@ -240,9 +243,14 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///     a key of the ordered dictionary, the `(key, value)` pair is appended at the end
     ///     of the ordered dictionary.
     @discardableResult
-    public mutating func updateValue(_ value: Value, forKey key: Key) -> Value? {
+    public mutating func updateValue(
+        _ value: Value,
+        forKey key: Key
+    ) -> Value? {
         if containsKey(key) {
-            let currentValue = _unsafeValue(forKey: key)
+            guard let currentValue = _keysToValues[key] else {
+                fatalError("[OrderedDictionary] Inconsistency error")
+            }
             
             _keysToValues[key] = value
             
@@ -269,9 +277,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - SeeAlso: `remove(at:)`
     @discardableResult
     public mutating func removeValue(forKey key: Key) -> Value? {
+        guard let currentValue = _keysToValues[key] else { return nil }
         guard let index = index(forKey: key) else { return nil }
-        
-        let currentValue = self[index].value
         
         _orderedKeys.remove(at: index)
         _keysToValues[key] = nil
@@ -285,15 +292,11 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///   - keepCapacity: Whether the ordered dictionary should keep its underlying storage.
     ///     If you pass `true`, the operation preserves the storage capacity that the collection
     ///     has, otherwise the underlying storage is released. The default is `false`.
-    public mutating func removeAll(keepingCapacity keepCapacity: Bool = false) {
+    public mutating func removeAll(
+        keepingCapacity keepCapacity: Bool = false
+    ) {
         _orderedKeys.removeAll(keepingCapacity: keepCapacity)
         _keysToValues.removeAll(keepingCapacity: keepCapacity)
-    }
-    
-    private func _unsafeValue(forKey key: Key) -> Value {
-        let value = _keysToValues[key]
-        precondition(value != nil, "Inconsistency error occurred in OrderedDictionary")
-        return value!
     }
     
     // ============================================================================ //
@@ -311,20 +314,101 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - Returns: A tuple containing the key-value pair corresponding to `position`.
     ///
     /// - SeeAlso: `update(_:at:)`
+    /// - SeeAlso: `subscript(bounds:)`
     public subscript(position: Index) -> Element {
         get {
             precondition(
                 indices.contains(position),
-                "OrderedDictionary index is out of range"
+                "[OrderedDictionary] Index is out of bounds"
             )
             
             let key = _orderedKeys[position]
-            let value = _unsafeValue(forKey: key)
+            
+            guard let value = _keysToValues[key] else {
+                fatalError("[OrderedDictionary] Inconsistency error")
+            }
             
             return (key, value)
         }
         set(newElement) {
             update(newElement, at: position)
+        }
+    }
+    
+    /// Accesses a contiguous subrange of the ordered dictionary's elements.
+    ///
+    /// - Parameters:
+    ///   - bounds: A range of indices. The bounds of the range must be valid indices of
+    ///     the ordered dictionary.
+    /// - Returns: An instance of `OrderedDictionarySlice`.
+    ///
+    /// - Precondition: When replacing a certain range with a slice, it has to have an equal size.
+    ///   Furthermore, the key-value pairs must not contain keys that are present in the ordered
+    ///   dictionary, but lie outside of the replaced range. It is safe to provide the keys
+    ///   from the replaced range in the different order or keys that are not present in the
+    ///   ordered dictionary.
+    public subscript(bounds: Range<Index>) -> SubSequence {
+        get {
+            precondition(
+                bounds.clamped(to: indices) == bounds,
+                "[OrderedDictionary] Range is out of bounds"
+            )
+
+            return SubSequence(base: self, bounds: bounds)
+        }
+        set(newElements) {
+            precondition(
+                bounds.clamped(to: indices) == bounds,
+                "[OrderedDictionary] Range is out of bounds"
+            )
+            
+            let innerKeys = orderedKeys[bounds]
+            let outerKeys = Set(orderedKeys).subtracting(innerKeys)
+
+            let newKeys = Set(newElements.map { $0.key })
+
+            precondition(
+                newKeys.isDisjoint(with: outerKeys),
+                "[OrderedDictionary] Range-based update produced duplicate keys"
+            )
+
+            // WriteBackMutableSlice.swift
+            // _writeBackMutableSlice(_:bounds:slice:)
+            // https://bit.ly/3lhaIA8
+            var baseIndex = bounds.lowerBound
+            let baseEndIndex = bounds.upperBound
+            
+            var sliceIndex = newElements.startIndex
+            let sliceEndIndex = newElements.endIndex
+
+            while baseIndex != baseEndIndex && sliceIndex != sliceEndIndex {
+                let (newKey, newValue) = newElements[sliceIndex]
+
+                let previousElement = self[baseIndex]
+                let previousKey = previousElement.key
+
+                // If the key of the previously stored element at the updated index is not
+                // replaced as part of the range-based update operation, its value is removed.
+                if !newKeys.contains(previousKey) {
+                    _keysToValues.removeValue(forKey: previousKey)
+                }
+
+                _orderedKeys[baseIndex] = newKey
+                _keysToValues[newKey] = newValue
+
+                self.formIndex(after: &baseIndex)
+                newElements.formIndex(after: &sliceIndex)
+            }
+            
+            precondition(
+                baseIndex == baseEndIndex,
+                "[OrderedDictionary] Cannot replace a range with a slice of a smaller size"
+            )
+            
+            precondition(
+                sliceIndex == sliceEndIndex,
+                "[OrderedDictionary] Cannot replace a range with a slice of a larger size"
+            )
         }
     }
     
@@ -382,9 +466,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - SeeAlso: `canInsert(key:)`
     /// - SeeAlso: `canInsert(at:)`
     /// - SeeAlso: `update(_:at:)`
-    public mutating func insert(_ newElement: Element, at index: Index) {
-        precondition(canInsert(key: newElement.key), "Cannot insert duplicate key in OrderedDictionary")
-        precondition(canInsert(at: index), "Cannot insert at invalid index in OrderedDictionary")
+    public mutating func insert(
+        _ newElement: Element,
+        at index: Index
+    ) {
+        precondition(
+            canInsert(key: newElement.key),
+            "[OrderedDictionary] Cannot insert duplicate key"
+        )
+        
+        precondition(
+            canInsert(at: index),
+            "[OrderedDictionary] Cannot insert key-value pair at invalid index"
+        )
         
         let (key, value) = newElement
         
@@ -402,16 +496,32 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///   - newElement: The key-value pair to be set at the specified position.
     ///   - index: The position at which to set the key-value pair. `index` must be a valid index
     ///     of the ordered dictionary.
-    public func canUpdate(_ newElement: Element, at index: Index) -> Bool {
-        var keyPresentAtIndex = false
-        return _canUpdate(newElement, at: index, keyPresentAtIndex: &keyPresentAtIndex)
+    public func canUpdate(
+        _ newElement: Element,
+        at index: Index
+    ) -> Bool {
+        precondition(
+            indices.contains(index),
+            "[OrderedDictionary] Index is out of bounds"
+        )
+        
+        let newKey = newElement.key
+        
+        let previousElement = self[index]
+        let previousKey = previousElement.key
+        
+        let isSameKey = previousKey == newKey
+        let isExistingKey = containsKey(newKey)
+        
+        return isSameKey || !isExistingKey
     }
     
     /// Updates the key-value pair located at the specified position.
     ///
-    /// If the key of the updated pair already exists in the ordered dictionary *and* is located at 
-    /// a different position than the specified one, a runtime error is triggered. Use
-    /// `canUpdate(_:at:)` for performing a check first, so that this method can be executed safely.
+    /// If the key of the updated pair already exists in the ordered dictionary *and* is located
+    /// at a different position than the specified one, a runtime error is triggered.
+    ///
+    /// Use `canUpdate(_:at:)` to perform a check first, so that this method can be executed safely.
     ///
     /// - Parameters:
     ///   - newElement: The key-value pair to be set at the specified position.
@@ -421,32 +531,36 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - SeeAlso: `canUpdate(_:at:)`
     /// - SeeAlso: `insert(_:at:)`
     @discardableResult
-    public mutating func update(_ newElement: Element, at index: Index) -> Element? {
-        // Store the flag indicating whether the key of the inserted element is present
-        // at the updated index.
-        var keyPresentAtIndex = false
-        
+    public mutating func update(
+        _ newElement: Element,
+        at index: Index
+    ) -> Element? {
         precondition(
-            _canUpdate(newElement, at: index, keyPresentAtIndex: &keyPresentAtIndex),
-            "OrderedDictionary update duplicates key"
+            indices.contains(index),
+            "[OrderedDictionary] Index is out of bounds"
         )
         
-        // Decompose the element.
-        let (key, value) = newElement
+        let (newKey, newValue) = newElement
         
-        // Load the current element at the index.
-        let replacedElement = self[index]
+        let previousElement = self[index]
+        let previousKey = previousElement.key
         
-        // If its key differs, remove its associated value.
-        if (!keyPresentAtIndex) {
-            _keysToValues.removeValue(forKey: replacedElement.key)
+        let isSameKey = previousKey == newKey
+        let isExistingKey = containsKey(newKey)
+
+        precondition(
+            isSameKey || !isExistingKey,
+            "[OrderedDictionary] Index-based update produced duplicate keys"
+        )
+        
+        if (!isSameKey) {
+            _keysToValues.removeValue(forKey: previousKey)
         }
         
-        // Store the new position of the key and the new value associated with the key.
-        _orderedKeys[index] = key
-        _keysToValues[key] = value
+        _orderedKeys[index] = newKey
+        _keysToValues[newKey] = newValue
         
-        return replacedElement
+        return previousElement
     }
     
     /// Removes and returns the key-value pair at the specified position if there is any key-value
@@ -467,21 +581,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         return element
     }
     
-    private func _canUpdate(
-        _ newElement: Element,
-        at index: Index,
-        keyPresentAtIndex: inout Bool
-    ) -> Bool {
-        precondition(indices.contains(index), "OrderedDictionary index is out of range")
-        
-        let currentIndexOfKey = self.index(forKey: newElement.key)
-        
-        let keyNotPresent = currentIndexOfKey == nil
-        keyPresentAtIndex = currentIndexOfKey == index
-        
-        return keyNotPresent || keyPresentAtIndex
-    }
-    
     // ============================================================================ //
     // MARK: - Removing First & Last Elements
     // ============================================================================ //
@@ -500,30 +599,22 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
     /// Removes and returns the first key-value pair of the ordered dictionary.
     public mutating func removeFirst() -> Element {
-        precondition(!isEmpty, "Cannot remove key-value pairs from empty OrderedDictionary")
+        precondition(
+            !isEmpty,
+            "[OrderedDictionary] Cannot remove key-value pairs when empty"
+        )
+        
         return remove(at: startIndex)!
     }
     
     /// Removes and returns the last key-value pair of the ordered dictionary.
     public mutating func removeLast() -> Element {
-        precondition(!isEmpty, "Cannot remove key-value pairs from empty OrderedDictionary")
+        precondition(
+            !isEmpty,
+            "[OrderedDictionary] Cannot remove key-value pairs when empty"
+        )
+        
         return remove(at: index(before: endIndex))!
-    }
-    
-    // ============================================================================ //
-    // MARK: - Reordering Elements
-    // ============================================================================ //
-    
-    /// Exchanges the elements at the specified indices.
-    ///
-    /// - Parameters:
-    ///   - i: The index of the first value to swap.
-    ///   - j: The index of the second value to swap.
-    ///
-    /// - Precondition: Both indices must be valid existing indices of the ordered dictionary.
-    /// - Complexity: O(1)
-    public mutating func swapAt(_ i: Index, _ j: Index) {
-        _orderedKeys.swapAt(i, j)
     }
     
     // ============================================================================ //
@@ -543,9 +634,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     public mutating func sort(
         by areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows {
-        var array = ContiguousArray(self)
-        try array.sort(by: areInIncreasingOrder)
-        _orderedKeys = array.map { $0.key }
+        try _sort(
+            in: indices,
+            by: areInIncreasingOrder
+        )
     }
     
     /// Returns a new ordered dictionary, sorted using the given predicate as the comparison
@@ -567,8 +659,96 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         return new
     }
     
+    internal mutating func _sort(
+        in range: Range<Index>,
+        by areInIncreasingOrder: (Element, Element) throws -> Bool
+    ) rethrows {
+        try _orderedKeys[range].sort { key1, key2 in
+            let element1 = (key: key1, value: _keysToValues[key1]!)
+            let element2 = (key: key2, value: _keysToValues[key2]!)
+            return try areInIncreasingOrder(element1, element2)
+        }
+    }
+    
     // ============================================================================ //
-    // MARK: - Mapping Values
+    // MARK: - Reordering Elements
+    // ============================================================================ //
+    
+    // ------------------------------------------------------- //
+    // reverse()
+    // ------------------------------------------------------- //
+    
+    /// Reverses the key-value pairs of the ordered dictionary in place.
+    public mutating func reverse() {
+        _reverse(in: indices)
+    }
+    
+    internal mutating func _reverse(in range: Range<Index>) {
+        _orderedKeys[range].reverse()
+    }
+    
+    // ------------------------------------------------------- //
+    // shuffle(using:)
+    // ------------------------------------------------------- //
+    
+    /// Shuffles the ordered dictionary in place, using the given generator as a source
+    /// for randomness.
+    public mutating func shuffle<T>(
+        using generator: inout T
+    ) where T: RandomNumberGenerator {
+        _shuffle(in: indices, using: &generator)
+    }
+    
+    public mutating func _shuffle<T>(
+        in range: Range<Index>,
+        using generator: inout T
+    ) where T: RandomNumberGenerator {
+        _orderedKeys[range].shuffle(using: &generator)
+    }
+    
+    // ------------------------------------------------------- //
+    // partition(by:)
+    // ------------------------------------------------------- //
+    
+    /// Reorders the key-value pairs of the ordered dictionary such that all the key-value pairs
+    /// that match the given predicate are after all the key-value pairs that don't match.
+    public mutating func partition(
+        by belongsInSecondPartition: (Element) throws -> Bool
+    ) rethrows -> Index {
+        return try _partition(
+            in: indices,
+            by: belongsInSecondPartition
+        )
+    }
+    
+    internal mutating func _partition(
+        in range: Range<Index>,
+        by belongsInSecondPartition: (Element) throws -> Bool
+    ) rethrows -> Index {
+        try _orderedKeys[range].partition { key in
+            let element = (key: key, value: _keysToValues[key]!)
+            return try belongsInSecondPartition(element)
+        }
+    }
+    
+    // ------------------------------------------------------- //
+    // swapAt(_:_:)
+    // ------------------------------------------------------- //
+    
+    /// Exchanges the elements at the specified indices.
+    ///
+    /// - Parameters:
+    ///   - i: The index of the first value to swap.
+    ///   - j: The index of the second value to swap.
+    ///
+    /// - Precondition: Both indices must be valid existing indices of the ordered dictionary.
+    /// - Complexity: O(1)
+    public mutating func swapAt(_ i: Index, _ j: Index) {
+        _orderedKeys.swapAt(i, j)
+    }
+    
+    // ============================================================================ //
+    // MARK: - Transformations
     // ============================================================================ //
     
     /// Returns a new ordered dictionary containing the keys of this ordered dictionary with
@@ -601,10 +781,6 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         
         return result
     }
-    
-    // ============================================================================ //
-    // MARK: - Filtering
-    // ============================================================================ //
     
     /// Returns a new ordered dictionary container the key-value pairs that satisfy the given
     /// predicate while preserving the original order.
@@ -650,9 +826,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
 }
 
-// ============================================================================ //
-// MARK: - Literals
-// ============================================================================ //
+extension OrderedDictionary: Equatable where Value: Equatable {}
 
 extension OrderedDictionary: ExpressibleByArrayLiteral {
     
@@ -673,37 +847,6 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
             let (key, value) = element
             return (key: key, value: value)
         })
-    }
-    
-}
-
-// ============================================================================ //
-// MARK: - Equatable Conformance
-// ============================================================================ //
-
-extension OrderedDictionary: Equatable where Value: Equatable {}
-
-// ============================================================================ //
-// MARK: - Dictionary Extension
-// ============================================================================ //
-
-extension Dictionary {
-    
-    /// Returns an ordered dictionary containing the key-value pairs from the dictionary, sorted
-    /// using the given sort function.
-    ///
-    /// - Parameters:
-    ///   - areInIncreasingOrder: The sort function which compares the key-value pairs.
-    /// - Returns: The ordered dictionary.
-    ///
-    /// - SeeAlso: `OrderedDictionary.init(unsorted:areInIncreasingOrder:)`
-    public func sorted(
-        by areInIncreasingOrder: (Element, Element) throws -> Bool
-    ) rethrows -> OrderedDictionary<Key, Value> {
-        return try OrderedDictionary(
-            unsorted: self,
-            areInIncreasingOrder: areInIncreasingOrder
-        )
     }
     
 }

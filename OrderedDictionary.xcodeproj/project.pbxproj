@@ -17,6 +17,10 @@
 		80BE579B252B278D00F85D45 /* XCTUnwrapShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */; };
 		80BE57A5252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */; };
 		80BE57A6252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */; };
+		80BE57D4252BAB9400F85D45 /* OrderedDictionarySlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57D3252BAB9400F85D45 /* OrderedDictionarySlice.swift */; };
+		80BE57D5252BAB9400F85D45 /* OrderedDictionarySlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57D3252BAB9400F85D45 /* OrderedDictionarySlice.swift */; };
+		80BE57DF252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57DE252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift */; };
+		80BE57E0252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57DE252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift */; };
 		80BFD01B252B049E002B3C05 /* InitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD01A252B049E002B3C05 /* InitializationTests.swift */; };
 		80BFD01C252B049E002B3C05 /* InitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD01A252B049E002B3C05 /* InitializationTests.swift */; };
 		80BFD02A252B069F002B3C05 /* SortingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD029252B069F002B3C05 /* SortingTests.swift */; };
@@ -75,6 +79,8 @@
 		80B28EB71E2020DD007E3A77 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTUnwrapShim.swift; sourceTree = "<group>"; };
 		80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptAmbiguityTests.swift; sourceTree = "<group>"; };
+		80BE57D3252BAB9400F85D45 /* OrderedDictionarySlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedDictionarySlice.swift; sourceTree = "<group>"; };
+		80BE57DE252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+OrderedDictionary.swift"; sourceTree = "<group>"; };
 		80BFD01A252B049E002B3C05 /* InitializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializationTests.swift; sourceTree = "<group>"; };
 		80BFD029252B069F002B3C05 /* SortingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingTests.swift; sourceTree = "<group>"; };
 		80BFD030252B06EB002B3C05 /* DescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTests.swift; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 				80A203A01F3F483700622481 /* OrderedDictionary+Codable.swift */,
 				80E8E22F1E2133D100395E49 /* OrderedDictionary+Description.swift */,
 				8048C8AA22D8911B0086B88B /* OrderedDictionary+Deprecated.swift */,
+				80BE57D3252BAB9400F85D45 /* OrderedDictionarySlice.swift */,
+				80BE57DE252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -393,7 +401,9 @@
 				8048C8AB22D8911B0086B88B /* OrderedDictionary+Deprecated.swift in Sources */,
 				80E8E2301E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */,
 				80E8E21D1E20301E00395E49 /* OrderedDictionary.swift in Sources */,
+				80BE57D4252BAB9400F85D45 /* OrderedDictionarySlice.swift in Sources */,
 				80A203A11F3F483700622481 /* OrderedDictionary+Codable.swift in Sources */,
+				80BE57DF252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +434,9 @@
 				8048C8AC22D8911B0086B88B /* OrderedDictionary+Deprecated.swift in Sources */,
 				80E8E2311E2133D100395E49 /* OrderedDictionary+Description.swift in Sources */,
 				80E8E21F1E20425B00395E49 /* OrderedDictionary.swift in Sources */,
+				80BE57D5252BAB9400F85D45 /* OrderedDictionarySlice.swift in Sources */,
 				80A203A21F3F4C1F00622481 /* OrderedDictionary+Codable.swift in Sources */,
+				80BE57E0252BADEE00F85D45 /* Dictionary+OrderedDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

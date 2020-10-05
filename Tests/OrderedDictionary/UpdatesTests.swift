@@ -46,7 +46,7 @@ class UpdatesTests: XCTestCase {
     // MARK: - Index-based Updates Via subscript(position:)
     // ============================================================================ //
     
-    func testIndexBasedUpdate_viaSubscript_single_sameKey() throws {
+    func testIndexBasedUpdate_viaSubscriptSingle_sameKey() throws {
         var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
         
         orderedDictionary[1] = (key: "b", value: 0)
@@ -54,7 +54,7 @@ class UpdatesTests: XCTestCase {
         XCTAssertEqual(orderedDictionary, ["a": 1, "b": 0, "c": 3])
     }
     
-    func testIndexBasedUpdate_viaSubscript_single_newUniqueKey() throws {
+    func testIndexBasedUpdate_viaSubscriptSingle_newUniqueKey() throws {
         var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
         
         orderedDictionary[1] = (key: "d", value: 0)
@@ -66,7 +66,7 @@ class UpdatesTests: XCTestCase {
     // MARK: - Index-based Updates Via subscript(bounds:)
     // ============================================================================ //
     
-    func testIndexBasedUpdate_viaSubscript_multiple() {
+    func testIndexBasedUpdate_viaSubscriptMultiple_newUniqueKeys() {
         var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
         
         let sliceOrderedDictionary: OrderedDictionary<String, Int> = ["d": 0, "e": 0]
@@ -75,6 +75,28 @@ class UpdatesTests: XCTestCase {
         orderedDictionary[1..<3] = slice
         
         XCTAssertEqual(orderedDictionary, ["a": 1, "d": 0, "e": 0])
+    }
+    
+    func testIndexBasedUpdate_viaSubscriptMultiple_sameKeys() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+        
+        let sliceOrderedDictionary: OrderedDictionary<String, Int> = ["c": 0, "b": 0]
+        let slice = sliceOrderedDictionary[0..<2]
+        
+        orderedDictionary[1..<3] = slice
+        
+        XCTAssertEqual(orderedDictionary, ["a": 1, "c": 0, "b": 0])
+    }
+    
+    func testIndexBasedUpdate_viaSubscriptMultiple_mixedKeys() {
+        var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+        
+        let sliceOrderedDictionary: OrderedDictionary<String, Int> = ["d": 0, "c": 0]
+        let slice = sliceOrderedDictionary[0..<2]
+        
+        orderedDictionary[1..<3] = slice
+        
+        XCTAssertEqual(orderedDictionary, ["a": 1, "d": 0, "c": 0])
     }
     
     // ============================================================================ //

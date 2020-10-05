@@ -114,9 +114,13 @@ extension ReorderingTests {
     // to regenerate.
     static let __allTests__ReorderingTests = [
         ("testPartitioning", testPartitioning),
+        ("testPartitioning_throughSlice", testPartitioning_throughSlice),
         ("testReversal", testReversal),
+        ("testReversal_throughSlice", testReversal_throughSlice),
         ("testSwapAtDifferentIndices", testSwapAtDifferentIndices),
+        ("testSwapAtDifferentIndices_throughSlice", testSwapAtDifferentIndices_throughSlice),
         ("testSwapAtSameIndex", testSwapAtSameIndex),
+        ("testSwapAtSameIndex_throughSlice", testSwapAtSameIndex_throughSlice),
     ]
 }
 
@@ -125,8 +129,9 @@ extension SortingTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__SortingTests = [
-        ("testSortingAnUnsortedDictionary", testSortingAnUnsortedDictionary),
-        ("testSortingWithMutation", testSortingWithMutation),
+        ("testMutatingSort", testMutatingSort),
+        ("testMutatingSort_throughSlice", testMutatingSort_throughSlice),
+        ("testSortingUnsortedDictionary", testSortingUnsortedDictionary),
         ("testSortingWithoutMutation", testSortingWithoutMutation),
     ]
 }
@@ -150,9 +155,11 @@ extension UpdatesTests {
         ("testIndexBasedUpdate_viaMethod_duplicateKey", testIndexBasedUpdate_viaMethod_duplicateKey),
         ("testIndexBasedUpdate_viaMethod_newUniqueKey", testIndexBasedUpdate_viaMethod_newUniqueKey),
         ("testIndexBasedUpdate_viaMethod_sameKey", testIndexBasedUpdate_viaMethod_sameKey),
-        ("testIndexBasedUpdate_viaSubscript_multiple", testIndexBasedUpdate_viaSubscript_multiple),
-        ("testIndexBasedUpdate_viaSubscript_single_newUniqueKey", testIndexBasedUpdate_viaSubscript_single_newUniqueKey),
-        ("testIndexBasedUpdate_viaSubscript_single_sameKey", testIndexBasedUpdate_viaSubscript_single_sameKey),
+        ("testIndexBasedUpdate_viaSubscriptMultiple_mixedKeys", testIndexBasedUpdate_viaSubscriptMultiple_mixedKeys),
+        ("testIndexBasedUpdate_viaSubscriptMultiple_newUniqueKeys", testIndexBasedUpdate_viaSubscriptMultiple_newUniqueKeys),
+        ("testIndexBasedUpdate_viaSubscriptMultiple_sameKeys", testIndexBasedUpdate_viaSubscriptMultiple_sameKeys),
+        ("testIndexBasedUpdate_viaSubscriptSingle_newUniqueKey", testIndexBasedUpdate_viaSubscriptSingle_newUniqueKey),
+        ("testIndexBasedUpdate_viaSubscriptSingle_sameKey", testIndexBasedUpdate_viaSubscriptSingle_sameKey),
         ("testKeyBasedUpdate", testKeyBasedUpdate),
     ]
 }
