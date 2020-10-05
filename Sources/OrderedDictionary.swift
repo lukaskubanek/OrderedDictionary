@@ -522,7 +522,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///
     /// - Precondition: Both indices must be valid existing indices of the ordered dictionary.
     /// - Complexity: O(1)
-    public mutating func swapAt(_ i: Int, _ j: Int) {
+    public mutating func swapAt(_ i: Index, _ j: Index) {
         _orderedKeys.swapAt(i, j)
     }
     
