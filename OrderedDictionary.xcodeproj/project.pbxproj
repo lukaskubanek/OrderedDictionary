@@ -15,6 +15,8 @@
 		80B28EA01E201EC9007E3A77 /* OrderedDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B28E971E201EC8007E3A77 /* OrderedDictionary.framework */; };
 		80BE579A252B278D00F85D45 /* XCTUnwrapShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */; };
 		80BE579B252B278D00F85D45 /* XCTUnwrapShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */; };
+		80BE57A5252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */; };
+		80BE57A6252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */; };
 		80BFD01B252B049E002B3C05 /* InitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD01A252B049E002B3C05 /* InitializationTests.swift */; };
 		80BFD01C252B049E002B3C05 /* InitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD01A252B049E002B3C05 /* InitializationTests.swift */; };
 		80BFD02A252B069F002B3C05 /* SortingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BFD029252B069F002B3C05 /* SortingTests.swift */; };
@@ -72,6 +74,7 @@
 		80B28EB51E201F81007E3A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80B28EB71E2020DD007E3A77 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTUnwrapShim.swift; sourceTree = "<group>"; };
+		80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptAmbiguityTests.swift; sourceTree = "<group>"; };
 		80BFD01A252B049E002B3C05 /* InitializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializationTests.swift; sourceTree = "<group>"; };
 		80BFD029252B069F002B3C05 /* SortingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingTests.swift; sourceTree = "<group>"; };
 		80BFD030252B06EB002B3C05 /* DescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTests.swift; sourceTree = "<group>"; };
@@ -176,6 +179,7 @@
 				80BFD0A7252B1C96002B3C05 /* InsertionsTests.swift */,
 				80BFD07D252B0E19002B3C05 /* UpdatesTests.swift */,
 				80BFD060252B0A7F002B3C05 /* RemovalTests.swift */,
+				80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */,
 				80BFD076252B0D94002B3C05 /* MapFilterTests.swift */,
 				80BFD051252B09DC002B3C05 /* ReorderingTests.swift */,
 				80BFD029252B069F002B3C05 /* SortingTests.swift */,
@@ -407,6 +411,7 @@
 				80BFD07E252B0E19002B3C05 /* UpdatesTests.swift in Sources */,
 				80BFD0A8252B1C96002B3C05 /* InsertionsTests.swift in Sources */,
 				80BFD040252B0740002B3C05 /* CodingTests.swift in Sources */,
+				80BE57A5252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */,
 				80BFD01B252B049E002B3C05 /* InitializationTests.swift in Sources */,
 				80BE579A252B278D00F85D45 /* XCTUnwrapShim.swift in Sources */,
 			);
@@ -437,6 +442,7 @@
 				80BFD07F252B0E19002B3C05 /* UpdatesTests.swift in Sources */,
 				80BFD0A9252B1C96002B3C05 /* InsertionsTests.swift in Sources */,
 				80BFD041252B0740002B3C05 /* CodingTests.swift in Sources */,
+				80BE57A6252B3F6000F85D45 /* SubscriptAmbiguityTests.swift in Sources */,
 				80BFD01C252B049E002B3C05 /* InitializationTests.swift in Sources */,
 				80BE579B252B278D00F85D45 /* XCTUnwrapShim.swift in Sources */,
 			);
