@@ -15,10 +15,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     public typealias Indices = CountableRange<Int>
     
     /// The type of the contiguous subrange of the ordered dictionary's elements.
-    public typealias SubSequence = Slice<OrderedDictionary<Key, Value>>
+    public typealias SubSequence = Slice<Self>
 
     /// The type for a lazily evaluated collection of the ordered dictionary's values.
-    public typealias LazyValues = LazyMapCollection<OrderedDictionary<Key, Value>, Value>
+    public typealias LazyValues = LazyMapCollection<Self, Value>
     
     // ============================================================================ //
     // MARK: - Initialization
@@ -561,7 +561,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - SeeAlso: `sort(by:)`
     public func sorted(
         by areInIncreasingOrder: (Element, Element) throws -> Bool
-    ) rethrows -> OrderedDictionary<Key, Value> {
+    ) rethrows -> Self {
         var new = self
         try new.sort(by: areInIncreasingOrder)
         return new
