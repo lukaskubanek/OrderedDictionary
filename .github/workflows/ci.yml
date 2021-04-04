@@ -15,6 +15,15 @@ jobs:
         # See https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11.0-Readme.md
         xcode:
           - "12.4"   # Swift 5.3.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: Build
+        run: swift build -v
+      - name: Test
+        run: swift test -v
   
   macos-10.15:
     name: macOS 10.15 (Xcode ${{ matrix.xcode }})
