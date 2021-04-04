@@ -169,12 +169,12 @@
 		8055B0571E201DF3009DC3EE /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				80AF1630252A48080065B656 /* OrderedDictionary */,
+				80AF1630252A48080065B656 /* OrderedDictionaryTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		80AF1630252A48080065B656 /* OrderedDictionary */ = {
+		80AF1630252A48080065B656 /* OrderedDictionaryTests */ = {
 			isa = PBXGroup;
 			children = (
 				80BFD01A252B049E002B3C05 /* InitializationTests.swift */,
@@ -191,7 +191,7 @@
 				80BFD030252B06EB002B3C05 /* DescriptionTests.swift */,
 				80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */,
 			);
-			path = OrderedDictionary;
+			path = OrderedDictionaryTests;
 			sourceTree = "<group>";
 		};
 		80B28EB11E201F72007E3A77 /* Playgrounds */ = {
