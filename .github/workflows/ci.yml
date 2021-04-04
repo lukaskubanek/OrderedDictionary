@@ -7,9 +7,18 @@ on:
     branches: [ master ]
 
 jobs:
-  macos:
-    name: macOS (Xcode ${{ matrix.xcode }})
-    runs-on: macos-latest
+  macOS-11.0:
+    name: macOS 11 (Xcode ${{ matrix.xcode }})
+    runs-on: macos-11.0
+    strategy:
+      matrix:
+        # See https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11.0-Readme.md
+        xcode:
+          - "12.4"   # Swift 5.3.2
+  
+  macos-10.15:
+    name: macOS 10.15 (Xcode ${{ matrix.xcode }})
+    runs-on: macos-10.15
     strategy:
       matrix:
         # See https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md#xcode
