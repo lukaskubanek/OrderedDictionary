@@ -431,7 +431,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///
     /// - Parameters:
     ///   - key: The key to be inserted into the ordered dictionary.
-    /// - Returns: `true` if the key can safely be inserted; ortherwise, `false`.
+    /// - Returns: `true` if the key can safely be inserted; otherwise, `false`.
     ///
     /// - SeeAlso: `canInsert(at:)`
     public func canInsert(key: Key) -> Bool {
@@ -711,7 +711,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     // ------------------------------------------------------- //
     
     /// Reorders the key-value pairs of the ordered dictionary such that all the key-value pairs
-    /// that match the given predicate are after all the key-value pairs that don't match.
+    /// that match the given predicate are after all the key-value pairs that do not match.
     public mutating func partition(
         by belongsInSecondPartition: (Element) throws -> Bool
     ) rethrows -> Index {
