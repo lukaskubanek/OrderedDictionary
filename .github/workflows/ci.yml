@@ -25,7 +25,7 @@ jobs:
       - name: Test
         run: swift test -v
   
-  macos-10.15:
+  macos-10_15:
     name: macOS 10.15 (Xcode ${{ matrix.xcode }})
     runs-on: macos-10.15
     strategy:
