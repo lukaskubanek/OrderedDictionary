@@ -826,6 +826,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
 }
 
+extension OrderedDictionary: Hashable where Value: Hashable {}
 extension OrderedDictionary: Equatable where Value: Equatable {}
 
 extension OrderedDictionary: ExpressibleByArrayLiteral {
