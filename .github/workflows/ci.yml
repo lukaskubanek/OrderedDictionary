@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  macOS-11.0:
+  macos-11:
     name: macOS 11 (Xcode ${{ matrix.xcode }})
     runs-on: macos-11.0
     strategy:
