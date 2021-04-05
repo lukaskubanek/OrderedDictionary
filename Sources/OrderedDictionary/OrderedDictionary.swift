@@ -555,7 +555,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     public mutating func update(
         _ newElement: Element,
         at index: Index
-    ) -> Element? {
+    ) -> Element {
         precondition(
             indices.contains(index),
             "[OrderedDictionary] Index is out of bounds"
