@@ -14,13 +14,11 @@ let package = Package(
     targets: [
         .target(
             name: "OrderedDictionary",
-            dependencies: [],
-            path: "Sources"
+            dependencies: []
         ),
         .testTarget(
             name: "OrderedDictionaryTests",
-            dependencies: ["OrderedDictionary"],
-            path: "Tests"
+            dependencies: ["OrderedDictionary"]
         )
     ]
 )
