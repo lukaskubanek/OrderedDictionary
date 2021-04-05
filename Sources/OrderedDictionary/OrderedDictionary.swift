@@ -1,4 +1,26 @@
 /// A generic collection for storing key-value pairs in an ordered manner.
+///
+/// See the following example for a brief showcase including the initialization from a dictionary
+/// literal as well as iteration over its sorted key-value pairs:
+///
+///     let orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+///
+///     print(orderedDictionary)
+///     // => ["a": 1, "b": 2, "c": 3]
+///
+///     for (key, value) in orderedDictionary {
+///         print("key=\(key), value=\(value)")
+///     }
+///     // => key="a", value=1
+///     // => key="b", value=2
+///     // => key="c", value=3
+///
+///     for (index, element) in orderedDictionary.enumerated() {
+///         print("index=\(index), element=\(element)")
+///     }
+///     // => index=0, element=(key: "a", value: 1)
+///     // => index=1, element=(key: "b", value: 2)
+///     // => index=2, element=(key: "c", value: 3)
 public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, MutableCollection {
     
     // ============================================================================ //
@@ -130,12 +152,43 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     // ============================================================================ //
     
     /// An array containing just the keys of the ordered dictionary in the correct order.
+    ///
+    /// The following example shows how the ordered keys can be iterated over and accessed.
+    ///
+    ///     let orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     for key in orderedDictionary.orderedKeys {
+    ///         print(key)
+    ///     }
+    ///     // => "a"
+    ///     // => "b"
+    ///     // => "c"
+    ///
+    ///     print(orderedDictionary.orderedKeys)
+    ///     // => ["a", "b", "c"]
     public var orderedKeys: [Key] {
         return _orderedKeys
     }
     
     /// A lazily evaluated collection containing just the values of the ordered dictionary
     /// in the correct order.
+    ///
+    /// The following example shows how the ordered values can be iterated over and accessed.
+    /// Note that the collection is of type `LazyValues` which wraps the `OrderedDictionary`
+    /// as its base collection. Depending on the use case it might be desirable to convert
+    /// the collection to an `Array` which creates a copy of the values.
+    ///
+    ///     let orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     for value in orderedDictionary.orderedValues {
+    ///         print(value)
+    ///     }
+    ///     // => 1
+    ///     // => 2
+    ///     // => 3
+    ///
+    ///     print(Array(orderedDictionary.orderedValues))
+    ///     // => [1, 2, 3]
     public var orderedValues: LazyValues {
         return self.lazy.map { $0.value }
     }
@@ -181,6 +234,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
     /// Returns the index for the given key.
     ///
+    /// The following example shows how to get indices for given keys:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     print(orderedDictionary.index(forKey: "a"))
+    ///     // => Optional(0)
+    ///
+    ///     print(orderedDictionary.index(forKey: "x"))
+    ///     // => nil
+    ///
     /// - Parameters:
     ///   - key: The key to find in the ordered dictionary.
     /// - Returns: The index for `key` and its associated value if `key` is in the ordered
@@ -205,8 +268,39 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// ordered dictionary does not contain the key, a new key-value pair is appended to the end
     /// of the ordered dictionary.
     ///
-    /// If you assign `nil` as the value for the given key, the ordered dictionary removes that
-    /// key and its associated value if it exists.
+    /// When you assign `nil` as the value for the given key, the ordered dictionary removes
+    /// that key and its associated value if it exists.
+    ///
+    /// See the following example that shows how to access and set values for keys:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     print(orderedDictionary["a"])
+    ///     // => Optional(1)
+    ///
+    ///     print(orderedDictionary["x"])
+    ///     // => nil
+    ///
+    ///     orderedDictionary["b"] = 42
+    ///     print(orderedDictionary["b"])
+    ///     // => Optional(42)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "b": 42, "c": 3]
+    ///
+    ///     orderedDictionary["d"] = 4
+    ///     print(orderedDictionary["d"])
+    ///     // => Optional(4)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "b": 42, "c": 3, "d": 4]
+    ///
+    ///     orderedDictionary["c"] = nil
+    ///     print(orderedDictionary["c"])
+    ///     // => nil
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "b": 42, "d": 4]
     ///
     /// - Parameters:
     ///   - key: The key to find in the ordered dictionary.
@@ -229,6 +323,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///
     /// - Parameter key: The key to be looked up.
     /// - Returns: `true` if the ordered dictionary contains the given key; otherwise, `false`.
+    ///
+    /// - SeeAlso: `subscript(key:)`
     public func containsKey(_ key: Key) -> Bool {
         return _keysToValues[key] != nil
     }
@@ -236,10 +332,22 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// Returns the value associated with the given key if the key is found in the ordered
     /// dictionary, or `nil` if the key is not found.
     ///
+    /// The following example shows how to access values for keys:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     print(orderedDictionary.value(forKey: "a"))
+    ///     // => Optional(1)
+    ///
+    ///     print(orderedDictionary.value(forKey: "x"))
+    ///     // => nil
+    ///
     /// - Parameters:
     ///   - key: The key to find in the ordered dictionary.
     /// - Returns: The value associated with `key` if `key` is in the ordered dictionary;
     ///   otherwise, `nil`.
+    ///
+    /// - SeeAlso: `subscript(key:)`
     public func value(forKey key: Key) -> Value? {
         return _keysToValues[key]
     }
@@ -247,12 +355,45 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// Updates the value stored in the ordered dictionary for the given key, or appends a new
     /// key-value pair if the key does not exist.
     ///
+    /// The following example shows how to update the value for an existing key:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     let previousValue = orderedDictionary.updateValue(42, forKey: "b")
+    ///
+    ///     print(previousValue)
+    ///     // => Optional(2)
+    ///
+    ///     print(orderedDictionary["b"])
+    ///     // => Optional(42)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "b": 42, "c": 3]
+    ///
+    /// See the second example for the case where the updated key is not yet present in
+    /// the ordered dictionary:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     let previousValue = orderedDictionary.updateValue(4, forKey: "d")
+    ///
+    ///     print(previousValue)
+    ///     // => nil
+    ///
+    ///     print(orderedDictionary["d"])
+    ///     // => Optional(4)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "b": 2, "c": 3, "d": 4]
+    ///
     /// - Parameters:
     ///   - value: The new value to add to the ordered dictionary.
     ///   - key: The key to associate with `value`. If `key` already exists in the ordered
-    ///     dictionary, `value` replaces the existing associated value. If `key` is not already
+    ///     dictionary, `value` replaces the existing associated value. If `key` is not yet
     ///     a key of the ordered dictionary, the `(key, value)` pair is appended at the end
     ///     of the ordered dictionary.
+    ///
+    /// - SeeAlso: `subscript(key:)`
     @discardableResult
     public mutating func updateValue(
         _ value: Value,
@@ -282,11 +423,27 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// value. On removal, the indices of the ordered dictionary are invalidated. If the key is 
     /// not found in the ordered dictionary, this method returns `nil`.
     ///
+    /// The following example shows how to remove a value for a key:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     let removedValue = orderedDictionary.removeValue(forKey: "b")
+    ///
+    ///     print(removedValue)
+    ///     // => Optional(2)
+    ///
+    ///     print(orderedDictionary["b"])
+    ///     // => nil
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "c": 3]
+    ///
     /// - Parameters:
     ///   - key: The key to remove along with its associated value.
     /// - Returns: The value that was removed, or `nil` if the key was not present in the 
     ///   ordered dictionary.
     ///
+    /// - SeeAlso: `subscript(key:)`
     /// - SeeAlso: `remove(at:)`
     @discardableResult
     public mutating func removeValue(forKey key: Key) -> Value? {
@@ -320,10 +477,37 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     // MARK: - Index-based Access
     // ============================================================================ //
     
-    /// Accesses the key-value pair at the specified position.
+    /// Accesses the key-value pair at the specified position for reading and writing.
     ///
-    /// The specified position has to be a valid index of the ordered dictionary. The index-base
-    /// subscript returns the key-value pair corresponding to the index.
+    /// When accessing a key-value pair the given position must be a valid index of the ordered
+    /// dictionary.
+    ///
+    /// When assigning a key-value pair for a particular position, the position must be either
+    /// a valid index of the ordered dictionary or equal to `endIndex`. Furthermore, the given
+    /// key must not be already present at a different position of the ordered dictionary.
+    /// However, it is safe to set a key equal to the key that is currently present at that
+    /// position.
+    ///
+    /// The following example shows how to access and set key-value pairs at specific indices:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     print(orderedDictionary[0])
+    ///     // => (key: "a", value: 1)
+    ///
+    ///     orderedDictionary[1] = (key: "d", value: 42)
+    ///     print(orderedDictionary[1])
+    ///     // => (key: "d", value: 42)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "d": 42, "c": 3]
+    ///
+    ///     orderedDictionary[0] = (key: "a", value: 5)
+    ///     print(orderedDictionary[0])
+    ///     // => (key: "a", value: 5)
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 5, "d": 42, "c": 3]
     ///
     /// - Parameters:
     ///   - position: The position of the key-value pair to access. `position` must be a valid
@@ -364,6 +548,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///   dictionary, but lie outside of the replaced range. It is safe to provide the keys
     ///   from the replaced range in the different order or keys that are not present in the
     ///   ordered dictionary.
+    /// - SeeAlso: `subscript(position:)`
     public subscript(bounds: Range<Index>) -> SubSequence {
         get {
             precondition(
@@ -548,8 +733,10 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     ///   - newElement: The key-value pair to be set at the specified position.
     ///   - index: The position at which to set the key-value pair. `index` must be a valid index
     ///     of the ordered dictionary.
+    /// - Returns: A tuple containing the key-value pair previously associated with the `index`.
     ///
     /// - SeeAlso: `canUpdate(_:at:)`
+    /// - SeeAlso: `subscript(position:)`
     /// - SeeAlso: `insert(_:at:)`
     @discardableResult
     public mutating func update(
@@ -589,10 +776,23 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// Removes and returns the key-value pair at the specified position if there is any key-value
     /// pair, or `nil` if there is none.
     ///
+    /// The following example shows how to remove a key-value pair at a specific index:
+    ///
+    ///     var orderedDictionary: OrderedDictionary<String, Int> = ["a": 1, "b": 2, "c": 3]
+    ///
+    ///     let removedElement = orderedDictionary.remove(at: 1)
+    ///
+    ///     print(removedElement)
+    ///     // => Optional((key: "b", value: 2))
+    ///
+    ///     print(orderedDictionary)
+    ///     // => ["a": 1, "c": 3]
+    ///
     /// - Parameters:
     ///   - index: The position of the key-value pair to remove.
     /// - Returns: The element at the specified index, or `nil` if the position is not taken.
     ///
+    /// - SeeAlso: `subscript(position:)`
     /// - SeeAlso: `removeValue(forKey:)`
     @discardableResult
     public mutating func remove(at index: Index) -> Element? {
@@ -669,6 +869,16 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// between elements.
     ///
     /// The predicate must be a *strict weak ordering* over the elements.
+    ///
+    /// The following example shows how to sort an ordered dictionary according the keys or values:
+    ///
+    ///     let orderedDictionary: OrderedDictionary<String, Int> = ["c": 3, "d": 2, "b": 1, "a": 4]
+    ///
+    ///     print(orderedDictionary.sorted { $0.key < $1.key })
+    ///     // => ["a": 1, "b": 2, "c": 3, "d": 4]
+    ///
+    ///     print(orderedDictionary.sorted { $0.value < $1.value })
+    ///     // => ["b": 1, "d": 2, "c": 3, "a": 4]
     ///
     /// - Parameters:
     ///   - areInIncreasingOrder: A predicate that returns `true` if its first argument should

@@ -76,7 +76,6 @@
 		80B28E9F1E201EC9007E3A77 /* OrderedDictionary_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B28EB41E201F81007E3A77 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		80B28EB51E201F81007E3A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		80B28EB71E2020DD007E3A77 /* OrderedDictionary.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OrderedDictionary.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTUnwrapShim.swift; sourceTree = "<group>"; };
 		80BE57A4252B3F6000F85D45 /* SubscriptAmbiguityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptAmbiguityTests.swift; sourceTree = "<group>"; };
 		80BE57D3252BAB9400F85D45 /* OrderedDictionarySlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedDictionarySlice.swift; sourceTree = "<group>"; };
@@ -197,7 +196,6 @@
 		80B28EB11E201F72007E3A77 /* Playgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				80B28EB71E2020DD007E3A77 /* OrderedDictionary.playground */,
 				807AA68F1F1E587A00576474 /* OrderedDictionary+Codable.playground */,
 			);
 			path = Playgrounds;
