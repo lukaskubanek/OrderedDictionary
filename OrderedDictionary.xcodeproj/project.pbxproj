@@ -70,7 +70,6 @@
 		8048C8AA22D8911B0086B88B /* OrderedDictionary+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Deprecated.swift"; sourceTree = "<group>"; };
 		8055B0381E201C5D009DC3EE /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8055B0411E201C5D009DC3EE /* OrderedDictionary_Mac_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_Mac_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		807AA68F1F1E587A00576474 /* OrderedDictionary+Codable.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "OrderedDictionary+Codable.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		80A203A01F3F483700622481 /* OrderedDictionary+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrderedDictionary+Codable.swift"; sourceTree = "<group>"; };
 		80B28E971E201EC8007E3A77 /* OrderedDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OrderedDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B28E9F1E201EC9007E3A77 /* OrderedDictionary_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderedDictionary_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,7 +138,6 @@
 				80DE329420F4DD910053EDA7 /* LICENSE.md */,
 				80DE329220F4CAFA0053EDA7 /* Package.swift */,
 				8055B0521E201D24009DC3EE /* Sources */,
-				80B28EB11E201F72007E3A77 /* Playgrounds */,
 				8055B0571E201DF3009DC3EE /* Tests */,
 				80B28EB31E201F81007E3A77 /* Supporting Files */,
 				8055B0391E201C5D009DC3EE /* Products */,
@@ -191,14 +189,6 @@
 				80BE5799252B278D00F85D45 /* XCTUnwrapShim.swift */,
 			);
 			path = OrderedDictionaryTests;
-			sourceTree = "<group>";
-		};
-		80B28EB11E201F72007E3A77 /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-				807AA68F1F1E587A00576474 /* OrderedDictionary+Codable.playground */,
-			);
-			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 		80B28EB31E201F81007E3A77 /* Supporting Files */ = {

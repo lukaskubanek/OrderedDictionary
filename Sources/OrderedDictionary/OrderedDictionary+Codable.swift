@@ -1,6 +1,6 @@
 extension OrderedDictionary: Encodable where Key: Encodable, Value: Encodable {
     
-    /// __inheritdoc__
+    /// Encodes the contents of this ordered dictionary into the given encoder.
     public func encode(to encoder: Encoder) throws {
         // Encode the ordered dictionary as an array of alternating key-value pairs.
         var container = encoder.unkeyedContainer()
@@ -15,7 +15,7 @@ extension OrderedDictionary: Encodable where Key: Encodable, Value: Encodable {
 
 extension OrderedDictionary: Decodable where Key: Decodable, Value: Decodable {
     
-    /// __inheritdoc__
+    /// Creates a new ordered dictionary by decoding from the given decoder.
     public init(from decoder: Decoder) throws {
         // Decode the ordered dictionary from an array of alternating key-value pairs.
         self.init()
