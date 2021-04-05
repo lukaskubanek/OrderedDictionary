@@ -23,11 +23,11 @@
 
 OrderedDictionary is a lightweight implementation of an ordered dictionary data structure in Swift.
 
-The `OrderedDictionary` struct is a generic collection that combines the features of `Dictionary` and `Array` data structures from the Swift standard library. Like `Dictionary`, it stores key-value pairs with each key being unique and maps each key to an associated value. Like `Array`, it stores those pairs sorted and accessible by a zero-based integer index.
+The `OrderedDictionary<Key: Hashable, Value>` struct is a generic collection that combines the features of the `Dictionary` and `Array` data structures from the Swift standard library. Like `Dictionary`, it stores key-value pairs with each key being unique and maps each key to an associated value. Like `Array`, it stores those pairs sorted and accessible by a zero-based integer index.
 
 `OrderedDictionary` provides similar APIs to collections available in the Swift standard library like accessing contents by keys or indices, inserting and removing elements, iterating, sorting, transforming, filtering, etc.
 
-Internally, `OrderedDictionary` uses backing storage composed of a `Dictionary` for storing the key-value pairs and an `Array` for managing the ordered keys. This is certainly not the most performant implementation possible, but it gets its job done while reusing most functionality from the Swift standard library.
+Internally, `OrderedDictionary` uses backing storage composed of a `Dictionary` for storing the key-value pairs and an `Array` for managing the ordered keys. This is certainly not the most performant implementation one can achieve, but it gets its job done while reusing most functionality from the Swift standard library.
 
 ## Requirements
 
@@ -77,6 +77,10 @@ Although there has been a high demand for [CocoaPods](https://cocoapods.org) sup
 
 For the explanation of the API of `OrderedDictionary` and examples on how to use this data structure, please refer to the [documentation comments](Sources/OrderedDictionary/OrderedDictionary.swift) or the [comprehensive test suite](Tests/OrderedDictionaryTests).
 
+## Changelog
+
+To view the changelog, refer to GitHub's [releases page](releases). If you're upgrading from version 3.x, you might want to check out the list of changes made in [version 4.0](releases/tag/v4.0.0).
+
 ## Credits
 
-OrderedDictionary was built by [@lukaskubanek](https://twitter.com/lukaskubanek), the founder and  developer of [Diagrams](https://diagrams.app), a native diagram editor for Mac. We use this data structure extensively to power Diagrams' data model.
+OrderedDictionary was built by [@lukaskubanek](https://twitter.com/lukaskubanek), the founder and  developer of [Diagrams](https://diagrams.app), a native diagram editor for Mac. This data structure is being used extensively for powering Diagrams' data model.
