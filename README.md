@@ -35,9 +35,9 @@ Internally, `OrderedDictionary` uses backing storage composed of a `Dictionary` 
 - Xcode 11 or later
 - iOS 8 or later / macOS 10.10 or later
 
-*For support of older Swift version please refer to older versions of this library. For Swift 4.2 use version 3.x and for Swift 4.0-4.1 use version 2.x.*
+*For support of older Swift versions, please refer to older versions of this library. For Swift 4.2, use version 3.x, and for Swift 4.0-4.1, use version 2.x.*
 
-*The requirements for Xcode and OS versions apply only when the library is integrated as a framework or via the Xcode project.*
+*The requirements for Xcode and OS versions only apply when the library is integrated as a framework or via the Xcode project.*
 
 ## Installation
 
@@ -75,8 +75,8 @@ Although there has been a high demand for [CocoaPods](https://cocoapods.org) sup
 
 ## Usage & Docs
 
-For examples on how to use `OrderedDictionary` please refer to the [documentation comments](Sources/OrderedDictionary/OrderedDictionary.swift) or the [extensive test suite](Tests/OrderedDictionaryTests).
+For the explanation of the API of `OrderedDictionary` and examples on how to use this data structure, please refer to the [documentation comments](Sources/OrderedDictionary/OrderedDictionary.swift) or the [comprehensive test suite](Tests/OrderedDictionaryTests).
 
 ## Credits
 
-OrderedDictionary is built by [@lukaskubanek](https://twitter.com/lukaskubanek), the founder and developer of [Diagrams](https://diagrams.app), a native diagram editor for Mac. Diagrams' data model heavily relies on this data structure.
+OrderedDictionary was built by [@lukaskubanek](https://twitter.com/lukaskubanek), the founder and  developer of [Diagrams](https://diagrams.app), a native diagram editor for Mac. We use this data structure extensively to power Diagrams' data model.
