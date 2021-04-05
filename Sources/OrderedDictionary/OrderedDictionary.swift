@@ -23,15 +23,19 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
     /// Initializes an empty ordered dictionary.
     public init() {
-        self._orderedKeys = [Key]()
-        self._keysToValues = [Key: Value]()
+        self.init(
+            uniqueKeysWithValues: EmptyCollection<Element>(),
+            minimumCapacity: nil
+        )
     }
     
     /// Initializes an empty ordered dictionary with preallocated space for at least
     /// the specified number of elements.
     public init(minimumCapacity: Int) {
-        self.init()
-        self.reserveCapacity(minimumCapacity)
+        self.init(
+            uniqueKeysWithValues: EmptyCollection<Element>(),
+            minimumCapacity: minimumCapacity
+        )
     }
     
     /// Initializes an ordered dictionary from a regular unsorted dictionary by sorting it
@@ -100,18 +104,25 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     
     private init<S: Sequence>(
         uniqueKeysWithValues keysAndValues: S,
-        minimumCapacity: Int
+        minimumCapacity: Int?
     ) where S.Element == Element {
-        self.init(minimumCapacity: minimumCapacity)
+        defer { _assertInvariant() }
+        
+        var orderedKeys = [Key](minimumCapacity: minimumCapacity ?? 0)
+        var keysToValues = [Key: Value](minimumCapacity: minimumCapacity ?? 0)
         
         for (key, value) in keysAndValues {
             precondition(
-                !containsKey(key),
-                "[OrderedDictionary] Sequence of key-value pairs contains duplicate keys"
+                keysToValues[key] == nil,
+                "[OrderedDictionary] Sequence of key-value pairs contains duplicate keys (\(key))"
             )
             
-            self[key] = value
+            orderedKeys.append(key)
+            keysToValues[key] = value
         }
+        
+        self._orderedKeys = orderedKeys
+        self._keysToValues = keysToValues
     }
     
     // ============================================================================ //
@@ -126,7 +137,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// A lazily evaluated collection containing just the values of the ordered dictionary
     /// in the correct order.
     public var orderedValues: LazyValues {
-        return lazy.map { $0.value }
+        return self.lazy.map { $0.value }
     }
     
     // ============================================================================ //
@@ -247,6 +258,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         _ value: Value,
         forKey key: Key
     ) -> Value? {
+        defer { _assertInvariant() }
+        
         if containsKey(key) {
             guard let currentValue = _keysToValues[key] else {
                 fatalError("[OrderedDictionary] Inconsistency error")
@@ -280,6 +293,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         guard let currentValue = _keysToValues[key] else { return nil }
         guard let index = index(forKey: key) else { return nil }
         
+        defer { _assertInvariant() }
+        
         _orderedKeys.remove(at: index)
         _keysToValues[key] = nil
         
@@ -295,6 +310,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     public mutating func removeAll(
         keepingCapacity keepCapacity: Bool = false
     ) {
+        defer { _assertInvariant() }
+        
         _orderedKeys.removeAll(keepingCapacity: keepCapacity)
         _keysToValues.removeAll(keepingCapacity: keepCapacity)
     }
@@ -361,6 +378,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
                 bounds.clamped(to: indices) == bounds,
                 "[OrderedDictionary] Range is out of bounds"
             )
+            
+            defer { _assertInvariant() }
             
             let innerKeys = orderedKeys[bounds]
             let outerKeys = Set(orderedKeys).subtracting(innerKeys)
@@ -480,6 +499,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
             "[OrderedDictionary] Cannot insert key-value pair at invalid index"
         )
         
+        defer { _assertInvariant() }
+        
         let (key, value) = newElement
         
         _orderedKeys.insert(key, at: index)
@@ -540,6 +561,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
             "[OrderedDictionary] Index is out of bounds"
         )
         
+        defer { _assertInvariant() }
+        
         let (newKey, newValue) = newElement
         
         let previousElement = self[index]
@@ -574,6 +597,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     @discardableResult
     public mutating func remove(at index: Index) -> Element? {
         guard let element = elementAt(index) else { return nil }
+        
+        defer { _assertInvariant() }
         
         _orderedKeys.remove(at: index)
         _keysToValues.removeValue(forKey: element.key)
@@ -663,6 +688,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         in range: Range<Index>,
         by areInIncreasingOrder: (Element, Element) throws -> Bool
     ) rethrows {
+        defer { _assertInvariant() }
+        
         try _orderedKeys[range].sort { key1, key2 in
             let element1 = (key: key1, value: _keysToValues[key1]!)
             let element2 = (key: key2, value: _keysToValues[key2]!)
@@ -684,6 +711,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     }
     
     internal mutating func _reverse(in range: Range<Index>) {
+        defer { _assertInvariant() }
+        
         _orderedKeys[range].reverse()
     }
     
@@ -703,6 +732,8 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         in range: Range<Index>,
         using generator: inout T
     ) where T: RandomNumberGenerator {
+        defer { _assertInvariant() }
+        
         _orderedKeys[range].shuffle(using: &generator)
     }
     
@@ -725,7 +756,9 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
         in range: Range<Index>,
         by belongsInSecondPartition: (Element) throws -> Bool
     ) rethrows -> Index {
-        try _orderedKeys[range].partition { key in
+        defer { _assertInvariant() }
+        
+        return try _orderedKeys[range].partition { key in
             let element = (key: key, value: _keysToValues[key]!)
             return try belongsInSecondPartition(element)
         }
@@ -787,7 +820,7 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     public func filter(
         _ isIncluded: (Element) throws -> Bool
     ) rethrows -> Self {
-        return Self(uniqueKeysWithValues: try lazy.filter(isIncluded))
+        return Self(uniqueKeysWithValues: try self.lazy.filter(isIncluded))
     }
     
     // ============================================================================ //
@@ -810,8 +843,42 @@ public struct OrderedDictionary<Key: Hashable, Value>: RandomAccessCollection, M
     /// - Parameters:
     ///   - minimumCapacity: The requested number of elements to store.
     public mutating func reserveCapacity(_ minimumCapacity: Int) {
+        defer { _assertInvariant() }
+        
         _orderedKeys.reserveCapacity(minimumCapacity)
         _keysToValues.reserveCapacity(minimumCapacity)
+    }
+    
+    // ============================================================================ //
+    // MARK: - Invariant
+    // ============================================================================ //
+    
+    /// Asserts whether the internal invariant is met and traps in the debug mode otherwise.
+    /// Inspired by the implementation in PenguinStructures: https://bit.ly/3dDLidO
+    ///
+    /// - Complexity: O(`count`)
+    private func _assertInvariant() {
+        assert(
+            _computeInvariant(),
+            """
+            [OrderedDictionary] Broken internal invariant:
+             orderedKeys(count: \(_orderedKeys.count)) = \(_orderedKeys)
+             keysToValues(count: \(_keysToValues.count)) = \(_keysToValues)
+            """
+        )
+    }
+    
+    /// Computes the internal invariant for the count and key presence in the underlying storage,
+    /// and returns `true` if the invariant is met.
+    private func _computeInvariant() -> Bool {
+        if _orderedKeys.count != _keysToValues.count { return false }
+        
+        for index in _orderedKeys.indices {
+            let key = _orderedKeys[index]
+            if _keysToValues[key] == nil { return false }
+        }
+        
+        return true
     }
     
     // ============================================================================ //
@@ -848,6 +915,17 @@ extension OrderedDictionary: ExpressibleByDictionaryLiteral {
             let (key, value) = element
             return (key: key, value: value)
         })
+    }
+    
+}
+
+extension Array {
+    
+    /// Initializes an empty array with preallocated space for at least the specified number
+    /// of elements.
+    fileprivate init(minimumCapacity: Int) {
+        self.init()
+        self.reserveCapacity(minimumCapacity)
     }
     
 }
