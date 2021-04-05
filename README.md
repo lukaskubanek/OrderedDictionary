@@ -79,7 +79,7 @@ For the explanation of the API of `OrderedDictionary` and examples on how to use
 
 ## Changelog
 
-To view the changelog, refer to GitHub's [releases page](releases). If you're upgrading from version 3.x, you might want to check out the list of changes made in [version 4.0](releases/tag/v4.0.0).
+To view the changelog, refer to GitHub's [releases page](https://github.com/lukaskubanek/OrderedDictionary/releases). If you're upgrading from version 3.x, you might want to check out the list of changes made in [version 4.0](https://github.com/lukaskubanek/OrderedDictionary/releases/tag/v4.0.0).
 
 ## Credits
 
