@@ -38,15 +38,28 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: RandomAccessCollecti
     public let endIndex: Base.Index
     
     // ============================================================================ //
-    // MARK: - Subscript
+    // MARK: - Subscripts
     // ============================================================================ //
     
-    public subscript(position: Base.Index) -> Base.Element {
+    public subscript(
+        position: Base.Index
+    ) -> Base.Element {
         get {
             base[position]
         }
         set(newElement) {
             base[position] = newElement
+        }
+    }
+    
+    public subscript(
+        bounds: Range<Int>
+    ) -> OrderedDictionarySlice<Key, Value> {
+        get {
+            base[bounds]
+        }
+        set(newElements) {
+            base[bounds] = newElements
         }
     }
     
